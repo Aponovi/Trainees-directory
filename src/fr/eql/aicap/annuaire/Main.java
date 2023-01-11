@@ -86,8 +86,12 @@ public class Main {
 
     }
 
-    private static String completer(String mot, int promo) {
+    private static String completer(String mot, int taille) {
 
+        int nbEspace = taille - mot.length();
+        for (int i = 0; i < nbEspace; i++) {
+            mot += " ";
+        }
 
         return mot;
     }
