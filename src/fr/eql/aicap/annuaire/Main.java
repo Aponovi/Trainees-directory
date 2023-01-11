@@ -38,7 +38,7 @@ public class Main {
             while ((ligne = bf.readLine()) != null) {
                 compteurTab = 0;
                 for (int i = 0; i < ligne.length(); i++){
-                    if (ligne.charAt(i) != '    '){
+                    if (ligne.charAt(i) != '	'){
                         mot += ligne.charAt(i);
                     } else {
                         switch (compteurTab){
@@ -86,6 +86,15 @@ public class Main {
 
     }
 
-    private static String completer(String mot, int promo) {
+    private static String completer(String mot, int taille) {
+
+        int nbEspace = taille - mot.length();
+        for (int i = 0; i < nbEspace; i++) {
+            mot += " ";
+        }
+
+        return mot;
     }
+
+
 }
