@@ -1,0 +1,13 @@
+[1mdiff --cc test.java[m
+[1mindex ed9574c,e760e32..0000000[m
+[1m--- a/test.java[m
+[1m+++ b/test.java[m
+[36m@@@ -1,4 -1,4 +1,8 @@@[m
+  public class test {[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +    lalilolou[m
+[32m++=======[m
+[32m+     lalalalala je teste trop des trucs[m
+[32m++>>>>>>> main[m
+  }[m
