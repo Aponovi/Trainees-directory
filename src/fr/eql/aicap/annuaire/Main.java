@@ -9,7 +9,7 @@ public class Main {
 
     //allocation taille des données pour l'arbre
 
-    public static final int PROMODIGIT = 2;
+    public static final int PROMODIGIT = 2; // hello
     public static final int PROMO = 8;
     public static final int ANNEE = 4;
     public static final int NOM = 50;
