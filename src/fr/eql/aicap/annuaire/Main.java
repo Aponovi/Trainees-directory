@@ -9,14 +9,14 @@ public class Main {
 
     //allocation taille des données pour l'arbre
 
-    public static final int PROMODIGIT = 15;
-    public static final int PROMO = 15;
+    public static final int PROMODIGIT = 2;
+    public static final int PROMO = 8;
     public static final int ANNEE = 4;
     public static final int NOM = 50;
     public static final int PRENOM = 50;
     public static final int DEPARTEMENT = 3;
 
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + PROMODIGIT + ANNEE + NOM + PRENOM + DEPARTEMENT) *2 );
+    public static final int LONGUEURSTAGIAIRE = ((PROMO + PROMODIGIT + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2 );
 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -24,6 +24,7 @@ public class Main {
         String ligne ="";
         String mot = "";
         int compteurTab= 0;
+        int compteurStagiaire = 0;
 
         RandomAccessFile stagiaires;
 
@@ -71,10 +72,19 @@ public class Main {
                                 int nb3 = Integer.parseInt(mot);
                                 stagiaires.writeInt(nb3);
                                 break;
+
+
                         }
+                        compteurTab += 1;
+                        mot = "";
                     }
                 }
-
+                mot = completer(mot, PROMODIGIT);
+                mot = completer(mot, ANNEE);
+                mot = completer(mot, DEPARTEMENT);
+                stagiaires.writeChars(mot);
+                mot = "";
+                compteurStagiaire += 1;
 
             }
 
