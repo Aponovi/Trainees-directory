@@ -3,6 +3,8 @@
 .iml
 out/
 
+*.bin
+
 # Compiled class file
 *.class
 
