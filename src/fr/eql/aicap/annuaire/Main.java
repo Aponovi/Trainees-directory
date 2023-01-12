@@ -1,4 +1,4 @@
-package src.fr.eql.aicap.annuaire;
+package fr.eql.aicap.annuaire;
 
 import java.io.*;
 
