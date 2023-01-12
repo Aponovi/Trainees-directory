@@ -4,6 +4,7 @@ package fr.eql.aicap.annuaire;
 public class HardBinaryTree {
 
     Node root;
+    // hey what did i broke
 
     public void addNode(String key, String name) {
 
