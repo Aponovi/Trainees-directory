@@ -16,14 +16,14 @@ public class Main {
     public static final int PRENOM = 50;
     public static final int DEPARTEMENT = 3;
 
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + PROMODIGIT + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2 );
+    public static final int LONGUEURSTAGIAIRE = ((PROMO + PROMODIGIT + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2);
 
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        String ligne ="";
+        String ligne = "";
         String mot = "";
-        int compteurTab= 0;
+        int compteurTab = 0;
         int compteurStagiaire = 0;
 
         RandomAccessFile stagiaires;
@@ -33,50 +33,53 @@ public class Main {
 
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            FileReader fichierOriginal = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
+            FileReader fichierOriginal = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
             BufferedReader bf = new BufferedReader(fichierOriginal);
 
             while ((ligne = bf.readLine()) != null) {
                 compteurTab = 0;
-                for (int i = 0; i < ligne.length(); i++){
-                    if (ligne.charAt(i) != '	'){
-                        mot += ligne.charAt(i);
-                    } else {
-                        switch (compteurTab){
-                            case 0:
-                                int nb = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb);
-                                break;
+                System.out.println(ligne);
+                for (int i = 0; i < ligne.length(); i++) {
+                    if (ligne.charAt(i) != '*') {
+                        if (ligne.charAt(i) != '	') {
+                            mot += ligne.charAt(i);
+                        } else {
+                            switch (compteurTab) {
+                                case 0:
+                                    int nb = Integer.parseInt(mot);
+                                    stagiaires.writeInt(nb);
+                                    break;
 
-                            case 1:
-                                mot = completer(mot, PROMO);
-                                stagiaires.writeChars(mot);
-                                break;
+                                case 1:
+                                    mot = completer(mot, PROMO);
+                                    stagiaires.writeChars(mot);
+                                    break;
 
-                            case 2:
-                                int nb2 = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb2);
-                                break;
+                                case 2:
+                                    int nb2 = Integer.parseInt(mot);
+                                    stagiaires.writeInt(nb2);
+                                    break;
 
-                            case 3:
-                                mot = completer(mot, NOM);
-                                stagiaires.writeChars(mot);
-                                break;
+                                case 3:
+                                    mot = completer(mot, NOM);
+                                    stagiaires.writeChars(mot);
+                                    break;
 
-                            case 4:
-                                mot = completer(mot, PRENOM);
-                                stagiaires.writeChars(mot);
-                                break;
+                                case 4:
+                                    mot = completer(mot, PRENOM);
+                                    stagiaires.writeChars(mot);
+                                    break;
 
-                            case 5:
-                                int nb3 = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb3);
-                                break;
+                                case 5:
+                                    int nb3 = Integer.parseInt(mot);
+                                    stagiaires.writeInt(nb3);
+                                    break;
 
 
+                            }
+                            compteurTab += 1;
+                            mot = "";
                         }
-                        compteurTab += 1;
-                        mot = "";
                     }
                 }
                 mot = completer(mot, PROMODIGIT);

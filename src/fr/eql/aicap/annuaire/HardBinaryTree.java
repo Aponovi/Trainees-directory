@@ -4,7 +4,6 @@ package fr.eql.aicap.annuaire;
 public class HardBinaryTree {
 
     Node root;
-    // hey what did i broke
 
     public void addNode(String key, String name) {
 
@@ -170,7 +169,7 @@ public class HardBinaryTree {
 
         HardBinaryTree theTree = new HardBinaryTree();
 
-        theTree.addNode("KANAAN", "Boss");
+        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
 
         theTree.addNode("FIORE", "Vice President");
 
@@ -194,7 +193,7 @@ public class HardBinaryTree {
 
         // System.out.println("\nNode with the key 75");
 
-        System.out.println(theTree.findNode("BEATRICE"));
+        System.out.println(theTree.findNode("JULIE"));
 
     }
 }
