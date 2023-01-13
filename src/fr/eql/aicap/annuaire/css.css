@@ -1,44 +1,21 @@
-/*Adapted from Oracle JavaFX Documentation Home */
 
-/*The background style is applied to the .root style, which means it is applied
- * to the root node of the Scene instance
- */
 .root {
     /*  -fx-background-image: url("background.jpg");*/
     -fx-background-color: #b5d1e2;
 }
-/* the .label style class, which means the styles will affect all labels in the form */
-.label {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
-}
-/*titreText est un ID défini dans le code java. Il doit être précédé de # */
-#titreText {
-   -fx-font-size: 25px;
-   -fx-font-family: "Arial Black";
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
-}
 
-#actionTexte {
-  -fx-fill: FIREBRICK;
-  -fx-font-weight: bold;
-  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
-}
-
-.btn {
-    -fx-text-fill: white;
+.button {
+    -fx-text-fill: black;
     -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-color: white;
+    -fx-background-radius: 6.5px;
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+
 }
 
-.button:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+.button:active{
+    -fx-border-color: none;
 }
 
-.list-cell:odd { -fx-background-color: white; /* 1 */ }
-.list-cell:even { -fx-background-color: #b5d1e2; /* for information */ }
+
