@@ -25,12 +25,15 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
+        HardBinaryTree theTree = new HardBinaryTree();
+
         String ligne = "";
         String mot = "";
         int compteurLigne;
         int compteurStagiaire = 0;
-        int leftChild = 1;
-        int rightChild = 1;
+        int traineePositionInBinFile = 0;
+        int leftChild = 1; // 1 = pas de child
+        int rightChild = 1; // 1 = pas de child
 
         RandomAccessFile stagiaires;
 
@@ -42,18 +45,18 @@ public class Main {
             FileReader fichierOriginal = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
             BufferedReader bf = new BufferedReader(fichierOriginal);
             compteurLigne = 0;
+
             // ajout du leftchild dans le fichier bin
             String convert = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
-            System.out.println(convert);
             stagiaires.writeInt(Integer.parseInt(convert));
+
             // ajout du rightchild dans le fichier bin
             String conver = String.format("%0" + Integer.numberOfLeadingZeros(rightChild) + "d", rightChild);
-            System.out.println(conver);
             stagiaires.writeInt(Integer.parseInt(conver));
 
+            // lecture du fichier txt et recopie dans le fichier bin
             while ((ligne = bf.readLine()) != null) {
                 compteurLigne = compteurLigne % 6;
-                // System.out.println(ligne);
                 mot = ligne;
                 switch (compteurLigne) {
                     case 0:
@@ -68,6 +71,11 @@ public class Main {
                     case 2:
                         mot = completer(mot, NOM);
                         stagiaires.writeChars(mot);
+                        // stagiaires.seek(4);
+                        System.out.println("dans le tree il y aurait : " + mot );
+
+                        theTree.addNode(mot, traineePositionInBinFile);
+                        traineePositionInBinFile += 208;
                         break;
 
                     case 3:
@@ -85,6 +93,7 @@ public class Main {
                 compteurStagiaire += 1;
             }
 
+
             stagiaires.close();
 
         } catch (
@@ -96,20 +105,21 @@ public class Main {
             /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
              * cad là où la lecture ou l'écriture s'effectuera.
              */
-            System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
-            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
-            for (int i = 0; i < 100; i++) {
-                System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            }
-
-            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
+//            System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+//            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+//            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+//            for (int i = 0; i < 100; i++) {
+//                System.out.println("Lecture du caractère : " + stagiaires.readChar());
+//            }
+//
+//            System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
 
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
         }
+        theTree.inOrderTraverseTree(theTree.root);
 
     }
 
@@ -122,6 +132,8 @@ public class Main {
 
         return mot;
     }
+
+
 }
 
 
