@@ -16,11 +16,11 @@ public class Main {
     public static final int NOM = 40;
     public static final int PRENOM = 40;
     public static final int DEPARTEMENT = 4;
-    public static final int LEFTCHILD = 300;
+    public static final int LEFTCHILD = 20;
     public static final int RIGHTCHILD = 20;
 
 
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2);
+    public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT + LEFTCHILD + RIGHTCHILD ) * 2);
 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -29,8 +29,8 @@ public class Main {
         String mot = "";
         int compteurLigne;
         int compteurStagiaire = 0;
-        int leftChild = 3000;
-        int rightChild=-1;
+        int leftChild = 1;
+        int rightChild = 1;
 
         // int adresseStagiaire = 0;
 
@@ -44,55 +44,74 @@ public class Main {
             FileReader fichierOriginal = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
             BufferedReader bf = new BufferedReader(fichierOriginal);
             compteurLigne = 0;
-            while ((ligne = bf.readLine()) != null) {
-                compteurLigne = compteurLigne % 6;
-                // System.out.println(ligne);
-                mot = ligne;
-                switch (compteurLigne) {
-                    case 0:
-                        mot = completer(mot, PROMO);
-                        stagiaires.writeChars(mot);
-                        break;
-                    case 1:
-                        mot = completer(mot, ANNEE);
-                        stagiaires.writeChars(mot);
-                        break;
+            // ajout du leftchild dans le fichier bin
+            String convert = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
+            System.out.println(convert);
+            stagiaires.writeInt(Integer.parseInt(convert));
+            // ajout du rightchild dans le fichier bin
+            String conver = String.format("%0" + Integer.numberOfLeadingZeros(rightChild) + "d", rightChild);
+            System.out.println(conver);
+            stagiaires.writeInt(Integer.parseInt(conver));
 
-                    case 2:
-                        mot = completer(mot, NOM);
-                        stagiaires.writeChars(mot);
-                        break;
+                while ((ligne = bf.readLine()) != null) {
+                    compteurLigne = compteurLigne % 6;
+                    // System.out.println(ligne);
+                    mot = ligne;
+                    switch (compteurLigne) {
+                        case 0:
+                            mot = completer(mot, PROMO);
+                            stagiaires.writeChars(mot);
+                            break;
+                        case 1:
+                            mot = completer(mot, ANNEE);
+                            stagiaires.writeChars(mot);
+                            break;
 
-                    case 3:
-                        mot = completer(mot, PRENOM);
-                        stagiaires.writeChars(mot);
-                        break;
+                        case 2:
+                            mot = completer(mot, NOM);
+                            stagiaires.writeChars(mot);
+                            break;
 
-                    case 4:
-                        mot = completer(mot, DEPARTEMENT);
-                        stagiaires.writeChars(mot);
-                        break;
+                        case 3:
+                            mot = completer(mot, PRENOM);
+                            stagiaires.writeChars(mot);
+                            break;
 
-                }
-                compteurLigne += 1;
-                compteurStagiaire += 1;
+                        case 4:
+                            mot = completer(mot, DEPARTEMENT);
+                            stagiaires.writeChars(mot);
+                            break;
+
+                    }
+                    compteurLigne += 1;
+                    compteurStagiaire += 1;
+
+//                    String convert = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
+//
+//                    System.out.println(convert);
+//
+//                    stagiaires.writeInt(Integer.parseInt(convert));
+
+//                System.out.println(leftChild);
+//                System.out.println(Integer.numberOfLeadingZeros(leftChild));
+//                System.out.println(Integer.numberOfLeadingZeros(leftChild) * 0);
+                    // leftChild = (Integer.numberOfLeadingZeros(leftChild) * 0) + leftChild;
 
 
+//                def digitFormatter(long: Long, numDigits: Int): String = {
+//                        val padlength = if (long >= 0) numDigits else numDigits + 1
+//                String.format(s"%0${padlength}d", long)
+//                  }
+                //}
+//            for (int i = 0; i < compteurStagiaire; i++) {
+
+                // System.out.println(compteurStagiaire);
             }
+
             // ajout du leftchild qui est un integer
             // stagiaires.writeInt(leftChild);
             // System.out.println(leftChild);
             // cherche à compléter le leftchild avec des espaces vides pour "garder sa place"
-            System.out.println(leftChild);
-            System.out.println(Integer.numberOfLeadingZeros(leftChild));
-            System.out.println(Integer.numberOfLeadingZeros(leftChild) * 0);
-            leftChild = (Integer.numberOfLeadingZeros(leftChild) * 0) + leftChild;
-
-            // String convert = String.format("%" +  Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
-            String convert = String.format("%0"+  Integer.numberOfLeadingZeros(leftChild) +"d", leftChild);
-
-            System.out.println(convert);
-            stagiaires.writeInt(Integer.parseInt(convert));
 
 
             // stagiaires.writeInt(leftChild,LEFTCHILD);
@@ -112,14 +131,15 @@ public class Main {
             /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
              * cad là où la lecture ou l'écriture s'effectuera.
              */
-//            System.out.println("Avant lecture le pointure se situe sur la position : " + stagiaires.getFilePointer());
-//
-//            for (int i = 0; i < 100; i++) {
-//                System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            }
-//
-//            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
-//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
+            System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Lecture du caractère : " + stagiaires.readChar());
+            }
+
+            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
+            System.out.println("Lecture du caractère : " + stagiaires.readChar());
 
         } catch (
                 IOException e) {
@@ -138,11 +158,11 @@ public class Main {
         return mot;
     }
 
+
     //TODO
     /* créer une fonction "compléter" pour les children
     qui ajoute des 0 devant l'adresse des children
     */
-
 
 
 }
