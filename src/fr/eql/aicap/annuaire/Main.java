@@ -68,136 +68,37 @@ public class Main {
                         stagiaires.writeChars(mot);
                         break;
 
+                }
+                compteurLigne += 1;
+                compteurStagiaire += 1;
+
+
             }
-            compteurLigne += 1;
-            compteurStagiaire += 1;
-
-
-        }
             System.out.println("Taille du RAF : " + stagiaires.length());
             System.out.println("nb stagiaires : " + compteurStagiaire);
             System.out.println("lenght raf par stagiaires : " + (stagiaires.length() / compteurStagiaire));
 
             stagiaires.close();
 
-    } catch(
-    IOException e)
-
-    {
-        throw new RuntimeException(e);
-    }
-        try
-
-    {
-        stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-        /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
-         * cad là où la lecture ou l'écriture s'effectuera.
-         */
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
+            /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
+             * cad là où la lecture ou l'écriture s'effectuera.
+             */
             System.out.println("Avant lecture le pointure se situe sur la position : " + stagiaires.getFilePointer());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
+
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Lecture du caractère : " + stagiaires.readChar());
+            }
+
             System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
             System.out.println("Lecture du caractère : " + stagiaires.readChar());
-        // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
-        // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
+            // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
+            // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
 
 
             /* Lecture du 5ème octet.
@@ -216,14 +117,12 @@ public class Main {
 //            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
 //            stagiaires.close();
 
-    } catch(
-    IOException e)
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
 
-    {
-        throw new RuntimeException(e);
     }
-
-}
 
     private static String completer(String mot, int taille) {
 
