@@ -1,5 +1,7 @@
 package fr.eql.aicap.annuaire;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.io.*;
 
 public class Main {
@@ -14,8 +16,8 @@ public class Main {
     public static final int NOM = 40;
     public static final int PRENOM = 40;
     public static final int DEPARTEMENT = 4;
-    public static final int LEFTCHILD = 2;
-    public static final int RIGHTCHILD = 2;
+    public static final int LEFTCHILD = 300;
+    public static final int RIGHTCHILD = 20;
 
 
     public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2);
@@ -27,7 +29,10 @@ public class Main {
         String mot = "";
         int compteurLigne;
         int compteurStagiaire = 0;
-        int adresseStagiaire = 0;
+        int leftChild = 3000;
+        int rightChild=-1;
+
+        // int adresseStagiaire = 0;
 
         RandomAccessFile stagiaires;
 
@@ -74,9 +79,27 @@ public class Main {
 
 
             }
-            System.out.println("Taille du RAF : " + stagiaires.length());
-            System.out.println("nb stagiaires : " + compteurStagiaire);
-            System.out.println("lenght raf par stagiaires : " + (stagiaires.length() / compteurStagiaire));
+            // ajout du leftchild qui est un integer
+            // stagiaires.writeInt(leftChild);
+            // System.out.println(leftChild);
+            // cherche à compléter le leftchild avec des espaces vides pour "garder sa place"
+            System.out.println(leftChild);
+            System.out.println(Integer.numberOfLeadingZeros(leftChild));
+            System.out.println(Integer.numberOfLeadingZeros(leftChild) * 0);
+            leftChild = (Integer.numberOfLeadingZeros(leftChild) * 0) + leftChild;
+
+            // String convert = String.format("%" +  Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
+            String convert = String.format("%0"+  Integer.numberOfLeadingZeros(leftChild) +"d", leftChild);
+
+            System.out.println(convert);
+            stagiaires.writeInt(Integer.parseInt(convert));
+
+
+            // stagiaires.writeInt(leftChild,LEFTCHILD);
+            // stagiaires.writeInt(rightChild,LEFTCHILD);
+//            System.out.println("Taille du RAF : " + stagiaires.length());
+//            System.out.println("nb stagiaires : " + compteurStagiaire);
+//            System.out.println("lenght raf par stagiaires : " + (stagiaires.length() / compteurStagiaire));
 
             stagiaires.close();
 
@@ -89,33 +112,14 @@ public class Main {
             /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
              * cad là où la lecture ou l'écriture s'effectuera.
              */
-            System.out.println("Avant lecture le pointure se situe sur la position : " + stagiaires.getFilePointer());
-
-            for (int i = 0; i < 100; i++) {
-                System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            }
-
-            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
-            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-            // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
-            // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
-
-
-            /* Lecture du 5ème octet.
-            On bouge le pointeur à la bonne position grâce à la méthode seek'().
-            Puis on lit avec la methode readxxx()/
-             */
-//            stagiaires.seek(4);
+//            System.out.println("Avant lecture le pointure se situe sur la position : " + stagiaires.getFilePointer());
+//
+//            for (int i = 0; i < 100; i++) {
+//                System.out.println("Lecture du caractère : " + stagiaires.readChar());
+//            }
+//
 //            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
 //            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            // System.out.println("Lecture du 5ème octet : " + stagiaires.readByte());
-//            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
-//            System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//            System.out.println("Maintenant  le pointure se situe sur la position : " + stagiaires.getFilePointer());
-//            stagiaires.close();
 
         } catch (
                 IOException e) {
@@ -133,6 +137,12 @@ public class Main {
 
         return mot;
     }
+
+    //TODO
+    /* créer une fonction "compléter" pour les children
+    qui ajoute des 0 devant l'adresse des children
+    */
+
 
 
 }
