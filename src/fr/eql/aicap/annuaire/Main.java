@@ -20,7 +20,7 @@ public class Main {
     public static final int RIGHTCHILD = 20;
 
 
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT + LEFTCHILD + RIGHTCHILD ) * 2);
+    public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT + LEFTCHILD + RIGHTCHILD) * 2);
 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -31,8 +31,6 @@ public class Main {
         int compteurStagiaire = 0;
         int leftChild = 1;
         int rightChild = 1;
-
-        // int adresseStagiaire = 0;
 
         RandomAccessFile stagiaires;
 
@@ -53,38 +51,38 @@ public class Main {
             System.out.println(conver);
             stagiaires.writeInt(Integer.parseInt(conver));
 
-                while ((ligne = bf.readLine()) != null) {
-                    compteurLigne = compteurLigne % 6;
-                    // System.out.println(ligne);
-                    mot = ligne;
-                    switch (compteurLigne) {
-                        case 0:
-                            mot = completer(mot, PROMO);
-                            stagiaires.writeChars(mot);
-                            break;
-                        case 1:
-                            mot = completer(mot, ANNEE);
-                            stagiaires.writeChars(mot);
-                            break;
+            while ((ligne = bf.readLine()) != null) {
+                compteurLigne = compteurLigne % 6;
+                // System.out.println(ligne);
+                mot = ligne;
+                switch (compteurLigne) {
+                    case 0:
+                        mot = completer(mot, PROMO);
+                        stagiaires.writeChars(mot);
+                        break;
+                    case 1:
+                        mot = completer(mot, ANNEE);
+                        stagiaires.writeChars(mot);
+                        break;
 
-                        case 2:
-                            mot = completer(mot, NOM);
-                            stagiaires.writeChars(mot);
-                            break;
+                    case 2:
+                        mot = completer(mot, NOM);
+                        stagiaires.writeChars(mot);
+                        break;
 
-                        case 3:
-                            mot = completer(mot, PRENOM);
-                            stagiaires.writeChars(mot);
-                            break;
+                    case 3:
+                        mot = completer(mot, PRENOM);
+                        stagiaires.writeChars(mot);
+                        break;
 
-                        case 4:
-                            mot = completer(mot, DEPARTEMENT);
-                            stagiaires.writeChars(mot);
-                            break;
+                    case 4:
+                        mot = completer(mot, DEPARTEMENT);
+                        stagiaires.writeChars(mot);
+                        break;
 
-                    }
-                    compteurLigne += 1;
-                    compteurStagiaire += 1;
+                }
+                compteurLigne += 1;
+                compteurStagiaire += 1;
             }
 
             stagiaires.close();
@@ -124,14 +122,6 @@ public class Main {
 
         return mot;
     }
-
-
-    //TODO
-    /* créer une fonction "compléter" pour les children
-    qui ajoute des 0 devant l'adresse des children
-    */
-
-
 }
 
 
