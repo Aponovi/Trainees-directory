@@ -6,11 +6,10 @@ import java.io.*;
 import java.text.Normalizer;
 
 public class Main {
-
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
 
-    //tree data size allocation
+    //allocation taille des données pour l'arbre
 
     public static final int PROMO = 50;
     public static final int ANNEE = 4;
@@ -41,7 +40,15 @@ public class Main {
 
         //Rechercher_Contact(Nom_Binaire,Contact_A_Rechercher)
 
-        HardBinaryTree theTree = new HardBinaryTree();
+        //Ajouter_Contact(Nom_Binaire,Contact)
+
+        //Modifier_Contact(Nom_Binaire,Contact)
+
+        //Sup_Contact(Nom_Binaire,Contact)
+
+        //Rechercher_Contact(Nom_Binaire,Contact_A_Rechercher)
+
+        BinaryTree theTree = new BinaryTree();
 
         String ligne = "";
         String mot = "";
@@ -58,7 +65,7 @@ public class Main {
 
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
+            File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
             BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichierOriginal), "ISO-8859-1"));
             compteurLigne = 0;
 
@@ -107,10 +114,12 @@ public class Main {
 
                 }
                 compteurLigne += 1;
+
             }
 
 
             stagiaires.close();
+            //System.out.println("nb stagiaires : " + compteurStagiaire);
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -200,6 +209,20 @@ public class Main {
                 System.out.println("Lecture du leftchild : " + stagiaires.readInt());
                 System.out.println("Lecture du rightchild : " + stagiaires.readInt());
                 for (int i = 0; i < (PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT)
+                        ; i++) {
+                    System.out.println("Lecture du caractère : " + stagiaires.readChar());
+                }
+        /**********************************
+         * check if everything went right *
+         **********************************/
+
+        try {
+            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
+            for (int j = 0; j < 15; j++) {
+                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+                System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+                System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+                for (int i = 0; i < (PROMO + ANNEE + NOM  + PRENOM + DEPARTEMENT)
                         ; i++) {
                     System.out.println("Lecture du caractère : " + stagiaires.readChar());
                 }
