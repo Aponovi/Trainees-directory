@@ -105,7 +105,6 @@ public class Main {
 
                 }
                 compteurLigne += 1;
-                System.out.println(NOM);
 
             }
 
