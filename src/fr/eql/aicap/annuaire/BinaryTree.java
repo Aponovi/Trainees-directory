@@ -1,7 +1,7 @@
 package fr.eql.aicap.annuaire;
 
 
-public class HardBinaryTree {
+public class BinaryTree {
 
     Node root;
 
@@ -167,7 +167,7 @@ public class HardBinaryTree {
 
     public static void main(String[] args) {
 
-        HardBinaryTree theTree = new HardBinaryTree();
+        BinaryTree theTree = new BinaryTree();
 
 //        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
 //
@@ -202,17 +202,18 @@ public class HardBinaryTree {
 class Node {
 
     String key;
-    int name;
+    int address;
     Node leftChild;
+
     Node rightChild;
 
     Node(String key, int position) {
         this.key = key;
-        this.name = position;
+        this.address = position;
     }
 
     public String toString() {
-        return name + " has the key " + key;
+        return address + " has the key " + key;
 
         /*
          * return name + " has the key " + key + "\nLeft Child: " + leftChild +
