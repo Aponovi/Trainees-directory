@@ -1,8 +1,5 @@
 package fr.eql.aicap.annuaire;
 
-import com.sun.xml.internal.bind.v2.TODO;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.io.*;
 import java.text.Normalizer;
 
@@ -18,18 +15,17 @@ public class Main {
     public static final int NOM = 40;
     public static final int PRENOM = 40;
     public static final int DEPARTEMENT = 4;
-    public static final int LEFTCHILD = 20;
-    public static final int RIGHTCHILD = 20;
+    public static final int LEFTCHILD = 1;
+    public static final int RIGHTCHILD = 1;
 
 
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT + LEFTCHILD + RIGHTCHILD));
+    public static final int LONGUEURSTAGIAIRE = (PROMO * 2 + ANNEE * 2 + NOM * 2 + PRENOM * 2 + DEPARTEMENT * 2 + LEFTCHILD * 4 + RIGHTCHILD * 4);
+    public static final int ADRESSBIGINNINGNAME = (PROMO * 2 + ANNEE * 2 + LEFTCHILD * 4 + RIGHTCHILD * 4);
 
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        System.out.println("Longueur stagaire : " + LONGUEURSTAGIAIRE);
-
-        HardBinaryTree theTree = new HardBinaryTree();
+        BinaryTree theTree = new BinaryTree();
 
         String ligne = "";
         String mot = "";
@@ -105,33 +101,33 @@ public class Main {
         }
 
 
-        /*********************
-         * find nodes children *
-         *********************/
-
-        try {
-            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            int focusTrainee = 116;
-            int nbnoeud = 0;
-            stagiaires.seek(focusTrainee);
-            String focusTraineeName;
-
-            while (nbnoeud != ((compteurStagiaire))) {
-                focusTraineeName = "";
-                for (int i = 0; i < 40; i++) {
-                    focusTraineeName += stagiaires.readChar();
-                }
-
-                focusTrainee += 284;
-                stagiaires.seek(focusTrainee);
-                nbnoeud += 1;
-            }
-            stagiaires.close();
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        /*********************
+//         * find nodes children *
+//         *********************/
+//
+//        try {
+//            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
+//            int focusTrainee = 116;
+//            int nbnoeud = 0;
+//            stagiaires.seek(focusTrainee);
+//            String focusTraineeName;
+//
+//            while (nbnoeud != ((compteurStagiaire))) {
+//                focusTraineeName = "";
+//                for (int i = 0; i < 40; i++) {
+//                    focusTraineeName += stagiaires.readChar();
+//                }
+//
+//                focusTrainee += 284;
+//                stagiaires.seek(focusTrainee);
+//                nbnoeud += 1;
+//            }
+//            stagiaires.close();
+//
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
 
@@ -141,7 +137,7 @@ public class Main {
          *************************************/
         stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
         try {
-            int focusTrainee = 116;
+            int focusTrainee = ADRESSBIGINNINGNAME;
             int nbnoeud = 0;
             stagiaires.seek(focusTrainee);
             String focusTraineeName = "";
@@ -152,7 +148,7 @@ public class Main {
                 focusTraineeName = "";
 
 
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < NOM; i++) {
                     focusTraineeName += stagiaires.readChar();
                 }
                 if (theTree.findNode(focusTraineeName).leftChild != null) {
@@ -163,18 +159,18 @@ public class Main {
                 }
 
 
-                stagiaires.seek(focusTrainee - 116);
+                stagiaires.seek(focusTrainee - ADRESSBIGINNINGNAME);
                 int lefttchildCompleted = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(leftChildAddress) + "d", leftChildAddress));
                 stagiaires.writeInt(lefttchildCompleted);
                 int rightchildCompleted = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(rightChildAddress) + "d", rightChildAddress));
                 stagiaires.writeInt(rightchildCompleted);
 
-                focusTrainee += 284;
+                focusTrainee += LONGUEURSTAGIAIRE;
                 stagiaires.seek(focusTrainee);
                 nbnoeud += 1;
             }
 
-
+            stagiaires.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -183,30 +179,28 @@ public class Main {
          * check if everything went right *
          **********************************/
 
-//        try {
-//            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-//            /* le raf possède une méthode get File Pointer() qui permet de savoir où est placé le pointeur
-//             * cad là où la lecture ou l'écriture s'effectuera.
-//             */
-//            for (int j = 0; j < 15; j++) {
-//                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-//                System.out.println("Lecture du leftchild : " + stagiaires.readInt());
-//                System.out.println("Lecture du rightchild : " + stagiaires.readInt());
-//                for (int i = 0; i < 138
-//                        ; i++) {
-//                    System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//                }
-//
-//                System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-//                //System.out.println("Lecture du caractère : " + stagiaires.readChar());
-//
-//            }
-//            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
-//            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
-//        } catch (
-//                IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
+            for (int j = 0; j < 15; j++) {
+                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+                System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+                System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+                for (int i = 0; i < (PROMO + ANNEE + NOM  + PRENOM + DEPARTEMENT)
+                        ; i++) {
+                    System.out.println("Lecture du caractère : " + stagiaires.readChar());
+                }
+
+                System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+                //System.out.println("Lecture du caractère : " + stagiaires.readChar());
+
+            }
+            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+            stagiaires.close();
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

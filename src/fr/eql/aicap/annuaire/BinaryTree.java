@@ -1,7 +1,7 @@
 package fr.eql.aicap.annuaire;
 
 
-public class HardBinaryTree {
+public class BinaryTree {
 
     Node root;
 
@@ -167,7 +167,7 @@ public class HardBinaryTree {
 
     public static void main(String[] args) {
 
-        HardBinaryTree theTree = new HardBinaryTree();
+        BinaryTree theTree = new BinaryTree();
 
 //        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
 //
