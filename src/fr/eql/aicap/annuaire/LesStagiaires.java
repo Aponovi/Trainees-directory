@@ -26,11 +26,10 @@ public class LesStagiaires {
         }
     }
 
-    // Transforme une chaine en un objet de type Employe
-    //format de la chaine : 1*BARBE*Rue des Vignes Paris*0123546789*10000
+    // Transforme une chaine en un objet de type Stagiaire
     private Stagiaires fabriqueStagiaire(String chaine){
         Stagiaires stg=null;
-        StringTokenizer st = new StringTokenizer(chaine, "*");
+        StringTokenizer st = new StringTokenizer(chaine, "\\\\r?\\\\n");
         if(st.countTokens()==5){
             String promo = st.nextToken();
             Integer annee = Integer.parseInt(st.nextToken());
@@ -41,7 +40,7 @@ public class LesStagiaires {
         }
         return stg;
     }
-    //Transformer le fichier en une collection d'employés
+    //Transformer le fichier en une collection de stagiaires
     public List<Stagiaires> fabriqueVecteur(){
         String chaine;
         Stagiaires stg;
@@ -76,4 +75,5 @@ public class LesStagiaires {
         }
         return chainebf.toString();
     }
+
 }

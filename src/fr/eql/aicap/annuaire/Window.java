@@ -23,6 +23,7 @@ import java.util.List;
 
 public class Window extends Application {
 
+
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -107,27 +108,6 @@ public class Window extends Application {
 
 
     }
-
-
-
-
-//        button1.setOnAction(event -> {
-//            FileReader in = null;
-//            try {
-//                in = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-//            } catch (FileNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-//            BufferedReader br = new BufferedReader(in);
-//            StringBuffer sb = new StringBuffer();
-//            String line;
-//
-//
-//        });
-
-
-
-
 
     public static void main(String[] args) {
         Application.launch(args);

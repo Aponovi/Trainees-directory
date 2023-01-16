@@ -16,6 +16,7 @@ public class Stagiaires {
         this.nom = nom;
         this.prenom = prenom;
         this.dpt = dpt;
+
     }
 
     //méthodes d'accès aux variables d'instance
@@ -38,6 +39,7 @@ public class Stagiaires {
     public int getDpt(){
         return dpt;
     }
+
 
 //    public String setPromo(){}
 

@@ -5,11 +5,11 @@ public class HardBinaryTree {
 
     Node root;
 
-    public void addNode(String key, String name) {
+    public void addNode(String key, int positionInBinFile) {
 
         // Create a new Node and initialize it
 
-        Node newNode = new Node(key, name);
+        Node newNode = new Node(key, positionInBinFile);
 
         // If there is no root this becomes root
 
@@ -169,17 +169,17 @@ public class HardBinaryTree {
 
         HardBinaryTree theTree = new HardBinaryTree();
 
-        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
-
-        theTree.addNode("FIORE", "Vice President");
-
-        theTree.addNode("GUIYING", "Office Manager");
-
-        theTree.addNode("BEATRICE", "Secretary");
-
-        theTree.addNode("ASFOUR", "Sales Manager");
-
-        theTree.addNode("HERTZFELD", "Salesman 1");
+//        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
+//
+//        theTree.addNode("FIORE", "Vice President");
+//
+//        theTree.addNode("GUIYING", "Office Manager");
+//
+//        theTree.addNode("BEATRICE", "Secretary");
+//
+//        theTree.addNode("ASFOUR", "Sales Manager");
+//
+//        theTree.addNode("HERTZFELD", "Salesman 1");
 
         // Different ways to traverse binary trees
 
@@ -193,7 +193,8 @@ public class HardBinaryTree {
 
         // System.out.println("\nNode with the key 75");
 
-        System.out.println(theTree.findNode("JULIE"));
+//        System.out.println(theTree.findNode("JULIE"));
+//        System.out.println(theTree.findNode("ASFOUR"));
 
     }
 }
@@ -201,20 +202,16 @@ public class HardBinaryTree {
 class Node {
 
     String key;
-    String name;
-
+    int name;
     Node leftChild;
     Node rightChild;
 
-    Node(String key, String name) {
-
+    Node(String key, int position) {
         this.key = key;
-        this.name = name;
-
+        this.name = position;
     }
 
     public String toString() {
-
         return name + " has the key " + key;
 
         /*
