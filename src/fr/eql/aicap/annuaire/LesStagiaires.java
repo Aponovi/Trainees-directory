@@ -27,24 +27,24 @@ public class LesStagiaires {
     }
 
     // Transforme une chaine en un objet de type Stagiaire
-    private Stagiaires fabriqueStagiaire(String chaine){
-        Stagiaires stg=null;
-        StringTokenizer st = new StringTokenizer(chaine, "\\\\r?\\\\n");
+    private Stagiaire fabriqueStagiaire(String chaine){
+        Stagiaire stg=null;
+        StringTokenizer st = new StringTokenizer(chaine, ",");
         if(st.countTokens()==5){
             String promo = st.nextToken();
             Integer annee = Integer.parseInt(st.nextToken());
             String nom = st.nextToken();
             String prenom= st.nextToken();
             Integer dpt = Integer.parseInt(st.nextToken());
-            stg = new Stagiaires(promo, annee, nom, prenom, dpt);
+            stg = new Stagiaire(promo, annee, nom, prenom, dpt);
         }
         return stg;
     }
     //Transformer le fichier en une collection de stagiaires
-    public List<Stagiaires> fabriqueVecteur(){
+    public List<Stagiaire> fabriqueVecteur(){
         String chaine;
-        Stagiaires stg;
-        List<Stagiaires> stagiaires = new Vector<Stagiaires>();
+        Stagiaire stg;
+        List<Stagiaire> stagiaires = new Vector<Stagiaire>();
         try{
             do{
                 chaine = bfr.readLine();

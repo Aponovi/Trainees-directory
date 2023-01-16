@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 
 
 import java.io.*;
-import java.util.List;
 
 
 public class Window extends Application {
@@ -28,55 +27,55 @@ public class Window extends Application {
     public void start(Stage stage) throws IOException {
 
 
-        ObservableList<Stagiaires> data = getStagiairesList();
+//        ObservableList<Stagiaire> data = getStagiairesList();
 
         //Création Table
-        TableView<Stagiaires> table = new TableView<Stagiaires>();
+        TableView<Stagiaire> table = new TableView<Stagiaire>();
         table.setEditable(true);
 
         Label label = new Label("Liste des stagiaires");
 
         //Création des 5colonnes
 
-        TableColumn<Stagiaires, String> promoCol =
-                new TableColumn<Stagiaires, String>("Promotion");
+        TableColumn<Stagiaire, String> promoCol =
+                new TableColumn<Stagiaire, String>("Promotion");
         promoCol.setMinWidth(100);
         promoCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaires, String>("promo"));
+                new PropertyValueFactory<Stagiaire, String>("promo"));
 
-        TableColumn<Stagiaires, Integer> anneeCol =
-                new TableColumn<Stagiaires, Integer>("Année");
+        TableColumn<Stagiaire, Integer> anneeCol =
+                new TableColumn<Stagiaire, Integer>("Année");
         anneeCol.setMinWidth(100);
         anneeCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaires, Integer>("Année")
+                new PropertyValueFactory<Stagiaire, Integer>("Année")
         );
 
-        TableColumn<Stagiaires, String> nomCol =
-                new TableColumn<Stagiaires, String>("Nom");
+        TableColumn<Stagiaire, String> nomCol =
+                new TableColumn<Stagiaire, String>("Nom");
         nomCol.setMinWidth(100);
         nomCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaires, String>("Nom")
+                new PropertyValueFactory<Stagiaire, String>("Nom")
         );
 
-        TableColumn<Stagiaires, String> prenomCol =
-                new TableColumn<Stagiaires, String>("Prénom");
+        TableColumn<Stagiaire, String> prenomCol =
+                new TableColumn<Stagiaire, String>("Prénom");
         prenomCol.setMinWidth(100);
         prenomCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaires, String>("Prénom")
+                new PropertyValueFactory<Stagiaire, String>("Prénom")
         );
 
-        TableColumn<Stagiaires, Integer> dptCol =
-                new TableColumn<Stagiaires, Integer>("Département");
+        TableColumn<Stagiaire, Integer> dptCol =
+                new TableColumn<Stagiaire, Integer>("Département");
         dptCol.setMinWidth(100);
         dptCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaires, Integer>("Département")
+                new PropertyValueFactory<Stagiaire, Integer>("Département")
         );
 
 
         // ajout des colonnes à la table
 
         table.getColumns().addAll(promoCol,nomCol,prenomCol, anneeCol,dptCol);
-        table.setItems(data);
+//        table.setItems(data);
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -99,15 +98,15 @@ public class Window extends Application {
         stage.setTitle("Annuaire SQL");
     }
 
-    private ObservableList<Stagiaires> getStagiairesList(){
-        LesStagiaires lesStag = new LesStagiaires("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-        List<Stagiaires> liste = lesStag.fabriqueVecteur();
-        ObservableList<Stagiaires> list = FXCollections.observableArrayList(liste);
-
-        return list;
-
-
-    }
+//    private ObservableList<Stagiaire> getStagiairesList(){
+////        LesStagiaires lesStag = new LesStagiaires("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
+////        List<Stagiaire> liste = lesStag.fabriqueVecteur();
+//          ObservableList<Stagiaire> list = FXCollections.observableArrayList(liste);
+//
+//        return list;
+//
+//
+//    }
 
     public static void main(String[] args) {
         Application.launch(args);

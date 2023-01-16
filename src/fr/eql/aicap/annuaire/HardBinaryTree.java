@@ -201,6 +201,7 @@ public class HardBinaryTree {
 
 class Node {
 
+    public int address;
     String key;
     int name;
     Node leftChild;

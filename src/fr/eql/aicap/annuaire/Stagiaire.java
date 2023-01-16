@@ -1,8 +1,6 @@
 package fr.eql.aicap.annuaire;
 
-import com.sun.org.apache.xpath.internal.objects.XString;
-
-public class Stagiaires {
+public class Stagiaire {
     private final String promo;
     private final int annee;
     private String nom;
@@ -10,7 +8,7 @@ public class Stagiaires {
     private final int dpt;
 
     //Constructeurs
-    public Stagiaires(String promo, int annee, String nom, String prenom, int dpt ){
+    public Stagiaire(String promo, int annee, String nom, String prenom, int dpt ){
         this.promo = promo;
         this.annee = annee;
         this.nom = nom;
@@ -18,6 +16,10 @@ public class Stagiaires {
         this.dpt = dpt;
 
     }
+
+    //méthode créer un stagiaire
+
+//    public String creationStagiaire()
 
     //méthodes d'accès aux variables d'instance
     public String getPromo(){
@@ -41,9 +43,7 @@ public class Stagiaires {
     }
 
 
-//    public String setPromo(){}
-
-//    public String toString(){
-//        return promo + " " + annee + "" + nom + "" + prenom +"" + dpt;
-//    }
+    public String toString(){
+        return promo + "," + annee + "," + nom + "," + prenom +"," + dpt;
+    }
 }
