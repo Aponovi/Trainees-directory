@@ -27,7 +27,7 @@ public class LesStagiaires {
     }
 
     // Transforme une chaine en un objet de type Stagiaire
-    private Stagiaires fabriqueStagiaire(String chaine){
+    public Stagiaires fabriqueStagiaire(String chaine){
         Stagiaires stg=null;
         StringTokenizer st = new StringTokenizer(chaine, "\\\\r?\\\\n");
         if(st.countTokens()==5){

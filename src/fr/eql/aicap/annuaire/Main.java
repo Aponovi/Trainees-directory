@@ -42,7 +42,7 @@ public class Main {
 
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
+            File fichierOriginal = new File("C:\\Users\\Formation\\Desktop\\PROJE1\\Trainees-directory\\stagiaires.txt");
             BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichierOriginal), "ISO-8859-1"));
             compteurLigne = 0;
 
