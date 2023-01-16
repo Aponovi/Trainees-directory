@@ -56,7 +56,7 @@ public class Window extends Application {
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        Button button1= new Button("Afficher l'annuaire");
+        Button button1= new Button("Ajouter un stagiaire");
         Button button2= new Button("Exporter en PDF");
         Button button3= new Button("Rechercher");
 
