@@ -1,12 +1,12 @@
 package fr.eql.aicap.annuaire;
 
-import com.sun.xml.internal.bind.v2.TODO;
+
+import javafx.application.Application;
 
 import java.io.*;
 import java.text.Normalizer;
 
 public class Main {
-
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
 
@@ -26,7 +26,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-
+        Application.launch(Window.class, args);
 
         HardBinaryTree theTree = new HardBinaryTree();
 
@@ -45,7 +45,7 @@ public class Main {
 
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt");
+            File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
             System.out.println("fichier original " + fichierOriginal);
             // BufferedReader bf = new BufferedReader(fichierOriginal);
             BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichierOriginal),"ISO-8859-1"));
@@ -94,11 +94,13 @@ public class Main {
 
                 }
                 compteurLigne += 1;
+                System.out.println(NOM);
+
             }
 
 
             stagiaires.close();
-            System.out.println("nb stagiaires : " + compteurStagiaire);
+            //System.out.println("nb stagiaires : " + compteurStagiaire);
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -136,7 +138,7 @@ public class Main {
 
             while (nbnoeud != ((compteurStagiaire)))
             {
-                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+                //System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
                 focusTraineeName = "";
                 for (int i = 0; i < 40; i++) {
                     focusTraineeName += stagiaires.readChar();
@@ -179,7 +181,6 @@ public class Main {
         s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return s;
     }
-
 
 }
 
