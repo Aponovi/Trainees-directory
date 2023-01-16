@@ -9,6 +9,7 @@ public class Stagiaires {
     private final String prenom;
     private final int dpt;
 
+    //Constructeurs
     public Stagiaires(String promo, int annee, String nom, String prenom, int dpt ){
         this.promo = promo;
         this.annee = annee;
@@ -17,7 +18,7 @@ public class Stagiaires {
         this.dpt = dpt;
     }
 
-
+    //méthodes d'accès aux variables d'instance
     public String getPromo(){
         return promo;
     }
@@ -38,7 +39,9 @@ public class Stagiaires {
         return dpt;
     }
 
-    public String toString(){
-        return promo + annee + nom + prenom + dpt;
-    }
+//    public String setPromo(){}
+
+//    public String toString(){
+//        return promo + " " + annee + "" + nom + "" + prenom +"" + dpt;
+//    }
 }
