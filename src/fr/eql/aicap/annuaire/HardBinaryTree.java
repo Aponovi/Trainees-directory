@@ -202,17 +202,18 @@ public class HardBinaryTree {
 class Node {
 
     String key;
-    int name;
+    int address;
     Node leftChild;
+
     Node rightChild;
 
     Node(String key, int position) {
         this.key = key;
-        this.name = position;
+        this.address = position;
     }
 
     public String toString() {
-        return name + " has the key " + key;
+        return address + " has the key " + key;
 
         /*
          * return name + " has the key " + key + "\nLeft Child: " + leftChild +
