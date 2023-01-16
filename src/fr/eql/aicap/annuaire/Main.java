@@ -46,7 +46,7 @@ public class Main {
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
             File fichierOriginal = new File("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-            System.out.println("fichier original " + fichierOriginal);
+            //System.out.println("fichier original " + fichierOriginal);
             // BufferedReader bf = new BufferedReader(fichierOriginal);
             BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichierOriginal),"ISO-8859-1"));
             compteurLigne = 0;
