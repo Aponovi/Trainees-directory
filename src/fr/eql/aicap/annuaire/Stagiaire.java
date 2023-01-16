@@ -1,6 +1,10 @@
 package fr.eql.aicap.annuaire;
 
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+
 public class Stagiaire {
     private final String promo;
     private final String annee;
@@ -8,8 +12,11 @@ public class Stagiaire {
     private final String prenom;
     private final String dpt;
 
+    RandomAccessFile stagiaires;
+
+
     //Constructeurs
-    public Stagiaire(String promo, String annee, String nom, String prenom, String dpt ){
+    public Stagiaire(String promo, String annee, String nom, String prenom, String dpt) {
         this.promo = promo;
         this.annee = annee;
         this.nom = nom;
@@ -19,30 +26,34 @@ public class Stagiaire {
     }
 
     //méthodes d'accès aux variables d'instance
-    public String getPromo(){
+    public String getPromo() {
         return promo;
     }
 
-    public String getAnnee(){
+    public String getAnnee() {
         return annee;
     }
 
-    public String getNom(){
+    public String getNom() {
         return nom;
     }
 
-    public String getPrenom(){
+    public String getPrenom() {
         return prenom;
     }
 
-    public String getDpt(){
+    public String getDpt() {
         return dpt;
     }
 
 
 //    public String setPromo(){}
 
-    public String toString(){
-        return promo + " " + annee + "" + nom + "" + prenom +"" + dpt;
+    public String toString() {
+        return promo + " " + annee + " " + nom + " " + prenom + " " + dpt;
     }
-}
+
+
+
+
+    }
