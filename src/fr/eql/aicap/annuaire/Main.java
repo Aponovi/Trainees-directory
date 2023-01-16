@@ -8,7 +8,7 @@ public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
 
-    //allocation taille des données pour l'arbre
+    //tree data size allocation
 
     public static final int PROMO = 50;
     public static final int ANNEE = 4;
@@ -24,6 +24,20 @@ public class Main {
 
 
     public static void main(String[] args) throws FileNotFoundException {
+
+
+
+        //Import_From_Txt(Chemin,Nom_Binaire)
+
+        //Creer_Modifier_Noeud(Nom_Binaire)
+
+        //Ajouter_Contact(Nom_Binaire,Contact)
+
+        //Modifier_Contact(Nom_Binaire,Contact)
+
+        //Sup_Contact(Nom_Binaire,Contact)
+
+        //Rechercher_Contact(Nom_Binaire,Contact_A_Rechercher)
 
         BinaryTree theTree = new BinaryTree();
 
@@ -130,10 +144,8 @@ public class Main {
 //        }
 
 
-
-
         /************************************
-         * write node children in binary file *
+         * write nodes children in binary file *
          *************************************/
         stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
         try {
@@ -185,13 +197,12 @@ public class Main {
                 System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
                 System.out.println("Lecture du leftchild : " + stagiaires.readInt());
                 System.out.println("Lecture du rightchild : " + stagiaires.readInt());
-                for (int i = 0; i < (PROMO + ANNEE + NOM  + PRENOM + DEPARTEMENT)
+                for (int i = 0; i < (PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT)
                         ; i++) {
                     System.out.println("Lecture du caractère : " + stagiaires.readChar());
                 }
 
                 System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-                //System.out.println("Lecture du caractère : " + stagiaires.readChar());
 
             }
             System.out.println("Lecture du leftchild : " + stagiaires.readInt());
