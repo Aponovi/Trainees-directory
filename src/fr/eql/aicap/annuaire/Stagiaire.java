@@ -1,16 +1,15 @@
 package fr.eql.aicap.annuaire;
 
-import com.sun.org.apache.xpath.internal.objects.XString;
 
-public class Stagiaires {
+public class Stagiaire {
     private final String promo;
-    private final int annee;
-    private String nom;
+    private final String annee;
+    private final String nom;
     private final String prenom;
-    private final int dpt;
+    private final String dpt;
 
     //Constructeurs
-    public Stagiaires(String promo, int annee, String nom, String prenom, int dpt ){
+    public Stagiaire(String promo, String annee, String nom, String prenom, String dpt ){
         this.promo = promo;
         this.annee = annee;
         this.nom = nom;
@@ -24,7 +23,7 @@ public class Stagiaires {
         return promo;
     }
 
-    public int getAnnee(){
+    public String getAnnee(){
         return annee;
     }
 
@@ -36,14 +35,14 @@ public class Stagiaires {
         return prenom;
     }
 
-    public int getDpt(){
+    public String getDpt(){
         return dpt;
     }
 
 
 //    public String setPromo(){}
 
-//    public String toString(){
-//        return promo + " " + annee + "" + nom + "" + prenom +"" + dpt;
-//    }
+    public String toString(){
+        return promo + " " + annee + "" + nom + "" + prenom +"" + dpt;
+    }
 }

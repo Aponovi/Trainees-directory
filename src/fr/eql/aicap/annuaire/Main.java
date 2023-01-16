@@ -26,7 +26,6 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
 
 
-
         //Import_From_Txt(Chemin,Nom_Binaire)
 
         //Creer_Modifier_Noeud(Nom_Binaire)
@@ -189,31 +188,91 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        /**********************************
-         * check if everything went right *
-         **********************************/
+
+        /*********************
+         * instancie un stagiaire *
+         ***********************/
 
         try {
             stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            for (int j = 0; j < 15; j++) {
-                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-                System.out.println("Lecture du leftchild : " + stagiaires.readInt());
-                System.out.println("Lecture du rightchild : " + stagiaires.readInt());
-                for (int i = 0; i < (PROMO + ANNEE + NOM  + PRENOM + DEPARTEMENT)
-                        ; i++) {
-                    System.out.println("Lecture du caractère : " + stagiaires.readChar());
+            int focusTrainee = 8;
+            int nbnoeud = 0;
+            String formationStagiaires = "";
+            String anneeFormationStagiaire = "";
+            String nomStagiaire = "";
+            String prenomStagiaire = "";
+            String departementStagiaire = "";
+
+            stagiaires.seek(focusTrainee);
+            // System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+
+            //while (nbnoeud != ((2))) {
+                for (int i = 0; i < 50; i++) {
+                    formationStagiaires += stagiaires.readChar();
+
                 }
+                for (int i = 0; i < 4; i++) {
+                    anneeFormationStagiaire += stagiaires.readChar();
+                    // System.out.println(anneeFormationStagiaire + "boucle" + i);
+                }
+                for (int i = 0; i < 40; i++) {
+                    nomStagiaire += stagiaires.readChar();
+                }
+                for (int i = 0; i < 40; i++) {
+                    prenomStagiaire += stagiaires.readChar();
+                }
+                for (int i = 0; i < 4; i++) {
+                    departementStagiaire += stagiaires.readChar();
+                }
+//                System.out.println("stagiaire : "
+//                        + formationStagiaires + " "
+//                        + anneeFormationStagiaire + ""
+//                        + nomStagiaire + ""
+//                        + prenomStagiaire + ""
+//                        + departementStagiaire);
 
-                System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
 
-            }
-            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
-            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+                Stagiaire machinChose = new Stagiaire(formationStagiaires,anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire );
+
+            System.out.println(machinChose);
+
+
+            //}//focusTrainee += 284;
+           // stagiaires.seek(focusTrainee);
+            // nbnoeud += 1;
             stagiaires.close();
-        } catch (
-                IOException e) {
+
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
+        /**********************************
+         * check if everything went right *
+         **********************************/
+//
+//        try {
+//            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
+//            for (int j = 0; j < 15; j++) {
+//                System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+//                System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+//                System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+//                for (int i = 0; i < (PROMO + ANNEE + NOM + PRENOM + DEPARTEMENT)
+//                        ; i++) {
+//                    System.out.println("Lecture du caractère : " + stagiaires.readChar());
+//                }
+//
+//                System.out.println("Maintenant  le pointeur se situe sur la position : " + stagiaires.getFilePointer());
+//
+//            }
+//            System.out.println("Lecture du leftchild : " + stagiaires.readInt());
+//            System.out.println("Lecture du rightchild : " + stagiaires.readInt());
+//            stagiaires.close();
+//        } catch (
+//                IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
     }
