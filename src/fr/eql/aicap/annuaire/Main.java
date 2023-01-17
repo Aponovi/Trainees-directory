@@ -1,5 +1,7 @@
 package fr.eql.aicap.annuaire;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 
 public class Main {
@@ -33,10 +35,13 @@ public class Main {
         Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
 
         //stagiaires.Select_Trainee(BINARYFILE,0);
-        Stagiaire.GetSelect(BINARYFILE,0);
+        // Stagiaire.GetSelect(BINARYFILE,0);
 
-        System.out.println(Bin_File.Select_Trainee(BINARYFILE,0));
+        //System.out.println(Bin_File.Select_Trainee(BINARYFILE,0));
 
+        Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
+
+        System.out.println(Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree));
 
 
     }
