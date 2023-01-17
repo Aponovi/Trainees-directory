@@ -4,15 +4,16 @@ package fr.eql.aicap.annuaire;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -85,6 +86,51 @@ public class Window extends Application {
         Button button4= new Button("Se connecter");
 
         hbBtn.getChildren().addAll(button1, button2, button3, button4);
+
+        //action bouton se connecter
+
+        button4.setOnAction(new EventHandler<ActionEvent>() {
+
+            TextField dataLogin = new TextField();
+            @Override
+            public void handle(ActionEvent event) {
+                Label windowCoLbl = new Label("Se connecter");
+                GridPane windowCoGrille = new GridPane();
+                Scene windowCoScene = new Scene(windowCoGrille, 230, 100);
+
+                // Nouvelle Fenêtre (Stage)
+                Stage windowCo = new Stage();
+                windowCo.setTitle("Connexion");
+                windowCo.setScene(windowCoScene);
+
+                //inside the login's window
+
+                windowCoGrille.setAlignment(Pos.CENTER);
+                windowCoGrille.setHgap(10);
+                windowCoGrille.setVgap(10);
+                windowCoGrille.setPadding(new Insets(20,20,20,20));
+
+                Label labelLogin = new Label("Login");
+                    windowCoGrille.add(labelLogin, 0, 1);
+                TextField textLogin = new TextField();
+                    windowCoGrille.add(textLogin, 1, 1);
+
+                Label labelPassword = new Label("Password");
+                    windowCoGrille.add(labelPassword, 0, 2);
+                TextField textPassword = new TextField();
+                    windowCoGrille.add(textPassword, 1, 2);
+
+                // Définir la position de la nouvelle fenetre
+                //relativement à la fenetre principale.
+                windowCo.setX(stage.getX() + 200);
+                windowCo.setY(stage.getY() + 100);
+                //Affichage de la nouvelle fenêtre
+                windowCo.show();
+
+
+
+            }
+        });
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);

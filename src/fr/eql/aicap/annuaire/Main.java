@@ -1,5 +1,7 @@
 package fr.eql.aicap.annuaire;
 
+import javafx.application.Application;
+
 public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
@@ -10,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        Application.launch(Window.class, args);
         //From_Txt_To_Bin(Chemin,Nom_Binaire)
 
         Bin_File Bin_File = new Bin_File();
