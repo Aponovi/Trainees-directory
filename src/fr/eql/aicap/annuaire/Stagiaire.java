@@ -1,7 +1,5 @@
 package fr.eql.aicap.annuaire;
 
-import javafx.collections.ObservableList;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -118,7 +116,7 @@ public class Stagiaire {
         return Trainees_List(fichier_Binaire, "", theTree);
     }
 
-    public static ObservableList<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
         int pointer = 0;
         List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
@@ -128,7 +126,7 @@ public class Stagiaire {
             pointer += Bin_File.LONGUEURSTAGIAIRE;
         }
 
-        return (ObservableList<Stagiaire>) Trainees_List;
+        return Trainees_List;
     }
 
     public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
