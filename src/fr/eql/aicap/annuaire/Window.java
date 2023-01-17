@@ -2,6 +2,8 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,9 +16,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-import jdk.internal.org.objectweb.asm.Handle;
+
+
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Window extends Application {
@@ -26,7 +31,7 @@ public class Window extends Application {
     public void start(Stage stage) throws IOException {
 
 
-//        ObservableList<Stagiaire> data = getStagiairesList();
+       ObservableList<Stagiaire> data = getStagiaireList();
 
         //Création Table
         TableView<Stagiaire> table = new TableView<Stagiaire>();
@@ -42,11 +47,11 @@ public class Window extends Application {
         promoCol.setCellValueFactory(
                 new PropertyValueFactory<Stagiaire, String>("promo"));
 
-        TableColumn<Stagiaire, Integer> anneeCol =
-                new TableColumn<Stagiaire, Integer>("Année");
+        TableColumn<Stagiaire, String> anneeCol =
+                new TableColumn<Stagiaire, String>("Année");
         anneeCol.setMinWidth(100);
         anneeCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, Integer>("Année")
+                new PropertyValueFactory<Stagiaire, String>("Année")
         );
 
         TableColumn<Stagiaire, String> nomCol =
@@ -63,18 +68,18 @@ public class Window extends Application {
                 new PropertyValueFactory<Stagiaire, String>("Prénom")
         );
 
-        TableColumn<Stagiaire, Integer> dptCol =
-                new TableColumn<Stagiaire, Integer>("Département");
+        TableColumn<Stagiaire, String> dptCol =
+                new TableColumn<Stagiaire, String>("Département");
         dptCol.setMinWidth(100);
         dptCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, Integer>("Département")
+                new PropertyValueFactory<Stagiaire, String>("Département")
         );
 
 
         // ajout des colonnes à la table
 
         table.getColumns().addAll(promoCol,nomCol,prenomCol, anneeCol,dptCol);
-//        table.setItems(data);
+        table.setItems(data);
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -127,6 +132,16 @@ public class Window extends Application {
 
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1,3);
+//                btnCo.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        WindowAdmin windowUserAdmin = new WindowAdmin();
+//                        Scene sceneAdmin = new Scene(windowUserAdmin.(), 800, 500);
+//                        Stage stageAdmin = new Stage();
+//                        stageAdmin.setScene(sceneAdmin);
+//                        stageAdmin.show();
+//                    }
+//                });
 
 
 
@@ -155,15 +170,15 @@ public class Window extends Application {
         stage.setTitle("Annuaire SQL");
     }
 
-//    private ObservableList<Stagiaire> getStagiairesList(){
-////        LesStagiaires lesStag = new LesStagiaires("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-////        List<Stagiaire> liste = lesStag.fabriqueVecteur();
-//          ObservableList<Stagiaire> list = FXCollections.observableArrayList(liste);
-//
-//        return list;
-//
-//
-//    }
+    private ObservableList<Stagiaire> getStagiaireList(){
+
+        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
+        ObservableList<Stagiaire> list = FXCollections.observableArrayList(Trainees_List);
+        System.out.println(Trainees_List);
+        return list;
+
+
+    }
 
     public static void main(String[] args) {
         Application.launch(args);

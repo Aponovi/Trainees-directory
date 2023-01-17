@@ -1,8 +1,6 @@
 //package fr.eql.aicap.annuaire;
 //
-//import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.IOException;
+//import java.io.*;
 //import java.util.List;
 //import java.util.StringTokenizer;
 //import java.util.Vector;
@@ -15,36 +13,38 @@
 //    public LesStagiaires(){
 //        bfr=null;
 //    }
+//
+//
+//    // Transforme une chaine en un objet de type Stagiaire
+//    private Stagiaire fabriqueStagiaire(String chaine){
+//        Stagiaire stg=null;
+//        StringTokenizer st = new StringTokenizer(chaine, "*");
+//        if(st.countTokens()==5){
+//            String promo = st.nextToken();
+//            String annee = st.nextToken();
+//            String nom = st.nextToken();
+//            String prenom= st.nextToken();
+//            String dpt = st.nextToken();
+//            stg = new Stagiaire(promo, annee, nom, prenom, dpt);
+//        }
+//        return stg;
+//    }
 //    public LesStagiaires(String nomFichier){
 //        try{
 //            //Création d'un flux pour le fichier texte
 //            //le nom du fichier est passé en argument
-//            FileReader in = new FileReader(nomFichier);
-//            bfr= new BufferedReader(in);
+//            ObjectOutputStream outPut = new ObjectOutputStream(new FileOutputStream("stagiaires.bin"));
+//            outPut.writeObject(fabriqueStagiaire);
 //        }catch (IOException e){
 //            System.out.println("Pb entrée sortie :" + e.getMessage());
 //        }
 //    }
 //
-//    // Transforme une chaine en un objet de type Stagiaire
-//    private Stagiaires fabriqueStagiaire(String chaine){
-//        Stagiaires stg=null;
-//        StringTokenizer st = new StringTokenizer(chaine, "\\\\r?\\\\n");
-//        if(st.countTokens()==5){
-//            String promo = st.nextToken();
-//            Integer annee = Integer.parseInt(st.nextToken());
-//            String nom = st.nextToken();
-//            String prenom= st.nextToken();
-//            Integer dpt = Integer.parseInt(st.nextToken());
-//            stg = new Stagiaires(promo, annee, nom, prenom, dpt);
-//        }
-//        return stg;
-//    }
 //    //Transformer le fichier en une collection de stagiaires
-//    public List<Stagiaires> fabriqueVecteur(){
+//    public List<Stagiaire> fabriqueVecteur(){
 //        String chaine;
-//        Stagiaires stg;
-//        List<Stagiaires> stagiaires = new Vector<Stagiaires>();
+//        Stagiaire stg;
+//        List<Stagiaire> stagiaires = new Vector<Stagiaire>();
 //        try{
 //            do{
 //                chaine = bfr.readLine();

@@ -1,5 +1,6 @@
 package fr.eql.aicap.annuaire;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -8,15 +9,16 @@ public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
     private static final String BINARYFILE = "files\\stagiaires.bin";
-    private static final String TXTFILE = "C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt";
+    private static final String TXTFILE = "C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt";
 
 
 
     public static void main(String[] args) {
 
-        Application.launch(Window.class, args);
+        //Application.launch(Window.class, args);
         //From_Txt_To_Bin(Chemin,Nom_Binaire)
-
+        File folder = new File(FOLDER);
+        folder.mkdir();
         Bin_File Bin_File = new Bin_File();
         Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
 
@@ -32,10 +34,10 @@ public class Main {
 
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE);
 
-        Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+        //Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
 
         //stagiaires.Select_Trainee(BINARYFILE,0);
-        // Stagiaire.GetSelect(BINARYFILE,0);
+        //Stagiaire.GetSelect(BINARYFILE,0);
 
         //System.out.println(Bin_File.Select_Trainee(BINARYFILE,0));
 
