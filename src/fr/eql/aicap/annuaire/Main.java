@@ -1,5 +1,6 @@
 package fr.eql.aicap.annuaire;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,6 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        File folder = new File(FOLDER);
+        folder.mkdir();
 
         //From_Txt_To_Bin(Chemin,Nom_Binaire)
 
