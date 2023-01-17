@@ -37,13 +37,21 @@ public class Main {
         // Stagiaire.GetSelect(BINARYFILE,0);
 
 
-        Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
+        // Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
 
+        // System.out.println(Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree));
+
+
+        Stagiaire julie = new Stagiaire("ai cap1", "2023", "juju", "julie", "92");
+        julie.Add(BINARYFILE);
+
+        Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+
+        Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
         System.out.println(Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree));
 
 
-       // Stagiaire julie = new Stagiaire("ai cap1", "2023", "juju", "julie", "92");
-        // julie.Add(BINARYFILE);
+
     }
 
 

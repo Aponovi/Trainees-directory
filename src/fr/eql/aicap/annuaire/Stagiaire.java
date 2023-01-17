@@ -1,5 +1,7 @@
 package fr.eql.aicap.annuaire;
 
+import javafx.collections.ObservableList;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -76,9 +78,15 @@ public class Stagiaire {
             RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
             int focusTrainee = Bin_File.compteurStagiaire * Bin_File.LONGUEURSTAGIAIRE;
             System.out.println(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + fichier_Binaire.getFilePointer());
-            RandomAccessFile.writeInt(Bin_File.LEFTCHILD);
-            RandomAccessFile.writeInt(Bin_File.RIGHTCHILD);
+
+            RandomAccessFile.seek(focusTrainee);
+            System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
+            int leftchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
+            int rightchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
+
+
+            RandomAccessFile.writeInt(leftchild);
+            RandomAccessFile.writeInt(rightchild);
             this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
             RandomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
@@ -91,8 +99,7 @@ public class Stagiaire {
             RandomAccessFile.writeChars(this._dpt);
 
 
-
-
+            RandomAccessFile.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -111,7 +118,7 @@ public class Stagiaire {
         return Trainees_List(fichier_Binaire, "", theTree);
     }
 
-    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
+    public static ObservableList<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
         int pointer = 0;
         List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
@@ -121,7 +128,7 @@ public class Stagiaire {
             pointer += Bin_File.LONGUEURSTAGIAIRE;
         }
 
-        return Trainees_List;
+        return (ObservableList<Stagiaire>) Trainees_List;
     }
 
     public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
