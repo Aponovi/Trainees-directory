@@ -16,8 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
+import javafx.scene.text.Text;
 import java.io.*;
 
 
@@ -94,21 +93,26 @@ public class Window extends Application {
             TextField dataLogin = new TextField();
             @Override
             public void handle(ActionEvent event) {
-                Label windowCoLbl = new Label("Se connecter");
+
                 GridPane windowCoGrille = new GridPane();
-                Scene windowCoScene = new Scene(windowCoGrille, 230, 100);
+                Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
 
                 // Nouvelle Fenêtre (Stage)
                 Stage windowCo = new Stage();
-                windowCo.setTitle("Connexion");
+                windowCo.setTitle("Fenêtre de connexion");
                 windowCo.setScene(windowCoScene);
 
-                //inside the login's window
-
+                // GridPane Layout
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
                 windowCoGrille.setPadding(new Insets(20,20,20,20));
+
+                //Remplir la grille
+                Text titre = new Text("Connectez-vous");
+                titre.setId("titreText"); //noeud pour CSS
+                    windowCoGrille.add(titre, 1,0,2,1);
+
 
                 Label labelLogin = new Label("Login");
                     windowCoGrille.add(labelLogin, 0, 1);
@@ -120,12 +124,19 @@ public class Window extends Application {
                 TextField textPassword = new TextField();
                     windowCoGrille.add(textPassword, 1, 2);
 
+                //Nouveau bouton
+
+                Button btnCo = new Button("Connexion");
+                windowCoGrille.add(btnCo, 1,3);
+
+
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(stage.getX() + 200);
                 windowCo.setY(stage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
+                windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
 
 
