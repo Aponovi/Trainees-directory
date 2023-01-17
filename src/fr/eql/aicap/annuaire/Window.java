@@ -9,12 +9,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,6 +28,8 @@ public class Window extends Application {
 
     private static final String PATH = "C:\\Users\\Formation\\Desktop\\PROJE1\\Trainees-directory\\stagiaires.txt";
 
+    Scene sceneRecherche;
+    Button buttonRecherche;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -89,13 +89,46 @@ public class Window extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button button1= new Button("Ajouter un stagiaire");
         Button button2= new Button("Exporter en PDF");
+
+        //Rechercher
         Button button3= new Button("Rechercher");
+        button3.setOnAction(e -> stage.setScene(sceneRecherche));
+
         Button button4= new Button("Se connecter");
 
         hbBtn.getChildren().addAll(button1, button2, button3, button4);
 
         // RECHERCHER -----------------------------------------------------------------------------------------------------------------
-        button3.setOnAction(new EventHandler<ActionEvent>() {
+
+        //Creation des zones de textes et boutons
+
+        TextField prenomTextField = new TextField();
+        prenomTextField.setPromptText("Prénom");
+
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Nom");
+
+        TextField departementTextField = new TextField();
+        departementTextField.setPromptText("Département");
+
+        TextField promoTextField = new TextField();
+        promoTextField.setPromptText("Promotion");
+
+        TextField annéeTextField = new TextField();
+        annéeTextField.setPromptText("Année");
+
+        TextField resultatRechercheTextField = new TextField();
+        annéeTextField.setPromptText("Année ");
+
+        nomTextField.setMaxWidth(170);
+        prenomTextField.setMaxWidth(170);
+        departementTextField.setMaxWidth(170);
+        promoTextField.setMaxWidth(170);
+        annéeTextField.setMaxWidth(170);
+
+        //scene2
+        buttonRecherche = new Button("Rechercher");
+        buttonRecherche.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String nomR = nomCol.getText();
@@ -110,6 +143,13 @@ public class Window extends Application {
                 table.setItems((FXCollections.observableArrayList(StagiaireTrouve)));
             }
         });
+
+
+        //creation scene recherche
+        StackPane layout2 = new StackPane();
+        layout2.getChildren().addAll(buttonRecherche, prenomTextField);
+        sceneRecherche = new Scene(layout2, 600, 300);
+        
         // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
 
 
