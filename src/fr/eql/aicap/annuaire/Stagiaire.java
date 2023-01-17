@@ -1,5 +1,6 @@
 package fr.eql.aicap.annuaire;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -69,6 +70,32 @@ public class Stagiaire {
 
     public void Add(String fichier_Binaire) {
         //Méthode qui ajoute dans le fichier bin le stagiaire this
+        try {
+
+
+            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            int focusTrainee = Bin_File.compteurStagiaire * Bin_File.LONGUEURSTAGIAIRE;
+            System.out.println(focusTrainee);
+            // System.out.println("Avant lecture le pointeur se situe sur la position : " + fichier_Binaire.getFilePointer());
+            RandomAccessFile.writeInt(Bin_File.LEFTCHILD);
+            RandomAccessFile.writeInt(Bin_File.RIGHTCHILD);
+            this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
+            RandomAccessFile.writeChars(this._promo);
+            this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
+            RandomAccessFile.writeChars(this._annee);
+            this._nom = Bin_File.completer(this._nom, Bin_File.NOM);
+            RandomAccessFile.writeChars(this._nom);
+            this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
+            RandomAccessFile.writeChars(this._prenom);
+            this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
+            RandomAccessFile.writeChars(this._dpt);
+
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void Delete(String fichier_Binaire, int pointerPosition) {
@@ -131,7 +158,7 @@ public class Stagiaire {
 //                        + prenomStagiaire + ""
 //                        + departementStagiaire);
             RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires.replaceAll("\\s+",""), anneeFormationStagiaire.replaceAll("\\s+",""), nomStagiaire.replaceAll("\\s+",""), prenomStagiaire.replaceAll("\\s+",""), departementStagiaire.replaceAll("\\s+",""));
+            return new Stagiaire(formationStagiaires.replaceAll("\\s+", ""), anneeFormationStagiaire.replaceAll("\\s+", ""), nomStagiaire.replaceAll("\\s+", ""), prenomStagiaire.replaceAll("\\s+", ""), departementStagiaire.replaceAll("\\s+", ""));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

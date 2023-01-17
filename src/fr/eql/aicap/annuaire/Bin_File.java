@@ -183,13 +183,13 @@ public class Bin_File {
         }
     }
 
-    private static String stripAccents(String s) {
+    public static String stripAccents(String s) {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return s;
     }
 
-    private static String completer(String mot, int taille) {
+    public static String completer(String mot, int taille) {
 
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {

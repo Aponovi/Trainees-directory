@@ -1,7 +1,6 @@
 package fr.eql.aicap.annuaire;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class Main {
     private static final String FOLDER = "files/";
@@ -32,19 +31,19 @@ public class Main {
         //Rechercher_Stagiaire(Nom_Binaire,Stagiaire_A_Rechercher)
 
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE);
-
-        Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+        // Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
 
         //stagiaires.Select_Trainee(BINARYFILE,0);
         // Stagiaire.GetSelect(BINARYFILE,0);
 
-        //System.out.println(Bin_File.Select_Trainee(BINARYFILE,0));
 
         Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
 
         System.out.println(Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree));
 
 
+       // Stagiaire julie = new Stagiaire("ai cap1", "2023", "juju", "julie", "92");
+        // julie.Add(BINARYFILE);
     }
 
 
