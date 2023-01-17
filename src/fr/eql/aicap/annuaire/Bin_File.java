@@ -1,5 +1,6 @@
 package fr.eql.aicap.annuaire;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 
 public class Bin_File {
@@ -23,26 +24,26 @@ public class Bin_File {
     private static int leftChild = 1; // 1 ==> pas de child
     private static int rightChild = 1; // 1 ==> pas de child
     RandomAccessFile RandomAccessFile;
-    public BinaryTree theTree = new BinaryTree();
-
-    public void From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
+    public BinaryTree From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
         try {
+            BinaryTree binaryTree = new BinaryTree();
             RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichier_txt), "ISO-8859-1"));
+            //BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichier_txt), "ISO-8859-1"));
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichier_txt), StandardCharsets.ISO_8859_1));
             compteurLigne = 0;
             // complete du leftchild
-            String convert = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
+            String _leftChild = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
             // complete du rightchild
-            String conver = String.format("%0" + Integer.numberOfLeadingZeros(rightChild) + "d", rightChild);
+            String _rightChild = String.format("%0" + Integer.numberOfLeadingZeros(rightChild) + "d", rightChild);
             // lecture du fichier txt et recopie dans le fichier bin
             while ((ligne = bf.readLine()) != null) {
                 compteurLigne = compteurLigne % 6;
-                ligne = stripAccents(ligne);
+                //ligne = stripAccents(ligne);
                 mot = ligne;
                 switch (compteurLigne) {
                     case 0:
-                        RandomAccessFile.writeInt(Integer.parseInt(convert));
-                        RandomAccessFile.writeInt(Integer.parseInt(conver));
+                        RandomAccessFile.writeInt(Integer.parseInt(_leftChild));
+                        RandomAccessFile.writeInt(Integer.parseInt(_rightChild));
                         mot = completer(mot, PROMO);
                         RandomAccessFile.writeChars(mot);
                         break;
@@ -53,8 +54,8 @@ public class Bin_File {
                     case 2:
                         mot = completer(mot, NOM);
                         RandomAccessFile.writeChars(mot);
-                        theTree.addNode(mot, traineePositionInBinFile);
-                        traineePositionInBinFile += 208;
+                        binaryTree.addNode(mot, traineePositionInBinFile);
+                        traineePositionInBinFile += LONGUEURSTAGIAIRE;
                         break;
                     case 3:
                         mot = completer(mot, PRENOM);
@@ -69,6 +70,7 @@ public class Bin_File {
                 compteurLigne += 1;
             }
             RandomAccessFile.close();
+            return binaryTree;
             //System.out.println("nb stagiaires : " + compteurStagiaire);
         } catch (
                 IOException e) {
@@ -79,8 +81,7 @@ public class Bin_File {
     /************************************
      * write nodes children in binary file *
      *************************************/
-
-    public void Add_Children_Addresses_into_Parent_Data(String fichier_Binaire) {
+    public void Add_Children_Addresses_into_Parent_Data(String fichier_Binaire,BinaryTree binaryTree) {
         try {
             RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
             int focusTrainee = ADRESSBIGINNINGNAME;
@@ -94,11 +95,11 @@ public class Bin_File {
                 for (int i = 0; i < NOM; i++) {
                     focusTraineeName += RandomAccessFile.readChar();
                 }
-                if (theTree.findNode(focusTraineeName).leftChild != null) {
-                    leftChildAddress = theTree.findNode(focusTraineeName).leftChild.address;
+                if (binaryTree.findNode(focusTraineeName).leftChild != null) {
+                    leftChildAddress = binaryTree.findNode(focusTraineeName).leftChild.address;
                 }
-                if (theTree.findNode(focusTraineeName).rightChild != null) {
-                    rightChildAddress = theTree.findNode(focusTraineeName).rightChild.address;
+                if (binaryTree.findNode(focusTraineeName).rightChild != null) {
+                    rightChildAddress = binaryTree.findNode(focusTraineeName).rightChild.address;
                 }
                 RandomAccessFile.seek(focusTrainee - ADRESSBIGINNINGNAME);
                 int lefttchildCompleted = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(leftChildAddress) + "d", leftChildAddress));
@@ -122,7 +123,7 @@ public class Bin_File {
     public void Visual_Check_of_binary_tree(String fichier_Binaire) {
         try {
             RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            for (int j = 0; j < 1; j++) {
+            for (int j = 0; j < 30; j++) {
                 System.out.println("Avant lecture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
                 RandomAccessFile.seek(395044);
                 System.out.println("Avant lecture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
@@ -145,7 +146,7 @@ public class Bin_File {
     /*********************
      * find trainee data in the binary file to create a trainee instance *
      ***********************/
-    public Stagiaire Select_Trainee(String fichier_Binaire, int pointerPosition) {
+    /*public Stagiaire Select_Trainee(String fichier_Binaire, int pointerPosition) {
         try {
             RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
             int focusTrainee = pointerPosition + 8;
@@ -172,33 +173,17 @@ public class Bin_File {
             for (int i = 0; i < 4; i++) {
                 departementStagiaire += RandomAccessFile.readChar();
             }
-//                System.out.println("stagiaire : "
-//                        + formationStagiaires + " "
-//                        + anneeFormationStagiaire + ""
-//                        + nomStagiaire + ""
-//                        + prenomStagiaire + ""
-//                        + departementStagiaire);
             RandomAccessFile.close();
             return new Stagiaire(formationStagiaires, anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static String stripAccents(String s) {
-        s = Normalizer.normalize(s, Normalizer.Form.NFD);
-        s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        return s;
-    }
-
+    }*/
     public static String completer(String mot, int taille) {
-
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {
             mot += " ";
         }
-
         return mot;
     }
-
 }
