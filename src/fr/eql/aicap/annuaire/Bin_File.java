@@ -122,7 +122,9 @@ public class Bin_File {
     public void Visual_Check_of_binary_tree(String fichier_Binaire) {
         try {
             RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 1; j++) {
+                System.out.println("Avant lecture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
+                RandomAccessFile.seek(395044);
                 System.out.println("Avant lecture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
                 System.out.println("Lecture du leftchild : " + RandomAccessFile.readInt());
                 System.out.println("Lecture du rightchild : " + RandomAccessFile.readInt());
@@ -132,8 +134,8 @@ public class Bin_File {
                 }
                 System.out.println("Maintenant  le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
             }
-            System.out.println("Lecture du leftchild : " + RandomAccessFile.readInt());
-            System.out.println("Lecture du rightchild : " + RandomAccessFile.readInt());
+            // System.out.println("Lecture du leftchild : " + RandomAccessFile.readInt());
+            // System.out.println("Lecture du rightchild : " + RandomAccessFile.readInt());
             RandomAccessFile.close();
         } catch (
                 IOException e) {
@@ -183,13 +185,13 @@ public class Bin_File {
         }
     }
 
-    private static String stripAccents(String s) {
+    public static String stripAccents(String s) {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return s;
     }
 
-    private static String completer(String mot, int taille) {
+    public static String completer(String mot, int taille) {
 
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {
