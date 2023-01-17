@@ -1,16 +1,15 @@
 package fr.eql.aicap.annuaire;
 
 
-public class HardBinaryTree {
+public class BinaryTree {
 
     Node root;
-    // hey what did i broke
 
-    public void addNode(String key, String name) {
+    public void addNode(String key, int positionInBinFile) {
 
         // Create a new Node and initialize it
 
-        Node newNode = new Node(key, name);
+        Node newNode = new Node(key, positionInBinFile);
 
         // If there is no root this becomes root
 
@@ -70,12 +69,9 @@ public class HardBinaryTree {
                         return; // All Done
 
                     }
-
                 }
-
             }
         }
-
     }
 
     // All nodes are visited in ascending order
@@ -166,62 +162,6 @@ public class HardBinaryTree {
 
     }
 
-    public static void main(String[] args) {
-
-        HardBinaryTree theTree = new HardBinaryTree();
-
-        theTree.addNode("KANAAN", "Boss");
-
-        theTree.addNode("FIORE", "Vice President");
-
-        theTree.addNode("GUIYING", "Office Manager");
-
-        theTree.addNode("BEATRICE", "Secretary");
-
-        theTree.addNode("ASFOUR", "Sales Manager");
-
-        theTree.addNode("HERTZFELD", "Salesman 1");
-
-        // Different ways to traverse binary trees
-
-        theTree.inOrderTraverseTree(theTree.root);
-
-        //theTree.preorderTraverseTree(theTree.root);
-
-        //theTree.postOrderTraverseTree(theTree.root);
-
-        // Find the node with key 75
-
-        // System.out.println("\nNode with the key 75");
-
-        System.out.println(theTree.findNode("BEATRICE"));
-
-    }
 }
 
-class Node {
 
-    String key;
-    String name;
-
-    Node leftChild;
-    Node rightChild;
-
-    Node(String key, String name) {
-
-        this.key = key;
-        this.name = name;
-
-    }
-
-    public String toString() {
-
-        return name + " has the key " + key;
-
-        /*
-         * return name + " has the key " + key + "\nLeft Child: " + leftChild +
-         * "\nRight Child: " + rightChild + "\n";
-         */
-
-    }
-}
