@@ -18,12 +18,12 @@ public class Bin_File {
     private static String ligne = "";
     private static String mot = "";
     private static int compteurLigne;
-    private static int compteurStagiaire = 0;
+    public static int compteurStagiaire = 0;
     private static int traineePositionInBinFile = 0;
     private static int leftChild = 1; // 1 ==> pas de child
     private static int rightChild = 1; // 1 ==> pas de child
     RandomAccessFile RandomAccessFile;
-    BinaryTree theTree = new BinaryTree();
+    public BinaryTree theTree = new BinaryTree();
 
     public void From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
         try {

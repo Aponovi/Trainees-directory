@@ -2,6 +2,7 @@ package fr.eql.aicap.annuaire;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Stagiaire {
@@ -78,13 +79,23 @@ public class Stagiaire {
         //Méthode qui modifie dans le fichier bin le stagiaire this
     }
 
-    public List<Stagiaire> List(String fichier_Binaire) {
-        return List(fichier_Binaire, "");
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree theTree) {
+
+        return Trainees_List(fichier_Binaire, "", theTree);
     }
 
-    public List<Stagiaire> List(String fichier_Binaire, String Nom_Filtre) {
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
-        return null;
+        int pointer = 0;
+        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
+        for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
+            Stagiaire traineeToAddInList = GetSelect(fichier_Binaire, pointer);
+            Trainees_List.add(traineeToAddInList);
+            System.out.println("compteur stagaires" + i);
+            pointer += Bin_File.LONGUEURSTAGIAIRE;
+        }
+
+        return Trainees_List;
     }
 
     public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
@@ -121,7 +132,7 @@ public class Stagiaire {
 //                        + prenomStagiaire + ""
 //                        + departementStagiaire);
             RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires, anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire);
+            return new Stagiaire(formationStagiaires.replaceAll("\\s+",""), anneeFormationStagiaire.replaceAll("\\s+",""), nomStagiaire.replaceAll("\\s+",""), prenomStagiaire.replaceAll("\\s+",""), departementStagiaire.replaceAll("\\s+",""));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
