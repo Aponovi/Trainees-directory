@@ -37,14 +37,14 @@ public class WindowAdmin extends Application {
 
         //Code ajout stagiaire
         Stagiaire julie = new Stagiaire("ai cap1", "2023", "AAA", "julie", "92");
-        julie.Add(BINARYFILE,binaryTree);
+        julie.add(BINARYFILE,binaryTree);
         Refresh_List(binaryTree,table);
     }
     @Override
     public void start(Stage stage) throws IOException {
         Bin_File Bin_File = new Bin_File();
-        BinaryTree binaryTree =  Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
-        Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE,binaryTree);
+        BinaryTree binaryTree =  Bin_File.fromTxtToBin(TXTFILE, BINARYFILE);
+        Bin_File.addChildrenAddressesIntoParentData(BINARYFILE,binaryTree);
 
         List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
         ObservableList<Stagiaire> Trainees_List = FXCollections.observableArrayList(data);
