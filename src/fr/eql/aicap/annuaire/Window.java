@@ -22,7 +22,7 @@ import javafx.collections.FXCollections;
 
 public class Window extends Application {
 
-    Scene sceneSearch;
+    Scene sceneSearch, scene;
 
     //temporary table
     TableView<Stagiaire> tempTable;
@@ -95,10 +95,9 @@ public class Window extends Application {
         hbBtn.getChildren().addAll(button1, button2, button3, button4);
 
 
-        // scene RECHERCHER --------------------------------------------------------
+        // RECHERCHER --------------------------------------------------------
 
         //temporary table
-
         TableColumn<Stagiaire, String> nomColumn = new TableColumn<>("Nom");
         nomColumn.setMinWidth(200);
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -114,6 +113,10 @@ public class Window extends Application {
         //search button
         Button buttonRecherche = new Button("Rechercher");
         buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+        //return button
+        Button buttonReturn = new Button("Return");
+        buttonReturn.setOnAction(e -> stage.setScene(scene));
 
         //search boxes
         TextField prenomTextField = new TextField();
@@ -143,24 +146,27 @@ public class Window extends Application {
 
 
         HBox layoutSearch = new HBox();
-        layoutSearch.setPadding(new Insets(10,10,10,10));
-        layoutSearch.setSpacing(10);
-        layoutSearch.getChildren().addAll(tempTable,prenomTextField,nomTextField,anneeTextField, buttonRecherche);
+        layoutSearch.getChildren().addAll(tempTable,prenomTextField,nomTextField,anneeTextField);
 
+        HBox layoutSearch2 = new HBox();
+        layoutSearch2.getChildren().addAll(buttonRecherche, buttonReturn);
 
         VBox layoutRec = new VBox();
-        sceneSearch = new Scene(layoutRec, 600, 300);
-        layoutRec.getChildren().addAll(tempTable, layoutSearch);
+        layoutRec.setPadding(new Insets(10,10,10,10));
+        layoutRec.setSpacing(5);
+        layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
 
+        sceneSearch = new Scene(layoutRec);
 
         // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
+
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10 ,10,10,10));
         vbox.getChildren().addAll(table,hbBtn);
 
-        Scene scene = new Scene(vbox);
+        scene = new Scene(vbox);
         stage.setScene(scene);
         stage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
@@ -168,6 +174,8 @@ public class Window extends Application {
     }
 
     private void buttonRechercheClicked() {
+
+        //temporary search list
         ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
         allStagiaires = tempTable.getItems();
         stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
@@ -177,6 +185,7 @@ public class Window extends Application {
 
     public ObservableList<Stagiaire> getStagiaire(){
 
+        //temporary search list
         ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
 
         //String nom, String prenom, String annee
