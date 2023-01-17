@@ -1,6 +1,9 @@
 package fr.eql.aicap.annuaire;
 
 import java.io.File;
+import java.util.ArrayList;
+
+import javafx.application.Application;
 
 public class Main {
     private static final String FOLDER = "files/";
@@ -15,6 +18,7 @@ public class Main {
         File folder = new File(FOLDER);
         folder.mkdir();
 
+        //Application.launch(Window.class, args);
         //From_Txt_To_Bin(Chemin,Nom_Binaire)
 
         Bin_File Bin_File = new Bin_File();
@@ -32,6 +36,8 @@ public class Main {
 
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE);
         // Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+
+        //Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
 
         //stagiaires.Select_Trainee(BINARYFILE,0);
         // Stagiaire.GetSelect(BINARYFILE,0);

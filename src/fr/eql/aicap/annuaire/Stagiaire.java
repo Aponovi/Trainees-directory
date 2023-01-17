@@ -123,6 +123,7 @@ public class Stagiaire {
         for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
             Stagiaire traineeToAddInList = GetSelect(fichier_Binaire, pointer);
             Trainees_List.add(traineeToAddInList);
+            System.out.println("compteur stagaires" + i);
             pointer += Bin_File.LONGUEURSTAGIAIRE;
         }
 
@@ -163,7 +164,7 @@ public class Stagiaire {
 //                        + prenomStagiaire + ""
 //                        + departementStagiaire);
             RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires.replaceAll("\\s+", ""), anneeFormationStagiaire.replaceAll("\\s+", ""), nomStagiaire.replaceAll("\\s+", ""), prenomStagiaire.replaceAll("\\s+", ""), departementStagiaire.replaceAll("\\s+", ""));
+            return new Stagiaire(formationStagiaires.replaceAll("\\s+",""), anneeFormationStagiaire.replaceAll("\\s+",""), nomStagiaire.replaceAll("\\s+",""), prenomStagiaire.replaceAll("\\s+",""), departementStagiaire.replaceAll("\\s+",""));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
