@@ -18,12 +18,12 @@ public class Bin_File {
     private static String ligne = "";
     private static String mot = "";
     private static int compteurLigne;
-    private static int compteurStagiaire = 0;
+    public static int compteurStagiaire = 0;
     private static int traineePositionInBinFile = 0;
     private static int leftChild = 1; // 1 ==> pas de child
     private static int rightChild = 1; // 1 ==> pas de child
     RandomAccessFile RandomAccessFile;
-    BinaryTree theTree = new BinaryTree();
+    public BinaryTree theTree = new BinaryTree();
 
     public void From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
         try {
@@ -183,13 +183,13 @@ public class Bin_File {
         }
     }
 
-    private static String stripAccents(String s) {
+    public static String stripAccents(String s) {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return s;
     }
 
-    private static String completer(String mot, int taille) {
+    public static String completer(String mot, int taille) {
 
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {
