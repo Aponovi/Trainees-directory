@@ -69,12 +69,9 @@ public class BinaryTree {
                         return; // All Done
 
                     }
-
                 }
-
             }
         }
-
     }
 
     // All nodes are visited in ascending order
@@ -165,60 +162,6 @@ public class BinaryTree {
 
     }
 
-    public static void main(String[] args) {
-
-        BinaryTree theTree = new BinaryTree();
-
-//        theTree.addNode("KANAAN", "BLOB 56 2008 KANAAN Suhaila 94");
-//
-//        theTree.addNode("FIORE", "Vice President");
-//
-//        theTree.addNode("GUIYING", "Office Manager");
-//
-//        theTree.addNode("BEATRICE", "Secretary");
-//
-//        theTree.addNode("ASFOUR", "Sales Manager");
-//
-//        theTree.addNode("HERTZFELD", "Salesman 1");
-
-        // Different ways to traverse binary trees
-
-        theTree.inOrderTraverseTree(theTree.root);
-
-        //theTree.preorderTraverseTree(theTree.root);
-
-        //theTree.postOrderTraverseTree(theTree.root);
-
-        // Find the node with key 75
-
-        // System.out.println("\nNode with the key 75");
-
-//        System.out.println(theTree.findNode("JULIE"));
-//        System.out.println(theTree.findNode("ASFOUR"));
-
-    }
 }
 
-class Node {
 
-    String key;
-    int address;
-    Node leftChild;
-
-    Node rightChild;
-
-    Node(String key, int position) {
-        this.key = key;
-        this.address = position;
-    }
-
-    public String toString() {
-        return address + " has the key " + key;
-
-        /*
-         * return name + " has the key " + key + "\nLeft Child: " + leftChild +
-         * "\nRight Child: " + rightChild + "\n";
-         */
-
-    }
-}
