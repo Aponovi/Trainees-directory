@@ -69,12 +69,9 @@ public class BinaryTree {
                         return; // All Done
 
                     }
-
                 }
-
             }
         }
-
     }
 
     // All nodes are visited in ascending order

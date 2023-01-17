@@ -26,8 +26,6 @@ public class Main {
 
         //Rechercher_Stagiaire(Nom_Binaire,Stagiaire_A_Rechercher)
 
-        //BinaryTree theTree = new BinaryTree();
-
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE);
 
         Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
