@@ -6,7 +6,7 @@ public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
     private static final String BINARYFILE = "files\\stagiaires.bin";
-    private static final String TXTFILE = "C:\\Users\\Formation\\Documents\\Projects\\Trainees_directory\\stagiaires.txt";
+    private static final String TXTFILE = "C:\\Users\\Formation\\Desktop\\PROJE1\\Trainees-directory\\stagiaires.txt";
 
 
 

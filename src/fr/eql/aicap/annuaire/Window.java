@@ -2,6 +2,7 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,13 +14,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
 import java.io.*;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
 
 
 public class Window extends Application {
 
+    Scene sceneSearch;
+
+    //temporary table
+    TableView<Stagiaire> tempTable;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -79,10 +84,75 @@ public class Window extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button button1= new Button("Ajouter un stagiaire");
         Button button2= new Button("Exporter en PDF");
+
+        //go to scene Rechercher
         Button button3= new Button("Rechercher");
+        button3.setOnAction(e -> stage.setScene(sceneSearch));
+
         Button button4= new Button("Se connecter");
 
         hbBtn.getChildren().addAll(button1, button2, button3, button4);
+
+
+        // scene RECHERCHER --------------------------------------------------------
+
+        //temporary table
+
+        TableColumn<Stagiaire, String> nomColumn = new TableColumn<>("Nom");
+        nomColumn.setMinWidth(200);
+        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+        TableColumn<Stagiaire, String> prenomColumn = new TableColumn<>("Prenom");
+        prenomColumn.setMinWidth(100);
+        prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+
+        TableColumn<Stagiaire, String> anneeColumn = new TableColumn<>("Annee");
+        anneeColumn.setMinWidth(100);
+        anneeColumn.setCellValueFactory(new PropertyValueFactory<>("annee"));
+
+        //search button
+        Button buttonRecherche = new Button("Rechercher");
+        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+        //search boxes
+        TextField prenomTextField = new TextField();
+        prenomTextField.setPromptText("Prénom");
+        prenomTextField.setMinWidth(100);
+
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Nom");
+        nomTextField.setMinWidth(100);
+
+        /*TextField departementTextField = new TextField();
+        departementTextField.setPromptText("Département");
+        departementTextField.setMinWidth(100);
+
+        TextField promoTextField = new TextField();
+        promoTextField.setPromptText("Promotion");
+        promoTextField.setMinWidth(100);*/
+
+        TextField anneeTextField = new TextField();
+        anneeTextField.setPromptText("Année");
+        anneeTextField.setMinWidth(100);
+
+        //temporary search table
+        tempTable = new TableView<>();
+        tempTable.setItems(getStagiaire());
+        tempTable.getColumns().addAll(nomColumn, prenomColumn, anneeColumn);
+
+
+        HBox layoutSearch = new HBox();
+        layoutSearch.setPadding(new Insets(10,10,10,10));
+        layoutSearch.setSpacing(10);
+        layoutSearch.getChildren().addAll(tempTable,prenomTextField,nomTextField,anneeTextField, buttonRecherche);
+
+
+        VBox layoutRec = new VBox();
+        sceneSearch = new Scene(layoutRec, 600, 300);
+        layoutRec.getChildren().addAll(tempTable, layoutSearch);
+
+
+        // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
@@ -94,6 +164,26 @@ public class Window extends Application {
         stage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         stage.setTitle("Annuaire SQL");
+    }
+
+    private void buttonRechercheClicked() {
+        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
+        allStagiaires = tempTable.getItems();
+        stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
+
+        stagiairesSelected.forEach(allStagiaires::remove);
+    }
+
+    public ObservableList<Stagiaire> getStagiaire(){
+
+        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
+
+        //String nom, String prenom, String annee
+        stagiaires.add(new Stagiaire("CUVILLIER", "Leonard", "2016"));
+        stagiaires.add(new Stagiaire("BENNIS","Amaniyy","2017"));
+        stagiaires.add(new Stagiaire("MOLINA","Giuliana","2017"));
+
+        return stagiaires;
     }
 
 //    private ObservableList<Stagiaires> getStagiairesList(){
