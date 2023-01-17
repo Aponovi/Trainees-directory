@@ -2,8 +2,6 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,10 +11,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import jdk.internal.org.objectweb.asm.Handle;
+
 import java.io.*;
 
 
@@ -79,16 +78,16 @@ public class Window extends Application {
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        Button button1= new Button("Ajouter un stagiaire");
-        Button button2= new Button("Exporter en PDF");
-        Button button3= new Button("Rechercher");
-        Button button4= new Button("Se connecter");
+        Button buttonAdd= new Button("Ajouter un stagiaire");
+        Button buttonExport= new Button("Exporter en PDF");
+        Button buttonSearch= new Button("Rechercher");
+        Button buttonConnexion= new Button("Se connecter");
 
-        hbBtn.getChildren().addAll(button1, button2, button3, button4);
+        hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
         //action bouton se connecter
 
-        button4.setOnAction(new EventHandler<ActionEvent>() {
+        buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
             @Override
@@ -128,6 +127,7 @@ public class Window extends Application {
 
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1,3);
+
 
 
                 // Définir la position de la nouvelle fenetre
