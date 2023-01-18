@@ -134,19 +134,3 @@ public class WindowAdmin extends Application {
 
 
 
-//    private ObservableList<Stagiaire> getStagiaireList(List StagiairesListForJulie){
-//
-//        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
-//        ObservableList<Stagiaire> list = ;
-//        System.out.println(Trainees_List);
-//        return list;
-//
-//
-//    }
-
-//    public static void main(String[] args) {
-//        Application.launch(args);
-//    }
-//
-//}
-
