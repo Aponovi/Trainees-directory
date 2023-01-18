@@ -1,5 +1,8 @@
 package fr.eql.aicap.annuaire;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -75,17 +78,17 @@ public class Stagiaire {
         return _promo + " " + _annee + " " + _nom + " " + _prenom + " " + _dpt;
     }
 
-    public void Add(String fichier_Binaire) {
+    public void Add(String fichier_Binaire, BinaryTree binaryTree) {
         //Méthode qui ajoute dans le fichier bin le stagiaire this
         try {
-
-
             RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
             int focusTrainee = Bin_File.compteurStagiaire * Bin_File.LONGUEURSTAGIAIRE;
-            System.out.println(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + fichier_Binaire.getFilePointer());
-            RandomAccessFile.writeInt(Bin_File.LEFTCHILD);
-            RandomAccessFile.writeInt(Bin_File.RIGHTCHILD);
+            RandomAccessFile.seek(focusTrainee);
+            // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
+            int leftchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
+            int rightchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
+            RandomAccessFile.writeInt(leftchild);
+            RandomAccessFile.writeInt(rightchild);
             this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
             RandomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
@@ -96,10 +99,8 @@ public class Stagiaire {
             RandomAccessFile.writeChars(this._prenom);
             this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
             RandomAccessFile.writeChars(this._dpt);
-
-
-
-
+            RandomAccessFile.close();
+            binaryTree.addNode(this._nom, focusTrainee);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -113,28 +114,36 @@ public class Stagiaire {
         //Méthode qui modifie dans le fichier bin le stagiaire this
     }
 
-    public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree theTree) {
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree binaryTree) {
 
-        return Trainees_List(fichier_Binaire, "", theTree);
+        return Trainees_List(fichier_Binaire, "", binaryTree);
     }
 
-    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree theTree) {
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree binaryTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
         int pointer = 0;
-        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
-        for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
-            Stagiaire traineeToAddInList = GetSelect(fichier_Binaire, pointer);
-            Trainees_List.add(traineeToAddInList);
-            pointer += Bin_File.LONGUEURSTAGIAIRE;
-        }
+        List<Stagiaire> Trainees_List = new ArrayList<>();
+        Stagiaire traineeToAddInList = null;
+        BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
 
+        /*for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
+            traineeToAddInList = GetSelect(fichier_Binaire, pointer);
+            Trainees_List.add(traineeToAddInList);
+            // System.out.println("compteur stagaires" + i);
+            pointer += Bin_File.LONGUEURSTAGIAIRE;
+        }*/
+        System.out.println("la list dans la fonction " + Trainees_List);
         return Trainees_List;
+        //ObservableList<Stagiaire> OrderList = FXCollections.observableArrayList(Trainees_List);
+        //System.out.println("la orderlist " + OrderList);
+        //return OrderList;
     }
+
 
     public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
         try {
-            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            int focusTrainee = pointerPosition + 8;
+            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "r");
+            int focusTrainee = pointerPosition + Bin_File.LEFTCHILD * 4 + Bin_File.RIGHTCHILD * 4; // int sur 4 bytes
             String formationStagiaires = "";
             String anneeFormationStagiaire = "";
             String nomStagiaire = "";
@@ -164,8 +173,13 @@ public class Stagiaire {
 //                        + nomStagiaire + ""
 //                        + prenomStagiaire + ""
 //                        + departementStagiaire);
+            formationStagiaires = (formationStagiaires.replaceAll("\\s+", ""));
+            anneeFormationStagiaire = (anneeFormationStagiaire.replaceAll("\\s+", ""));
+            nomStagiaire = (nomStagiaire.replaceAll("\\s+", ""));
+            prenomStagiaire = (prenomStagiaire.replaceAll("\\s+", ""));
+            departementStagiaire = (departementStagiaire.replaceAll("\\s+", ""));
             RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires.replaceAll("\\s+", ""), anneeFormationStagiaire.replaceAll("\\s+", ""), nomStagiaire.replaceAll("\\s+", ""), prenomStagiaire.replaceAll("\\s+", ""), departementStagiaire.replaceAll("\\s+", ""));
+            return new Stagiaire(formationStagiaires, anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
