@@ -29,6 +29,7 @@ import static fr.eql.aicap.annuaire.Main.TXTFILE;
 
 public class Window extends Application {
 
+    Scene mainWindow;
 
     Scene sceneSearch, scene;
 
@@ -52,7 +53,8 @@ public class Window extends Application {
         refreshList(binaryTree,table);
     }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {;
+
         Bin_File Bin_File = new Bin_File();
         BinaryTree binaryTree =  Bin_File.fromTxtToBin(TXTFILE, BINARYFILE);
         Bin_File.addChildrenAddressesIntoParentData(BINARYFILE,binaryTree);
@@ -113,7 +115,7 @@ public class Window extends Application {
 
         //go to scene Rechercher
         Button buttonSearch = new Button("Rechercher");
-        buttonSearch.setOnAction(e -> stage.setScene(sceneSearch));
+        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
 
         Button buttonConnexion = new Button("Se connecter");
 
@@ -194,8 +196,8 @@ public class Window extends Application {
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
-                windowCo.setX(stage.getX() + 200);
-                windowCo.setY(stage.getY() + 100);
+                windowCo.setX(primaryStage.getX() + 200);
+                windowCo.setY(primaryStage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
@@ -244,6 +246,8 @@ public class Window extends Application {
                 //Nouveau bouton
 
                 Button btnCo = new Button("Connexion");
+                windowCoGrille.add(btnCo, 1,3);
+//                btnCo.setOnAction(event1 -> mainPage.run());
                 windowCoGrille.add(btnCo, 1, 3);
 //                btnCo.setOnAction(new EventHandler<ActionEvent>() {
 //                    @Override
@@ -260,12 +264,11 @@ public class Window extends Application {
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
-                windowCo.setX(stage.getX() + 200);
-                windowCo.setY(stage.getY() + 100);
+                windowCo.setX(primaryStage.getX() + 200);
+                windowCo.setY(primaryStage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-
 
 
             }
@@ -293,7 +296,7 @@ public class Window extends Application {
 
         //return button
         Button buttonReturn = new Button("Return");
-        buttonReturn.setOnAction(e -> stage.setScene(scene));
+        buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
 
         //search boxes
         TextField prenomTextField = new TextField();
@@ -344,11 +347,10 @@ public class Window extends Application {
         vbox.getChildren().addAll(table, hbBtn);
 
         Scene scene = new Scene(vbox);
-        stage.setScene(scene);
-
+        primaryStage.setScene(scene);
+        primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        stage.setTitle("Annuaire EQL");
-        stage.show();
+        primaryStage.setTitle("Annuaire EQL");
     }
 
     private void buttonRechercheClicked() {

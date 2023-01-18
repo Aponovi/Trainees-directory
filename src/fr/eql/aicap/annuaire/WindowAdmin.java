@@ -28,7 +28,13 @@ import static fr.eql.aicap.annuaire.Main.TXTFILE;
 
 public class WindowAdmin extends Application {
 
-    private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
+//    private Runnable adminSwitch;
+//
+//    public WindowAdmin(Runnable adminSwitch){
+//        this.adminSwitch = adminSwitch;
+//    }
+
+    private void Refresh_List(BinaryTree binaryTree, TableView<Stagiaire> table)
     {
         List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
         ObservableList<Stagiaire> _Trainees_List = FXCollections.observableArrayList(data);
@@ -100,13 +106,15 @@ public class WindowAdmin extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
+        Button buttonModify = new Button ("Modifier un stagiaire");
         Button buttonDelete= new Button("Supprimer un stagiaire");
         Button buttonExport = new Button("Exporter en PDF");
         Button buttonSearch = new Button("Rechercher");
         Button buttonUpdate= new Button("Modifier mes identifiants");
+        Button buttonOff= new Button("Se déconnecter");
 
 
-        hbBtn.getChildren().addAll(buttonAdd, buttonDelete, buttonExport, buttonSearch, buttonUpdate);
+        hbBtn.getChildren().addAll(buttonAdd, buttonDelete, buttonExport, buttonSearch, buttonUpdate, buttonOff, buttonModify);
 
         //action bouton se connecter
 
@@ -117,7 +125,7 @@ public class WindowAdmin extends Application {
             }
         });
 
-
+//        buttonOff.setOnAction(evt -> adminSwitch.run());
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
