@@ -9,7 +9,7 @@ public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
     public static final String BINARYFILE = "files\\stagiaires.bin";
-    public static final String TXTFILE = "file\\stagiaires.txt";
+    public static final String TXTFILE = "files/stagiaires.txt";
     public static BinaryTree binaryTree =null;
 
 

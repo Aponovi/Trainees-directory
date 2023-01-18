@@ -105,6 +105,8 @@ public class Stagiaire {
 
     public void Update(String fichier_Binaire, int pointerPosition) {
         //Méthode qui modifie dans le fichier bin le stagiaire this
+
+
     }
 
     public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree binaryTree) {
@@ -114,22 +116,10 @@ public class Stagiaire {
 
     public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree binaryTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
-        int pointer = 0;
         List<Stagiaire> Trainees_List = new ArrayList<>();
-        Stagiaire traineeToAddInList = null;
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
-
-        /*for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
-            traineeToAddInList = GetSelect(fichier_Binaire, pointer);
-            Trainees_List.add(traineeToAddInList);
-            // System.out.println("compteur stagaires" + i);
-            pointer += Bin_File.LONGUEURSTAGIAIRE;
-        }*/
-//        System.out.println("la list dans la fonction " + Trainees_List);
+        System.out.println("la list dans la fonction " + Trainees_List);
         return Trainees_List;
-        //ObservableList<Stagiaire> OrderList = FXCollections.observableArrayList(Trainees_List);
-        //System.out.println("la orderlist " + OrderList);
-        //return OrderList;
     }
 
 
@@ -143,7 +133,6 @@ public class Stagiaire {
             String prenomStagiaire = "";
             String departementStagiaire = "";
             RandomAccessFile.seek(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
             for (int i = 0; i < 50; i++) {
                 formationStagiaires += RandomAccessFile.readChar();
             }
@@ -160,12 +149,6 @@ public class Stagiaire {
             for (int i = 0; i < 4; i++) {
                 departementStagiaire += RandomAccessFile.readChar();
             }
-//                System.out.println("stagiaire : "
-//                        + formationStagiaires + " "
-//                        + anneeFormationStagiaire + ""
-//                        + nomStagiaire + ""
-//                        + prenomStagiaire + ""
-//                        + departementStagiaire);
             formationStagiaires = (formationStagiaires.replaceAll("\\s+", ""));
             anneeFormationStagiaire = (anneeFormationStagiaire.replaceAll("\\s+", ""));
             nomStagiaire = (nomStagiaire.replaceAll("\\s+", ""));

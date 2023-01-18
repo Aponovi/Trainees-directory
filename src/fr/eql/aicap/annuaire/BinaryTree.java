@@ -63,9 +63,8 @@ public class BinaryTree {
         if (focusNode != null) {
             // Traverse the left node
             inOrderTraverseTree_List(focusNode.leftChild,List,fichier_Binaire);
+            // add in list the currently focused on node
             List.add(Stagiaire.GetSelect(fichier_Binaire, focusNode.address));
-            // Visit the currently focused on node
-            //System.out.println(focusNode);
             // Traverse the right node
             inOrderTraverseTree_List(focusNode.rightChild,List,fichier_Binaire);
         }
