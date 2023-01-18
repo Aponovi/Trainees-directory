@@ -22,12 +22,12 @@ import javafx.scene.text.Text;
 import java.io.*;
 import java.util.List;
 
-import static fr.eql.aicap.annuaire.Main.BINARYFILE;
-import static fr.eql.aicap.annuaire.Main.TXTFILE;
+import static fr.eql.aicap.annuaire.Main.*;
 
 
 public class Window extends Application {
 
+    Scene mainWindow;
     private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
     {
         List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
@@ -45,7 +45,8 @@ public class Window extends Application {
         Refresh_List(binaryTree,table);
     }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {;
+
         Bin_File Bin_File = new Bin_File();
         BinaryTree binaryTree =  Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE,binaryTree);
@@ -181,8 +182,8 @@ public class Window extends Application {
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
-                windowCo.setX(stage.getX() + 200);
-                windowCo.setY(stage.getY() + 100);
+                windowCo.setX(primaryStage.getX() + 200);
+                windowCo.setY(primaryStage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
@@ -232,27 +233,17 @@ public class Window extends Application {
 
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1,3);
-//                btnCo.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        WindowAdmin windowUserAdmin = new WindowAdmin();
-//                        Scene sceneAdmin = new Scene(windowUserAdmin.(), 800, 500);
-//                        Stage stageAdmin = new Stage();
-//                        stageAdmin.setScene(sceneAdmin);
-//                        stageAdmin.show();
-//                    }
-//                });
+//                btnCo.setOnAction(event1 -> mainPage.run());
 
 
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
-                windowCo.setX(stage.getX() + 200);
-                windowCo.setY(stage.getY() + 100);
+                windowCo.setX(primaryStage.getX() + 200);
+                windowCo.setY(primaryStage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-
 
 
             }
@@ -264,10 +255,10 @@ public class Window extends Application {
         vbox.getChildren().addAll(table,hbBtn);
 
         Scene scene = new Scene(vbox);
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        stage.setTitle("Annuaire SQL");
+        primaryStage.setTitle("Annuaire SQL");
     }
 }
 
