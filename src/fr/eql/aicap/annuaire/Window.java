@@ -1,6 +1,5 @@
 package fr.eql.aicap.annuaire;
 
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,14 +15,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-
-
-
 import java.io.*;
 import java.util.List;
-
 import static fr.eql.aicap.annuaire.Main.*;
-
 
 public class Window extends Application {
 
