@@ -20,7 +20,6 @@ import javafx.scene.text.Text;
 
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static fr.eql.aicap.annuaire.Main.*;
@@ -33,30 +32,31 @@ public class Window extends Application {
     //temporary table
     TableView<Stagiaire> tempTable;
 
-    private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
-    {
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+    private void Refresh_List(BinaryTree binaryTree, TableView<Stagiaire> table) {
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> _Trainees_List = FXCollections.observableArrayList(data);
         table.setItems(_Trainees_List);
         table.refresh();
     }
-    private void Btn_Stagiaire_Add_Click(ActionEvent event,BinaryTree binaryTree,TableView<Stagiaire> table)
-    {
+
+    private void Btn_Stagiaire_Add_Click(ActionEvent event, BinaryTree binaryTree, TableView<Stagiaire> table) {
         //Affichage PopUp Stagiaire
 
         //Code ajout stagiaire
         Stagiaire julie = new Stagiaire("ai cap1", "2023", "AAA", "julie", "92");
-        julie.Add(BINARYFILE,binaryTree);
-        Refresh_List(binaryTree,table);
+        julie.Add(BINARYFILE, binaryTree);
+        Refresh_List(binaryTree, table);
     }
+
     @Override
-    public void start(Stage primaryStage) throws IOException {;
+    public void start(Stage primaryStage) throws IOException {
+        ;
 
         Bin_File Bin_File = new Bin_File();
-        BinaryTree binaryTree =  Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
-        Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE,binaryTree);
+        BinaryTree binaryTree = Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
+        Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE, binaryTree);
 
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> Trainees_List = FXCollections.observableArrayList(data);
 
         //Création Table
@@ -107,12 +107,11 @@ public class Window extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
         Button buttonExport = new Button("Exporter en PDF");
+        Button buttonSearch = new Button("Rechercher");
+        Button buttonConnexion = new Button("Se connecter");
 
         //go to scene Rechercher
-        Button buttonSearch = new Button("Rechercher");
         buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-
-        Button buttonConnexion = new Button("Se connecter");
 
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
@@ -121,13 +120,14 @@ public class Window extends Application {
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Btn_Stagiaire_Add_Click(event,binaryTree,table);
+                Btn_Stagiaire_Add_Click(event, binaryTree, table);
             }
         });
 
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
 
@@ -143,7 +143,7 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
 
@@ -162,19 +162,17 @@ public class Window extends Application {
                 windowCoGrille.add(Annee, 1, 2);
 
 
-                Label lblPrenom  = new Label("Prénom :   ");
+                Label lblPrenom = new Label("Prénom :   ");
                 windowCoGrille.add(lblPrenom, 0, 3);
                 TextField Prenom = new TextField();
                 windowCoGrille.add(Prenom, 1, 3);
-
 
                 Label lblNom = new Label("Nom :   ");
                 windowCoGrille.add(lblNom, 0, 4);
                 TextField Nom = new TextField();
                 windowCoGrille.add(Nom, 1, 4);
 
-
-                Label lblDpt  = new Label("Département :   ");
+                Label lblDpt = new Label("Département :   ");
                 windowCoGrille.add(lblDpt, 0, 5);
                 TextField Dpt = new TextField();
                 windowCoGrille.add(Dpt, 1, 5);
@@ -183,10 +181,10 @@ public class Window extends Application {
                 //Nouveau bouton
 
                 Button btnValider = new Button("Valider");
-                windowCoGrille.add(btnValider, 0,6);
+                windowCoGrille.add(btnValider, 0, 6);
 
                 Button btnAnnuler = new Button("Annuler");
-                windowCoGrille.add(btnAnnuler, 1,6);
+                windowCoGrille.add(btnAnnuler, 1, 6);
 
 
                 // Définir la position de la nouvelle fenetre
@@ -197,14 +195,13 @@ public class Window extends Application {
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
-
-
             }
         });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
 
@@ -220,30 +217,29 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
                 Text titre = new Text("Connectez-vous");
                 titre.setId("titreText"); //noeud pour CSS
-                    windowCoGrille.add(titre, 1,0,2,1);
+                windowCoGrille.add(titre, 1, 0, 2, 1);
 
 
                 Label labelLogin = new Label("Login");
-                    windowCoGrille.add(labelLogin, 0, 1);
+                windowCoGrille.add(labelLogin, 0, 1);
                 TextField textLogin = new TextField();
-                    windowCoGrille.add(textLogin, 1, 1);
+                windowCoGrille.add(textLogin, 1, 1);
 
                 Label labelPassword = new Label("Password");
-                    windowCoGrille.add(labelPassword, 0, 2);
+                windowCoGrille.add(labelPassword, 0, 2);
                 TextField textPassword = new TextField();
-                    windowCoGrille.add(textPassword, 1, 2);
+                windowCoGrille.add(textPassword, 1, 2);
 
                 //Nouveau bouton
 
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1,3);
+                windowCoGrille.add(btnCo, 1, 3);
 //                btnCo.setOnAction(event1 -> mainPage.run());
-
 
 
                 // Définir la position de la nouvelle fenetre
@@ -264,7 +260,7 @@ public class Window extends Application {
 
         //return button
         Button buttonReturn = new Button("Return");
-        buttonReturn.setOnAction(e -> stage.setScene(scene));
+        buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
 
         //search box _nom
 
@@ -295,29 +291,26 @@ public class Window extends Application {
 
         sceneSearch = new Scene(layoutRec);
         //stage.setScene(sceneSearch);
-        stage.show();
+        primaryStage.show();
         sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        stage.setTitle("Recherche");
+        primaryStage.setTitle("Recherche");
 
         // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
 
-            }
-        });
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10 ,10,10,10));
-        vbox.getChildren().addAll(table,hbBtn);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().addAll(table, hbBtn);
 
         Scene scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         primaryStage.setTitle("Annuaire SQL");
+
+
     }
-}
-
-
     private void buttonRechercheClicked() {
 
         //temporary search list
@@ -327,14 +320,14 @@ public class Window extends Application {
 
         stagiairesSelected.forEach(allStagiaires::remove);
     }
-
     public ObservableList<Stagiaire> getStagiaire(){
 
         //temporary search list
         ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
 
 
-
-
+        return stagiaires;
     }
+}
+
 
