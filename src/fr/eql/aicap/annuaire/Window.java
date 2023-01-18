@@ -241,12 +241,62 @@ public class Window extends Application {
 
     private void buttonRechercheClicked() {
 
-        //temporary search list
-        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
-        allStagiaires = tempTable.getItems();
-        stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
 
-        stagiairesSelected.forEach(allStagiaires::remove);
+           /* txtField = TextFields.createSearchField();
+
+            txtField.setPromptText("Filter");
+
+            txtField.textProperty().addListener(new InvalidationListener() {
+
+
+                @Override
+
+                public void invalidated(Observable o) {
+
+                    if(txtField.textProperty().get().isEmpty()) {
+
+                        table.setItems(data);
+
+                        return;
+
+                    }
+
+                    ObservableList<Employee> tableItems = FXCollections.observableArrayList();
+
+                    ObservableList<TableColumn<Employee, ?>> cols = table.getColumns();
+
+                    for(int i=0; i<data.size(); i++) {
+
+
+
+                        for(int j=0; j<cols.size(); j++) {
+
+                            TableColumn col = cols.get(j);
+
+                            String cellValue = col.getCellData(data.get(i)).toString();
+
+                            cellValue = cellValue.toLowerCase();
+
+                            if(cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+
+                                tableItems.add(data.get(i));
+
+                                break;
+
+                            }
+
+                        }
+
+
+                    }
+
+                    table.setItems(tableItems);
+
+                }
+
+            });*/
+
+
     }
 
     public ObservableList<Stagiaire> getStagiaire(){
