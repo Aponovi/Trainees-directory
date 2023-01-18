@@ -303,7 +303,7 @@ public class Window extends Application {
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.getChildren().addAll(table, hbBtn);
 
-        Scene scene = new Scene(vbox);
+        scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
