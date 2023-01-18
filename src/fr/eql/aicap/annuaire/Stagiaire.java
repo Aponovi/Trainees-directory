@@ -36,7 +36,7 @@ public class Stagiaire {
         return _annee;
     }
 
-    public String getNom() {
+    public  String getNom() {
         return _nom;
     }
 

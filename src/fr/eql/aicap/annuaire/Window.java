@@ -2,8 +2,12 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,9 +22,9 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 
-
 import java.io.*;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static fr.eql.aicap.annuaire.Main.*;
 
@@ -50,7 +54,7 @@ public class Window extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        ;
+
 
         Bin_File Bin_File = new Bin_File();
         BinaryTree binaryTree = Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
@@ -63,7 +67,8 @@ public class Window extends Application {
         TableView<Stagiaire> table = new TableView<Stagiaire>();
         table.setEditable(true);
 
-        Label label = new Label("Liste des stagiaires");
+        //Label label = new Label("Liste des stagiaires");
+
         //Création des 5 colonnes
         TableColumn<Stagiaire, String> promoCol =
                 new TableColumn<Stagiaire, String>("Promotion");
@@ -177,9 +182,7 @@ public class Window extends Application {
                 TextField Dpt = new TextField();
                 windowCoGrille.add(Dpt, 1, 5);
 
-
                 //Nouveau bouton
-
                 Button btnValider = new Button("Valider");
                 windowCoGrille.add(btnValider, 0, 6);
 
@@ -239,8 +242,7 @@ public class Window extends Application {
 
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1, 3);
-//                btnCo.setOnAction(event1 -> mainPage.run());
-
+                //btnCo.setOnAction(event1 -> mainPage.run());
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
@@ -252,31 +254,68 @@ public class Window extends Application {
             }
         });
 
-        // RECHERCHER ---------------------------------------------------------------------------------
+
+        // RECHERCHER ----------------------------------------------------------------------------------------------------------------------
 
         //search button
         Button buttonRecherche = new Button("Rechercher");
-        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+        //buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+        //search box _by nom
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Recherche par Nom");
+        nomTextField.setMinWidth(100);
+
+        // recherche button action--------------------------------------------------------
+
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<Stagiaire> filtered_Trainees_List = new FilteredList<>(Trainees_List, p -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        nomTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtered_Trainees_List.setPredicate(stagiaire -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(stagiaire.getNom()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                    // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+        buttonRecherche.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                // 3. Wrap the FilteredList in a SortedList.
+                SortedList<Stagiaire> sortedData = new SortedList<>(filtered_Trainees_List);
+
+                // 4. Bind the SortedList comparator to the TableView comparator.
+                sortedData.comparatorProperty().bind(tempTable.comparatorProperty());
+
+                // 5. Add sorted (and filtered) data to the table.
+                tempTable.setItems(sortedData);
+            }
+        });
+
+        /////////////////////////////////// fin recherche button action--------------------
 
         //return button
         Button buttonReturn = new Button("Return");
         buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
 
-        //search box _nom
-
-        TextField nomTextField = new TextField();
-        nomTextField.setPromptText("Nom");
-        nomTextField.setMinWidth(100);
-
-
         //temporary search table
         tempTable = new TableView<>();
-        tempTable.setItems(getStagiaire());
 
         // ajout des colonnes à la table
         tempTable.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
         tempTable.setItems(Trainees_List);
-
 
         HBox layoutSearch = new HBox();
         layoutSearch.getChildren().addAll(tempTable);
@@ -311,73 +350,7 @@ public class Window extends Application {
 
 
     }
-    private void buttonRechercheClicked() {
 
-
-           /* txtField = TextFields.createSearchField();
-
-            txtField.setPromptText("Filter");
-
-            txtField.textProperty().addListener(new InvalidationListener() {
-
-
-                @Override
-
-                public void invalidated(Observable o) {
-
-                    if(txtField.textProperty().get().isEmpty()) {
-
-                        table.setItems(data);
-
-                        return;
-
-                    }
-
-                    ObservableList<Employee> tableItems = FXCollections.observableArrayList();
-
-                    ObservableList<TableColumn<Employee, ?>> cols = table.getColumns();
-
-                    for(int i=0; i<data.size(); i++) {
-
-
-
-                        for(int j=0; j<cols.size(); j++) {
-
-                            TableColumn col = cols.get(j);
-
-                            String cellValue = col.getCellData(data.get(i)).toString();
-
-                            cellValue = cellValue.toLowerCase();
-
-                            if(cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-
-                                tableItems.add(data.get(i));
-
-                                break;
-
-                            }
-
-                        }
-
-
-                    }
-
-                    table.setItems(tableItems);
-
-                }
-
-            });*/
-
-
-    }
-    public ObservableList<Stagiaire> getStagiaire(){
-
-        //temporary search list
-        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
-
-
-        return stagiaires;
-    }
 }
 
 
