@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static fr.eql.aicap.annuaire.Main.*;
@@ -27,7 +28,11 @@ import static fr.eql.aicap.annuaire.Main.*;
 
 public class Window extends Application {
 
-    Scene mainWindow;
+    Scene sceneSearch, scene;
+
+    //temporary table
+    TableView<Stagiaire> tempTable;
+
     private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
     {
         List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
@@ -102,7 +107,11 @@ public class Window extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
         Button buttonExport = new Button("Exporter en PDF");
+
+        //go to scene Rechercher
         Button buttonSearch = new Button("Rechercher");
+        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
+
         Button buttonConnexion = new Button("Se connecter");
 
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
@@ -244,7 +253,53 @@ public class Window extends Application {
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+            }
+        });
 
+        // RECHERCHER ---------------------------------------------------------------------------------
+
+        //search button
+        Button buttonRecherche = new Button("Rechercher");
+        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+        //return button
+        Button buttonReturn = new Button("Return");
+        buttonReturn.setOnAction(e -> stage.setScene(scene));
+
+        //search box _nom
+
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Nom");
+        nomTextField.setMinWidth(100);
+
+
+        //temporary search table
+        tempTable = new TableView<>();
+        tempTable.setItems(getStagiaire());
+
+        // ajout des colonnes à la table
+        tempTable.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
+        tempTable.setItems(Trainees_List);
+
+
+        HBox layoutSearch = new HBox();
+        layoutSearch.getChildren().addAll(tempTable);
+
+        HBox layoutSearch2 = new HBox(15);
+        layoutSearch2.getChildren().addAll(nomTextField, buttonRecherche, buttonReturn);
+
+        VBox layoutRec = new VBox();
+        layoutRec.setSpacing(5);
+        layoutRec.setPadding(new Insets(10, 10, 10, 10));
+        layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
+
+        sceneSearch = new Scene(layoutRec);
+        //stage.setScene(sceneSearch);
+        stage.show();
+        sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+        stage.setTitle("Recherche");
+
+        // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
 
             }
         });
@@ -262,4 +317,24 @@ public class Window extends Application {
     }
 }
 
+
+    private void buttonRechercheClicked() {
+
+        //temporary search list
+        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
+        allStagiaires = tempTable.getItems();
+        stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
+
+        stagiairesSelected.forEach(allStagiaires::remove);
+    }
+
+    public ObservableList<Stagiaire> getStagiaire(){
+
+        //temporary search list
+        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
+
+
+
+
+    }
 
