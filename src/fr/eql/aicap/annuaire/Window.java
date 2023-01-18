@@ -37,31 +37,30 @@ public class Window extends Application {
     //temporary table
     TableView<Stagiaire> tempTable;
 
-    private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
-    {
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+    private void Refresh_List(BinaryTree binaryTree, TableView<Stagiaire> table) {
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> _Trainees_List = FXCollections.observableArrayList(data);
         table.setItems(_Trainees_List);
         table.refresh();
     }
-    private void Btn_Stagiaire_Add_Click(ActionEvent event, BinaryTree binaryTree, TableView<Stagiaire> table)
-    {
+
+    private void Btn_Stagiaire_Add_Click(ActionEvent event, BinaryTree binaryTree, TableView<Stagiaire> table) {
         //Affichage PopUp Stagiaire
 
         //Code ajout stagiaire
         Stagiaire julie = new Stagiaire("ai cap1", "2023", "AAA", "julie", "92");
-        julie.Add(BINARYFILE,binaryTree);
-        Refresh_List(binaryTree,table);
+        julie.Add(BINARYFILE, binaryTree);
+        Refresh_List(binaryTree, table);
     }
 
     @Override
     public void start(Stage stage) throws IOException {
 
         Bin_File Bin_File = new Bin_File();
-        BinaryTree binaryTree =  Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
-        Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE,binaryTree);
+        BinaryTree binaryTree = Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
+        Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE, binaryTree);
 
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> Trainees_List = FXCollections.observableArrayList(data);
 
         // ObservableList<Stagiaires> data = getStagiairesList();
@@ -109,7 +108,6 @@ public class Window extends Application {
         );
 
 
-
         // ajout des colonnes à la table
 
         table.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
@@ -134,13 +132,14 @@ public class Window extends Application {
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Btn_Stagiaire_Add_Click(event,binaryTree,table);
+                Btn_Stagiaire_Add_Click(event, binaryTree, table);
             }
         });
 
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
 
@@ -156,7 +155,7 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
 
@@ -175,7 +174,7 @@ public class Window extends Application {
                 windowCoGrille.add(Annee, 1, 2);
 
 
-                Label lblPrenom  = new Label("Prénom :   ");
+                Label lblPrenom = new Label("Prénom :   ");
                 windowCoGrille.add(lblPrenom, 0, 3);
                 TextField Prenom = new TextField();
                 windowCoGrille.add(Prenom, 1, 3);
@@ -187,7 +186,7 @@ public class Window extends Application {
                 windowCoGrille.add(Nom, 1, 4);
 
 
-                Label lblDpt  = new Label("Département :   ");
+                Label lblDpt = new Label("Département :   ");
                 windowCoGrille.add(lblDpt, 0, 5);
                 TextField Dpt = new TextField();
                 windowCoGrille.add(Dpt, 1, 5);
@@ -196,10 +195,10 @@ public class Window extends Application {
                 //Nouveau bouton
 
                 Button btnValider = new Button("Valider");
-                windowCoGrille.add(btnValider, 0,6);
+                windowCoGrille.add(btnValider, 0, 6);
 
                 Button btnAnnuler = new Button("Annuler");
-                windowCoGrille.add(btnAnnuler, 1,6);
+                windowCoGrille.add(btnAnnuler, 1, 6);
 
 
                 // Définir la position de la nouvelle fenetre
@@ -211,13 +210,13 @@ public class Window extends Application {
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
 
-
             }
         });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
 
@@ -233,28 +232,28 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
                 Text titre = new Text("Connectez-vous");
                 titre.setId("titreText"); //noeud pour CSS
-                    windowCoGrille.add(titre, 1,0,2,1);
+                windowCoGrille.add(titre, 1, 0, 2, 1);
 
 
                 Label labelLogin = new Label("Login");
-                    windowCoGrille.add(labelLogin, 0, 1);
+                windowCoGrille.add(labelLogin, 0, 1);
                 TextField textLogin = new TextField();
-                    windowCoGrille.add(textLogin, 1, 1);
+                windowCoGrille.add(textLogin, 1, 1);
 
                 Label labelPassword = new Label("Password");
-                    windowCoGrille.add(labelPassword, 0, 2);
+                windowCoGrille.add(labelPassword, 0, 2);
                 TextField textPassword = new TextField();
-                    windowCoGrille.add(textPassword, 1, 2);
+                windowCoGrille.add(textPassword, 1, 2);
 
                 //Nouveau bouton
 
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1,3);
+                windowCoGrille.add(btnCo, 1, 3);
 //                btnCo.setOnAction(new EventHandler<ActionEvent>() {
 //                    @Override
 //                    public void handle(ActionEvent event) {
@@ -267,7 +266,6 @@ public class Window extends Application {
 //                });
 
 
-
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(stage.getX() + 200);
@@ -277,10 +275,8 @@ public class Window extends Application {
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
 
-
             }
         });
-
 
 
         // RECHERCHER --------------------------------------------------------
@@ -334,13 +330,13 @@ public class Window extends Application {
 
 
         HBox layoutSearch = new HBox();
-        layoutSearch.getChildren().addAll(tempTable,prenomTextField,nomTextField,anneeTextField);
+        layoutSearch.getChildren().addAll(tempTable, prenomTextField, nomTextField, anneeTextField);
 
         HBox layoutSearch2 = new HBox();
         layoutSearch2.getChildren().addAll(buttonRecherche, buttonReturn);
 
         VBox layoutRec = new VBox();
-        layoutRec.setPadding(new Insets(10,10,10,10));
+        layoutRec.setPadding(new Insets(10, 10, 10, 10));
         layoutRec.setSpacing(5);
         layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
 
@@ -351,8 +347,8 @@ public class Window extends Application {
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10 ,10,10,10));
-        vbox.getChildren().addAll(table,hbBtn);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().addAll(table, hbBtn);
 
         scene = new Scene(vbox);
         stage.setScene(scene);
@@ -371,28 +367,23 @@ public class Window extends Application {
         stagiairesSelected.forEach(allStagiaires::remove);
     }
 
-    public ObservableList<Stagiaire> getStagiaire(){
+    public ObservableList<Stagiaire> getStagiaire() {
 
         //temporary search list
         ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
 
         //String nom, String prenom, String annee
         stagiaires.add(new Stagiaire("CUVILLIER", "Leonard", "2016"));
-        stagiaires.add(new Stagiaire("BENNIS","Amaniyy","2017"));
-        stagiaires.add(new Stagiaire("MOLINA","Giuliana","2017"));
+        stagiaires.add(new Stagiaire("BENNIS", "Amaniyy", "2017"));
+        stagiaires.add(new Stagiaire("MOLINA", "Giuliana", "2017"));
 
-//    private ObservableList<Stagiaire> getStagiaireList(List StagiairesListForJulie){
-//
-//        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
-//        ObservableList<Stagiaire> list = ;
-//        System.out.println(Trainees_List);
-//        return list;
-//
-//
-//    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
+        return stagiaires;
     }
 
-}
+
+        public static void main (String[]args){
+            Application.launch(args);
+        }
+
+    }
+
