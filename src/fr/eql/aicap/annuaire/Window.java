@@ -322,7 +322,7 @@ public class Window extends Application {
         primaryStage.setTitle("Annuaire EQL");
     }
 
-    }
+
     private void buttonRechercheClicked() {
 
         //temporary search list
