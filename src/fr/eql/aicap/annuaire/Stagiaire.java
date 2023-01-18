@@ -26,6 +26,7 @@ public class Stagiaire {
         this._dpt = dpt;
     }
 
+
     //méthodes d'accès aux variables d'instance
     public String getPromo() {
         return _promo;

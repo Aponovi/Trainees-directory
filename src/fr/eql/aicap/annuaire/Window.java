@@ -28,6 +28,11 @@ import static fr.eql.aicap.annuaire.Main.TXTFILE;
 
 public class Window extends Application {
 
+    Scene sceneSearch, scene;
+
+    //temporary table
+    TableView<Stagiaire> tempTable;
+
     private void Refresh_List(BinaryTree binaryTree,TableView<Stagiaire> table)
     {
         List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
@@ -57,7 +62,8 @@ public class Window extends Application {
         TableView<Stagiaire> table = new TableView<Stagiaire>();
         table.setEditable(true);
 
-        Label label = new Label("Liste des stagiaires");
+        //Label label = new Label("Liste des stagiaires");
+
         //Création des 5 colonnes
         TableColumn<Stagiaire, String> promoCol =
                 new TableColumn<Stagiaire, String>("Promotion");
@@ -101,13 +107,16 @@ public class Window extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
         Button buttonExport = new Button("Exporter en PDF");
+
+        //go to scene Rechercher
         Button buttonSearch = new Button("Rechercher");
+        buttonSearch.setOnAction(e -> stage.setScene(sceneSearch));
+
         Button buttonConnexion = new Button("Se connecter");
 
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
-        //action bouton se connecter
-
+        //action bouton se connecter-------------------------------------------------------------------
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -171,25 +180,80 @@ public class Window extends Application {
             }
         });
 
+        // RECHERCHER ---------------------------------------------------------------------------------
+
+        //search button
+        Button buttonRecherche = new Button("Rechercher");
+        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+        //return button
+        Button buttonReturn = new Button("Return");
+        buttonReturn.setOnAction(e -> stage.setScene(scene));
+
+        //search box _nom
+
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Nom");
+        nomTextField.setMinWidth(100);
+
+
+        //temporary search table
+        tempTable = new TableView<>();
+        tempTable.setItems(getStagiaire());
+
+        // ajout des colonnes à la table
+        tempTable.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
+        tempTable.setItems(Trainees_List);
+
+
+        HBox layoutSearch = new HBox();
+        layoutSearch.getChildren().addAll(tempTable);
+
+        HBox layoutSearch2 = new HBox(15);
+        layoutSearch2.getChildren().addAll(nomTextField, buttonRecherche, buttonReturn);
+
+        VBox layoutRec = new VBox();
+        layoutRec.setSpacing(5);
+        layoutRec.setPadding(new Insets(10, 10, 10, 10));
+        layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
+
+        sceneSearch = new Scene(layoutRec);
+        //stage.setScene(sceneSearch);
+        stage.show();
+        sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+        stage.setTitle("Recherche");
+
+        // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
+
+
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.getChildren().addAll(table, hbBtn);
 
-        Scene scene = new Scene(vbox);
+        scene = new Scene(vbox);
         stage.setScene(scene);
         stage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         stage.setTitle("Annuaire SQL");
     }
-}
 
 
+    private void buttonRechercheClicked() {
 
-        //String nom, String prenom, String annee
-        stagiaires.add(new Stagiaire("CUVILLIER", "Leonard", "2016"));
-        stagiaires.add(new Stagiaire("BENNIS", "Amaniyy", "2017"));
-        stagiaires.add(new Stagiaire("MOLINA", "Giuliana", "2017"));
+        //temporary search list
+        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
+        allStagiaires = tempTable.getItems();
+        stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
+
+        stagiairesSelected.forEach(allStagiaires::remove);
+    }
+
+    public ObservableList<Stagiaire> getStagiaire(){
+
+        //temporary search list
+        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
+
 
         return stagiaires;
     }
