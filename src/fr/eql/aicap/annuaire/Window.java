@@ -19,6 +19,10 @@ import javafx.scene.text.Text;
 
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +53,6 @@ public class Window extends Application {
         julie.add(BINARYFILE,binaryTree);
         refreshList(binaryTree,table);
     }
-
     @Override
     public void start(Stage primaryStage) throws IOException {;
 
@@ -133,7 +136,6 @@ public class Window extends Application {
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
-
             @Override
             public void handle(ActionEvent event) {
 
@@ -203,15 +205,46 @@ public class Window extends Application {
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
+                // fermer la fenetre en cliquant sur annuler
+                btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        windowCo.close();
+                    }
+                });
+
+                // Ajouter du nouveau stagiaire à la liste des stagiaires
+                btnValider.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+
+                        //Code ajout stagiaire
+                        Stagiaire stg = new Stagiaire(Promo.getText(), Annee.getText(), Nom.getText(), Prenom.getText(), Dpt.getText());
+                        stg.add(BINARYFILE,binaryTree);
+                        refreshList(binaryTree,table);
+
+                        windowCo.close();
 
 
-            }
+                    }
+
+                });
+
+
+
+
+            };
+
+
+
+
+
+
         });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
-
             @Override
             public void handle(ActionEvent event) {
 
@@ -250,6 +283,8 @@ public class Window extends Application {
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1, 3);
 //                btnCo.setOnAction(event1 -> mainPage.run());
+                windowCoGrille.add(btnCo, 1,3);
+
 
 
                 // Définir la position de la nouvelle fenetre
