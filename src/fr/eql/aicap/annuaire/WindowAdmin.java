@@ -15,11 +15,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.text.Text;
 
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.*;;
 import java.util.List;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;

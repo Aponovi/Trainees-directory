@@ -20,7 +20,6 @@ import javafx.scene.text.Text;
 
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;
@@ -275,9 +274,9 @@ public class Window extends Application {
 
 
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
+//    public static void main(String[] args) {
+//        Application.launch(args);
+//    }
 
 }
 

@@ -1,9 +1,7 @@
 package fr.eql.aicap.annuaire;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 
 import javafx.application.Application;
 
@@ -11,7 +9,7 @@ public class Main {
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
     public static final String BINARYFILE = "files\\stagiaires.bin";
-    public static final String TXTFILE = "C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt";
+    public static final String TXTFILE = "file\\stagiaires.txt";
     public static BinaryTree binaryTree =null;
 
 
