@@ -1,110 +1,62 @@
 package fr.eql.aicap.annuaire;
 
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javafx.application.Application;
 
 public class Main {
-
     private static final String FOLDER = "files/";
     private static final String RAF = "stagiaires.bin";
-
-    //allocation taille des données pour l'arbre
-
-    public static final int PROMODIGIT = 2; // hello
-    public static final int PROMO = 8;
-    public static final int ANNEE = 4;
-    public static final int NOM = 50;
-    public static final int PRENOM = 50;
-    public static final int DEPARTEMENT = 3;
-
-    public static final int LONGUEURSTAGIAIRE = ((PROMO + PROMODIGIT + ANNEE + NOM + PRENOM + DEPARTEMENT) * 2 );
+    public static final String BINARYFILE = "files\\stagiaires.bin";
+    public static final String TXTFILE = "C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt";
+    public static BinaryTree binaryTree =null;
 
 
-    public static void main(String[] args) throws FileNotFoundException {
 
-        String ligne ="";
-        String mot = "";
-        int compteurTab= 0;
-        int compteurStagiaire = 0;
-
-        RandomAccessFile stagiaires;
+    public static void main(String[] args) {
 
         File folder = new File(FOLDER);
         folder.mkdir();
 
-        try {
-            stagiaires = new RandomAccessFile(FOLDER + RAF, "rw");
-            FileReader fichierOriginal = new FileReader("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-            BufferedReader bf = new BufferedReader(fichierOriginal);
+        //From_Txt_To_Bin(Chemin,Nom_Binaire)
 
-            while ((ligne = bf.readLine()) != null) {
-                compteurTab = 0;
-                for (int i = 0; i < ligne.length(); i++){
-                    if (ligne.charAt(i) != '	'){
-                        mot += ligne.charAt(i);
-                    } else {
-                        switch (compteurTab){
-                            case 0:
-                                int nb = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb);
-                                break;
+//        Bin_File Bin_File = new Bin_File();
+//        Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
 
-                            case 1:
-                                mot = completer(mot, PROMO);
-                                stagiaires.writeChars(mot);
-                                break;
+        //Creer_Modifier_Noeud(Nom_Binaire)
 
-                            case 2:
-                                int nb2 = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb2);
-                                break;
+        //Ajouter_Stagiaire(Nom_Binaire,Stagiaire)
 
-                            case 3:
-                                mot = completer(mot, NOM);
-                                stagiaires.writeChars(mot);
-                                break;
+        //Modifier_Stagiaire(Nom_Binaire,Stagiaire)
 
-                            case 4:
-                                mot = completer(mot, PRENOM);
-                                stagiaires.writeChars(mot);
-                                break;
+        //Supprimer_Stagiaire(Nom_Binaire,Stagiaire)
 
-                            case 5:
-                                int nb3 = Integer.parseInt(mot);
-                                stagiaires.writeInt(nb3);
-                                break;
+        //Rechercher_Stagiaire(Nom_Binaire,Stagiaire_A_Rechercher)
+
+        // Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE);
+        // Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+
+        //Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+
+        //stagiaires.Select_Trainee(BINARYFILE,0);
+        // Stagiaire.GetSelect(BINARYFILE,0);
 
 
-                        }
-                        compteurTab += 1;
-                        mot = "";
-                    }
-                }
-                mot = completer(mot, PROMODIGIT);
-                mot = completer(mot, ANNEE);
-                mot = completer(mot, DEPARTEMENT);
-                stagiaires.writeChars(mot);
-                mot = "";
-                compteurStagiaire += 1;
+        // Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree);
 
-            }
+        // System.out.println(Stagiaire.Trainees_List(BINARYFILE, Bin_File.theTree));
 
+        // Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
+        //System.out.println(Stagiaire.Trainees_List(BINARYFILE, fr.eql.aicap.annuaire.Bin_File.theTree));
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        // System.out.println("la liste dans le main " + Stagiaire.Trainees_List(BINARYFILE));
 
-
+        Application.launch(Window.class, args);
+        //Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
     }
-
-    private static String completer(String mot, int taille) {
-
-        int nbEspace = taille - mot.length();
-        for (int i = 0; i < nbEspace; i++) {
-            mot += " ";
-        }
-
-        return mot;
-    }
-
-
 }
+
+
