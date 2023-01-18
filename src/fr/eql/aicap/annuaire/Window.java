@@ -270,10 +270,10 @@ public class Window extends Application {
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         stage.setTitle("Annuaire SQL");
     }
-}
 
 
-    }
+
+
 
     public static void main(String[] args) {
         Application.launch(args);
