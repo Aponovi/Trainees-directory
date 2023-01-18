@@ -91,8 +91,5 @@ import java.io.IOException;
             stageAdmin.setTitle("Annuaire SQL - User Admin");
         }
 
-
-
-
     }
 
