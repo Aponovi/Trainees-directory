@@ -26,13 +26,6 @@ public class Stagiaire {
         this._dpt = dpt;
     }
 
-    //temporary constructer
-    public Stagiaire(String nom, String prenom, String annee) {
-        this._annee = annee;
-        this._nom = nom;
-        this._prenom = prenom;
-    }
-
     //méthodes d'accès aux variables d'instance
     public String getPromo() {
         return _promo;
@@ -125,14 +118,7 @@ public class Stagiaire {
         List<Stagiaire> Trainees_List = new ArrayList<>();
         Stagiaire traineeToAddInList = null;
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
-
-        /*for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
-            traineeToAddInList = GetSelect(fichier_Binaire, pointer);
-            Trainees_List.add(traineeToAddInList);
-            // System.out.println("compteur stagaires" + i);
-            pointer += Bin_File.LONGUEURSTAGIAIRE;
-        }*/
-//        System.out.println("la list dans la fonction " + Trainees_List);
+        System.out.println("la list dans la fonction " + Trainees_List);
         return Trainees_List;
         //ObservableList<Stagiaire> OrderList = FXCollections.observableArrayList(Trainees_List);
         //System.out.println("la orderlist " + OrderList);
