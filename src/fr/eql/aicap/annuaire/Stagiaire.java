@@ -125,7 +125,7 @@ public class Stagiaire {
             // System.out.println("compteur stagaires" + i);
             pointer += Bin_File.LONGUEURSTAGIAIRE;
         }*/
-        System.out.println("la list dans la fonction " + Trainees_List);
+//        System.out.println("la list dans la fonction " + Trainees_List);
         return Trainees_List;
         //ObservableList<Stagiaire> OrderList = FXCollections.observableArrayList(Trainees_List);
         //System.out.println("la orderlist " + OrderList);
