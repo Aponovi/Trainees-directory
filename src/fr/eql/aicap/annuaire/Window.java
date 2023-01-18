@@ -2,33 +2,38 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
 import java.io.*;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
 
 
 public class Window extends Application {
+
+    Scene sceneSearch, scene;
+
+    //temporary table
+    TableView<Stagiaire> tempTable;
+
 
 
     @Override
     public void start(Stage stage) throws IOException {
 
 
-//        ObservableList<Stagiaire> data = getStagiairesList();
+        // ObservableList<Stagiaires> data = getStagiairesList();
 
         //Création Table
         TableView<Stagiaire> table = new TableView<Stagiaire>();
@@ -76,78 +81,127 @@ public class Window extends Application {
         // ajout des colonnes à la table
 
         table.getColumns().addAll(promoCol,nomCol,prenomCol, anneeCol,dptCol);
-//        table.setItems(data);
+        // table.setItems(data);
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button button1= new Button("Ajouter un stagiaire");
         Button button2= new Button("Exporter en PDF");
+
+        //go to scene Rechercher
         Button button3= new Button("Rechercher");
+        button3.setOnAction(e -> stage.setScene(sceneSearch));
+
         Button button4= new Button("Se connecter");
 
         hbBtn.getChildren().addAll(button1, button2, button3, button4);
 
-        //action bouton se connecter
 
-        button4.setOnAction(new EventHandler<ActionEvent>() {
+        // RECHERCHER --------------------------------------------------------
 
-            TextField dataLogin = new TextField();
-            @Override
-            public void handle(ActionEvent event) {
-                Label windowCoLbl = new Label("Se connecter");
-                GridPane windowCoGrille = new GridPane();
-                Scene windowCoScene = new Scene(windowCoGrille, 230, 100);
+        //temporary table
+        TableColumn<Stagiaire, String> nomColumn = new TableColumn<>("Nom");
+        nomColumn.setMinWidth(200);
+        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
 
-                // Nouvelle Fenêtre (Stage)
-                Stage windowCo = new Stage();
-                windowCo.setTitle("Connexion");
-                windowCo.setScene(windowCoScene);
+        TableColumn<Stagiaire, String> prenomColumn = new TableColumn<>("Prenom");
+        prenomColumn.setMinWidth(100);
+        prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
 
-                //inside the login's window
+        TableColumn<Stagiaire, String> anneeColumn = new TableColumn<>("Annee");
+        anneeColumn.setMinWidth(100);
+        anneeColumn.setCellValueFactory(new PropertyValueFactory<>("annee"));
 
-                windowCoGrille.setAlignment(Pos.CENTER);
-                windowCoGrille.setHgap(10);
-                windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+        //search button
+        Button buttonRecherche = new Button("Rechercher");
+        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
 
-                Label labelLogin = new Label("Login");
-                    windowCoGrille.add(labelLogin, 0, 1);
-                TextField textLogin = new TextField();
-                    windowCoGrille.add(textLogin, 1, 1);
+        //return button
+        Button buttonReturn = new Button("Return");
+        buttonReturn.setOnAction(e -> stage.setScene(scene));
 
-                Label labelPassword = new Label("Password");
-                    windowCoGrille.add(labelPassword, 0, 2);
-                TextField textPassword = new TextField();
-                    windowCoGrille.add(textPassword, 1, 2);
+        //search boxes
+        TextField prenomTextField = new TextField();
+        prenomTextField.setPromptText("Prénom");
+        prenomTextField.setMinWidth(100);
 
-                // Définir la position de la nouvelle fenetre
-                //relativement à la fenetre principale.
-                windowCo.setX(stage.getX() + 200);
-                windowCo.setY(stage.getY() + 100);
-                //Affichage de la nouvelle fenêtre
-                windowCo.show();
+        TextField nomTextField = new TextField();
+        nomTextField.setPromptText("Nom");
+        nomTextField.setMinWidth(100);
+
+        /*TextField departementTextField = new TextField();
+        departementTextField.setPromptText("Département");
+        departementTextField.setMinWidth(100);
+
+        TextField promoTextField = new TextField();
+        promoTextField.setPromptText("Promotion");
+        promoTextField.setMinWidth(100);*/
+
+        TextField anneeTextField = new TextField();
+        anneeTextField.setPromptText("Année");
+        anneeTextField.setMinWidth(100);
+
+        //temporary search table
+        tempTable = new TableView<>();
+        tempTable.setItems(getStagiaire());
+        tempTable.getColumns().addAll(nomColumn, prenomColumn, anneeColumn);
 
 
+        HBox layoutSearch = new HBox();
+        layoutSearch.getChildren().addAll(tempTable,prenomTextField,nomTextField,anneeTextField);
 
-            }
-        });
+        HBox layoutSearch2 = new HBox();
+        layoutSearch2.getChildren().addAll(buttonRecherche, buttonReturn);
+
+        VBox layoutRec = new VBox();
+        layoutRec.setPadding(new Insets(10,10,10,10));
+        layoutRec.setSpacing(5);
+        layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
+
+        sceneSearch = new Scene(layoutRec);
+
+        // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
+
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10 ,10,10,10));
         vbox.getChildren().addAll(table,hbBtn);
 
-        Scene scene = new Scene(vbox);
+        scene = new Scene(vbox);
         stage.setScene(scene);
         stage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         stage.setTitle("Annuaire SQL");
     }
 
-//    private ObservableList<Stagiaire> getStagiairesList(){
-////        LesStagiaires lesStag = new LesStagiaires("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
-////        List<Stagiaire> liste = lesStag.fabriqueVecteur();
-//          ObservableList<Stagiaire> list = FXCollections.observableArrayList(liste);
+    private void buttonRechercheClicked() {
+
+        //temporary search list
+        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
+        allStagiaires = tempTable.getItems();
+        stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
+
+        stagiairesSelected.forEach(allStagiaires::remove);
+    }
+
+    public ObservableList<Stagiaire> getStagiaire(){
+
+        //temporary search list
+        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
+
+        //String nom, String prenom, String annee
+        stagiaires.add(new Stagiaire("CUVILLIER", "Leonard", "2016"));
+        stagiaires.add(new Stagiaire("BENNIS","Amaniyy","2017"));
+        stagiaires.add(new Stagiaire("MOLINA","Giuliana","2017"));
+
+        return stagiaires;
+    }
+
+//    private ObservableList<Stagiaires> getStagiairesList(){
+//        LesStagiaires lesStag = new LesStagiaires("C:\\Users\\Formation\\Documents\\Projects\\Trainees-directory\\stagiaires.txt");
+//        List<Stagiaires> liste = lesStag.fabriqueVecteur();
+//        ObservableList<Stagiaires> list = FXCollections.observableArrayList(liste);
 //
 //        return list;
 //
@@ -159,4 +213,3 @@ public class Window extends Application {
     }
 
 }
-
