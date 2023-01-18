@@ -28,8 +28,6 @@ import static fr.eql.aicap.annuaire.Main.TXTFILE;
 
 public class Window extends Application {
 
-    Scene mainWindow;
-
     Scene sceneSearch, scene;
 
     //temporary table
@@ -118,6 +116,9 @@ public class Window extends Application {
 
         Button buttonConnexion = new Button("Se connecter");
 
+        //go to scene Rechercher
+        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
+
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
         //action bouton se connecter
@@ -132,6 +133,7 @@ public class Window extends Application {
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
 
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
 
@@ -166,7 +168,7 @@ public class Window extends Application {
                 windowCoGrille.add(Annee, 1, 2);
 
 
-                Label lblPrenom = new Label("Prénom :   ");
+                Label lblPrenom  = new Label("Prénom :   ");
                 windowCoGrille.add(lblPrenom, 0, 3);
                 TextField Prenom = new TextField();
                 windowCoGrille.add(Prenom, 1, 3);
@@ -207,11 +209,15 @@ public class Window extends Application {
         });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
+
             TextField dataLogin = new TextField();
+
             @Override
             public void handle(ActionEvent event) {
+
                 GridPane windowCoGrille = new GridPane();
                 Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+
                 // Nouvelle Fenêtre (Stage)
                 Stage windowCo = new Stage();
                 windowCo.setTitle("Fenêtre de connexion");
@@ -228,6 +234,7 @@ public class Window extends Application {
                 titre.setId("titreText"); //noeud pour CSS
                 windowCoGrille.add(titre, 1, 0, 2, 1);
 
+
                 Label labelLogin = new Label("Login");
                 windowCoGrille.add(labelLogin, 0, 1);
                 TextField textLogin = new TextField();
@@ -239,20 +246,11 @@ public class Window extends Application {
                 windowCoGrille.add(textPassword, 1, 2);
 
                 //Nouveau bouton
+
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1,3);
-//                btnCo.setOnAction(event1 -> mainPage.run());
                 windowCoGrille.add(btnCo, 1, 3);
-//                btnCo.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        WindowAdmin windowUserAdmin = new WindowAdmin();
-//                        Scene sceneAdmin = new Scene(windowUserAdmin.(), 800, 500);
-//                        Stage stageAdmin = new Stage();
-//                        stageAdmin.setScene(sceneAdmin);
-//                        stageAdmin.show();
-//                    }
-//                });
+//                btnCo.setOnAction(event1 -> mainPage.run());
+
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
@@ -315,13 +313,16 @@ public class Window extends Application {
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.getChildren().addAll(table, hbBtn);
 
-        Scene scene = new Scene(vbox);
+        scene = new Scene(vbox);
         primaryStage.setScene(scene);
         primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+        primaryStage.setTitle("Annuaire SQL");
+
         primaryStage.setTitle("Annuaire EQL");
     }
 
+    }
     private void buttonRechercheClicked() {
 
         //temporary search list
@@ -331,7 +332,6 @@ public class Window extends Application {
 
         stagiairesSelected.forEach(allStagiaires::remove);
     }
-
     public ObservableList<Stagiaire> getStagiaire(){
 
         //temporary search list
@@ -340,7 +340,6 @@ public class Window extends Application {
 
         return stagiaires;
     }
+}
 
-
-    }
 
