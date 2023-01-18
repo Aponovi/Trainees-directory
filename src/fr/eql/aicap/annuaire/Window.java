@@ -27,6 +27,8 @@ public class Window extends Application {
     //temporary table
     TableView<Stagiaire> tempTable;
 
+
+
     @Override
     public void start(Stage stage) throws IOException {
 
