@@ -37,28 +37,28 @@ import java.io.IOException;
                     new TableColumn<Stagiaire, Integer>("Année");
             anneeCol.setMinWidth(100);
             anneeCol.setCellValueFactory(
-                    new PropertyValueFactory<Stagiaire, Integer>("Année")
+                    new PropertyValueFactory<Stagiaire, Integer>("annee")
             );
 
             TableColumn<Stagiaire, String> nomCol =
                     new TableColumn<Stagiaire, String>("Nom");
             nomCol.setMinWidth(100);
             nomCol.setCellValueFactory(
-                    new PropertyValueFactory<Stagiaire, String>("Nom")
+                    new PropertyValueFactory<Stagiaire, String>("nom")
             );
 
             TableColumn<Stagiaire, String> prenomCol =
                     new TableColumn<Stagiaire, String>("Prénom");
             prenomCol.setMinWidth(100);
             prenomCol.setCellValueFactory(
-                    new PropertyValueFactory<Stagiaire, String>("Prénom")
+                    new PropertyValueFactory<Stagiaire, String>("prenom")
             );
 
             TableColumn<Stagiaire, Integer> dptCol =
                     new TableColumn<Stagiaire, Integer>("Département");
             dptCol.setMinWidth(100);
             dptCol.setCellValueFactory(
-                    new PropertyValueFactory<Stagiaire, Integer>("Département")
+                    new PropertyValueFactory<Stagiaire, Integer>("dpt")
             );
 
 
@@ -88,7 +88,7 @@ import java.io.IOException;
             stageAdmin.setScene(scene);
             stageAdmin.show();
             scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-            stageAdmin.setTitle("Annuaire SQL - User Admin");
+            stageAdmin.setTitle("Annuaire EQL - User Admin");
         }
 
     }

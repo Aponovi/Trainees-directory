@@ -1,9 +1,5 @@
 package fr.eql.aicap.annuaire;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -71,40 +67,61 @@ public class Stagiaire {
         return _promo + " " + _annee + " " + _nom + " " + _prenom + " " + _dpt;
     }
 
-    public void Add(String fichier_Binaire, BinaryTree binaryTree) {
+    public void add(String fichierBinaire, BinaryTree binaryTree) {
         //Méthode qui ajoute dans le fichier bin le stagiaire this
         try {
-            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             int focusTrainee = Bin_File.compteurStagiaire * Bin_File.LONGUEURSTAGIAIRE;
-            RandomAccessFile.seek(focusTrainee);
+            randomAccessFile.seek(focusTrainee);
             // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
             int leftchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
             int rightchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
-            RandomAccessFile.writeInt(leftchild);
-            RandomAccessFile.writeInt(rightchild);
+            randomAccessFile.writeInt(leftchild);
+            randomAccessFile.writeInt(rightchild);
             this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
-            RandomAccessFile.writeChars(this._promo);
+            randomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
-            RandomAccessFile.writeChars(this._annee);
+            randomAccessFile.writeChars(this._annee);
             this._nom = Bin_File.completer(this._nom, Bin_File.NOM);
-            RandomAccessFile.writeChars(this._nom);
+            randomAccessFile.writeChars(this._nom);
             this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
-            RandomAccessFile.writeChars(this._prenom);
+            randomAccessFile.writeChars(this._prenom);
             this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
-            RandomAccessFile.writeChars(this._dpt);
-            RandomAccessFile.close();
+            randomAccessFile.writeChars(this._dpt);
+            randomAccessFile.close();
             binaryTree.addNode(this._nom, focusTrainee);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void Delete(String fichier_Binaire, int pointerPosition) {
+    public void delete(String fichierBinaire, int pointerPosition) {
         //Méthode qui supprime dans le fichier bin le stagiaire this
     }
 
-    public void Update(String fichier_Binaire, int pointerPosition) {
+    public void update(String fichierBinaire, String keyname) {
         //Méthode qui modifie dans le fichier bin le stagiaire this
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
+            int focusTrainee = BinaryTree.findNode(keyname).address;
+            // RandomAccessFile.seek(focusTrainee);
+            // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
+            randomAccessFile.seek(focusTrainee);
+            this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
+            randomAccessFile.writeChars(this._promo);
+            this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
+            randomAccessFile.writeChars(this._annee);
+            int pointer = (int) randomAccessFile.getFilePointer();
+            focusTrainee = pointer + Bin_File.NOM;
+            randomAccessFile.seek(focusTrainee);
+            this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
+            randomAccessFile.writeChars(this._prenom);
+            this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
+            randomAccessFile.writeChars(this._dpt);
+            randomAccessFile.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
@@ -123,7 +140,7 @@ public class Stagiaire {
     }
 
 
-    public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
+    public static Stagiaire getSelect(String fichier_Binaire, int pointerPosition) {
         try {
             RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "r");
             int focusTrainee = pointerPosition + Bin_File.LEFTCHILD * 4 + Bin_File.RIGHTCHILD * 4; // int sur 4 bytes

@@ -13,9 +13,8 @@ public class Node {
     }
 
     public String toString() {
-        return  key + " has the adresse " + address;
+        return key + " has the adresse " + address;
     }
-
 
 
 //        /*********************
@@ -45,7 +44,5 @@ public class Node {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-
-
 
 }

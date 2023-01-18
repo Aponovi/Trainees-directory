@@ -1,7 +1,7 @@
 package fr.eql.aicap.annuaire;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.Normalizer;
 
 public class Bin_File {
     /******************************
@@ -24,12 +24,13 @@ public class Bin_File {
     private static int leftChild = 1; // 1 ==> pas de child
     private static int rightChild = 1; // 1 ==> pas de child
     RandomAccessFile RandomAccessFile;
-    public BinaryTree From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
+
+    public BinaryTree fromTxtToBin(String fichierTxt, String fichierBinaire) {
         try {
             BinaryTree binaryTree = new BinaryTree();
-            RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            RandomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             //BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichier_txt), "ISO-8859-1"));
-            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichier_txt), StandardCharsets.ISO_8859_1));
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fichierTxt), StandardCharsets.ISO_8859_1));
             compteurLigne = 0;
             // complete du leftchild
             String _leftChild = String.format("%0" + Integer.numberOfLeadingZeros(leftChild) + "d", leftChild);
@@ -81,9 +82,9 @@ public class Bin_File {
     /************************************
      * write nodes children in binary file *
      *************************************/
-    public void Add_Children_Addresses_into_Parent_Data(String fichier_Binaire,BinaryTree binaryTree) {
+    public void addChildrenAddressesIntoParentData(String fichierBinaire, BinaryTree binaryTree) {
         try {
-            RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            RandomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             int focusTrainee = ADRESSBIGINNINGNAME;
             int nbnoeud = 0;
             String focusTraineeName = "";
@@ -116,13 +117,9 @@ public class Bin_File {
         }
     }
 
-    /**********************************
-     * visual check binary tree *
-     **********************************/
-//
-    public void Visual_Check_of_binary_tree(String fichier_Binaire) {
+    public void visualCheckOfBinaryTree(String fichierBinaire) {
         try {
-            RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            RandomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             for (int j = 0; j < 30; j++) {
                 System.out.println("Avant lecture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
                 RandomAccessFile.seek(395044);
@@ -143,42 +140,7 @@ public class Bin_File {
             throw new RuntimeException(e);
         }
     }
-    /*********************
-     * find trainee data in the binary file to create a trainee instance *
-     ***********************/
-    /*public Stagiaire Select_Trainee(String fichier_Binaire, int pointerPosition) {
-        try {
-            RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            int focusTrainee = pointerPosition + 8;
-            String formationStagiaires = "";
-            String anneeFormationStagiaire = "";
-            String nomStagiaire = "";
-            String prenomStagiaire = "";
-            String departementStagiaire = "";
-            RandomAccessFile.seek(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-            for (int i = 0; i < 50; i++) {
-                formationStagiaires += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 4; i++) {
-                anneeFormationStagiaire += RandomAccessFile.readChar();
-                // System.out.println(anneeFormationStagiaire + "boucle" + i);
-            }
-            for (int i = 0; i < 40; i++) {
-                nomStagiaire += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 40; i++) {
-                prenomStagiaire += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 4; i++) {
-                departementStagiaire += RandomAccessFile.readChar();
-            }
-            RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires, anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
+
     public static String completer(String mot, int taille) {
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {
