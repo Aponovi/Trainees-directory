@@ -1,9 +1,7 @@
 package fr.eql.aicap.annuaire;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 
 import javafx.application.Application;
 
