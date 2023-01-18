@@ -143,42 +143,7 @@ public class Bin_File {
             throw new RuntimeException(e);
         }
     }
-    /*********************
-     * find trainee data in the binary file to create a trainee instance *
-     ***********************/
-    /*public Stagiaire Select_Trainee(String fichier_Binaire, int pointerPosition) {
-        try {
-            RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
-            int focusTrainee = pointerPosition + 8;
-            String formationStagiaires = "";
-            String anneeFormationStagiaire = "";
-            String nomStagiaire = "";
-            String prenomStagiaire = "";
-            String departementStagiaire = "";
-            RandomAccessFile.seek(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
-            for (int i = 0; i < 50; i++) {
-                formationStagiaires += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 4; i++) {
-                anneeFormationStagiaire += RandomAccessFile.readChar();
-                // System.out.println(anneeFormationStagiaire + "boucle" + i);
-            }
-            for (int i = 0; i < 40; i++) {
-                nomStagiaire += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 40; i++) {
-                prenomStagiaire += RandomAccessFile.readChar();
-            }
-            for (int i = 0; i < 4; i++) {
-                departementStagiaire += RandomAccessFile.readChar();
-            }
-            RandomAccessFile.close();
-            return new Stagiaire(formationStagiaires, anneeFormationStagiaire, nomStagiaire, prenomStagiaire, departementStagiaire);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
+
     public static String completer(String mot, int taille) {
         int nbEspace = taille - mot.length();
         for (int i = 0; i < nbEspace; i++) {

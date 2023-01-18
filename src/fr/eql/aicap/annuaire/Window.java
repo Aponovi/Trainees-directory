@@ -2,8 +2,6 @@ package fr.eql.aicap.annuaire;
 
 
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -24,7 +22,6 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static fr.eql.aicap.annuaire.Main.*;
 
@@ -53,9 +50,7 @@ public class Window extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-
-
+    public void start(Stage stage) throws IOException {
         Bin_File Bin_File = new Bin_File();
         BinaryTree binaryTree = Bin_File.From_Txt_To_Bin(TXTFILE, BINARYFILE);
         Bin_File.Add_Children_Addresses_into_Parent_Data(BINARYFILE, binaryTree);
@@ -67,8 +62,7 @@ public class Window extends Application {
         TableView<Stagiaire> table = new TableView<Stagiaire>();
         table.setEditable(true);
 
-        //Label label = new Label("Liste des stagiaires");
-
+        Label label = new Label("Liste des stagiaires");
         //Création des 5 colonnes
         TableColumn<Stagiaire, String> promoCol =
                 new TableColumn<Stagiaire, String>("Promotion");
@@ -116,7 +110,7 @@ public class Window extends Application {
         Button buttonConnexion = new Button("Se connecter");
 
         //go to scene Rechercher
-        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
+        buttonSearch.setOnAction(e -> stage.setScene(sceneSearch));
 
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
@@ -136,19 +130,19 @@ public class Window extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                GridPane windowCoGrille = new GridPane();
-                Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+                GridPane windowAddGrille = new GridPane();
+                Scene windowAddScene = new Scene(windowAddGrille, 500, 300);
 
                 // Nouvelle Fenêtre (Stage)
-                Stage windowCo = new Stage();
-                windowCo.setTitle("Ajouter un stagiaire");
-                windowCo.setScene(windowCoScene);
+                Stage windowAdd = new Stage();
+                windowAdd.setTitle("Ajouter un stagiaire");
+                windowAdd.setScene(windowAddScene);
 
                 // GridPane Layout
-                windowCoGrille.setAlignment(Pos.CENTER);
-                windowCoGrille.setHgap(10);
-                windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
+                windowAddGrille.setAlignment(Pos.CENTER);
+                windowAddGrille.setHgap(10);
+                windowAddGrille.setVgap(10);
+                windowAddGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
 
@@ -156,49 +150,82 @@ public class Window extends Application {
                 // Création des champs de texte
 
                 Label lblPromo = new Label("Promotion :   ");
-                windowCoGrille.add(lblPromo, 0, 1);
+                windowAddGrille.add(lblPromo, 0, 1);
                 TextField Promo = new TextField();
-                windowCoGrille.add(Promo, 1, 1);
+                windowAddGrille.add(Promo, 1, 1);
 
 
                 Label lblAnnee = new Label("Année :   ");
-                windowCoGrille.add(lblAnnee, 0, 2);
+                windowAddGrille.add(lblAnnee, 0, 2);
                 TextField Annee = new TextField();
-                windowCoGrille.add(Annee, 1, 2);
+                windowAddGrille.add(Annee, 1, 2);
 
 
                 Label lblPrenom = new Label("Prénom :   ");
-                windowCoGrille.add(lblPrenom, 0, 3);
+                windowAddGrille.add(lblPrenom, 0, 3);
                 TextField Prenom = new TextField();
-                windowCoGrille.add(Prenom, 1, 3);
+                windowAddGrille.add(Prenom, 1, 3);
+
 
                 Label lblNom = new Label("Nom :   ");
-                windowCoGrille.add(lblNom, 0, 4);
+                windowAddGrille.add(lblNom, 0, 4);
                 TextField Nom = new TextField();
-                windowCoGrille.add(Nom, 1, 4);
+                windowAddGrille.add(Nom, 1, 4);
+
 
                 Label lblDpt = new Label("Département :   ");
-                windowCoGrille.add(lblDpt, 0, 5);
+                windowAddGrille.add(lblDpt, 0, 5);
                 TextField Dpt = new TextField();
-                windowCoGrille.add(Dpt, 1, 5);
+                windowAddGrille.add(Dpt, 1, 5);
 
-                //Nouveau bouton
+
+                //Nouveaux boutons
+
                 Button btnValider = new Button("Valider");
-                windowCoGrille.add(btnValider, 0, 6);
+                windowAddGrille.add(btnValider, 0, 6);
 
                 Button btnAnnuler = new Button("Annuler");
-                windowCoGrille.add(btnAnnuler, 1, 6);
+                windowAddGrille.add(btnAnnuler, 1, 6);
 
 
-                // Définir la position de la nouvelle fenetre
-                //relativement à la fenetre principale.
-                windowCo.setX(primaryStage.getX() + 200);
-                windowCo.setY(primaryStage.getY() + 100);
+                // Définir la position de la nouvelle fenetre relativement à la fenetre principale.
+                windowAdd.setX(stage.getX() + 200);
+                windowAdd.setY(stage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
-                windowCo.show();
-                windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+                windowAdd.show();
+                windowAddScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+
+                // fermer la fenetre en cliquant sur annuler
+                btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        windowAdd.close();
+                    }
+                });
+
+                // Ajouter du nouveau stagiaire à la liste des stagiaires
+                btnValider.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+
+                        //Code ajout stagiaire
+                        Stagiaire stg = new Stagiaire(Promo.getText(), Annee.getText(), Nom.getText(), Prenom.getText(), Dpt.getText());
+                        stg.Add(BINARYFILE, binaryTree);
+                        Refresh_List(binaryTree, table);
+
+                        windowAdd.close();
+
+
+                    }
+
+                });
+
 
             }
+
+            ;
+
+
         });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
@@ -242,12 +269,23 @@ public class Window extends Application {
 
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1, 3);
-                //btnCo.setOnAction(event1 -> mainPage.run());
 
-                // Définir la position de la nouvelle fenetre
+                Button btnCancel = new Button("Annuler");
+                windowCoGrille.add(btnCancel, 2, 3);
+
+                // fermer la fenetre en cliquant sur annuler
+                btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        windowCo.close();
+                    }
+                });
+
+
+                //Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
-                windowCo.setX(primaryStage.getX() + 200);
-                windowCo.setY(primaryStage.getY() + 100);
+                windowCo.setX(stage.getX() + 200);
+                windowCo.setY(stage.getY() + 100);
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
@@ -260,6 +298,7 @@ public class Window extends Application {
         //search button
         Button buttonRecherche = new Button("Rechercher");
         //buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
 
         //search box _by nom
         TextField nomTextField = new TextField();
@@ -308,7 +347,7 @@ public class Window extends Application {
 
         //return button
         Button buttonReturn = new Button("Return");
-        buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
+        buttonReturn.setOnAction(e -> stage.setScene(scene));
 
         //temporary search table
         tempTable = new TableView<>();
@@ -330,9 +369,9 @@ public class Window extends Application {
 
         sceneSearch = new Scene(layoutRec);
         //stage.setScene(sceneSearch);
-        primaryStage.show();
+        stage.show();
         sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        primaryStage.setTitle("Recherche");
+        stage.setTitle("Recherche");
 
         // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
 
@@ -343,13 +382,12 @@ public class Window extends Application {
         vbox.getChildren().addAll(table, hbBtn);
 
         scene = new Scene(vbox);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        primaryStage.setTitle("Annuaire SQL");
-
-
+        stage.setTitle("Annuaire SQL");
     }
+
 
 }
 
