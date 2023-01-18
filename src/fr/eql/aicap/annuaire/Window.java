@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,12 +116,92 @@ public class Window extends Application {
             }
         });
 
-        buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
+        buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
+
             TextField dataLogin = new TextField();
             @Override
             public void handle(ActionEvent event) {
+
                 GridPane windowCoGrille = new GridPane();
                 Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+
+                // Nouvelle Fenêtre (Stage)
+                Stage windowCo = new Stage();
+                windowCo.setTitle("Ajouter un stagiaire");
+                windowCo.setScene(windowCoScene);
+
+                // GridPane Layout
+                windowCoGrille.setAlignment(Pos.CENTER);
+                windowCoGrille.setHgap(10);
+                windowCoGrille.setVgap(10);
+                windowCoGrille.setPadding(new Insets(20,20,20,20));
+
+                //Remplir la grille
+
+                // Création des labels
+                // Création des champs de texte
+
+                Label lblPromo = new Label("Promotion :   ");
+                windowCoGrille.add(lblPromo, 0, 1);
+                TextField Promo = new TextField();
+                windowCoGrille.add(Promo, 1, 1);
+
+
+                Label lblAnnee = new Label("Année :   ");
+                windowCoGrille.add(lblAnnee, 0, 2);
+                TextField Annee = new TextField();
+                windowCoGrille.add(Annee, 1, 2);
+
+
+                Label lblPrenom  = new Label("Prénom :   ");
+                windowCoGrille.add(lblPrenom, 0, 3);
+                TextField Prenom = new TextField();
+                windowCoGrille.add(Prenom, 1, 3);
+
+
+                Label lblNom = new Label("Nom :   ");
+                windowCoGrille.add(lblNom, 0, 4);
+                TextField Nom = new TextField();
+                windowCoGrille.add(Nom, 1, 4);
+
+
+                Label lblDpt  = new Label("Département :   ");
+                windowCoGrille.add(lblDpt, 0, 5);
+                TextField Dpt = new TextField();
+                windowCoGrille.add(Dpt, 1, 5);
+
+
+                //Nouveau bouton
+
+                Button btnValider = new Button("Valider");
+                windowCoGrille.add(btnValider, 0,6);
+
+                Button btnAnnuler = new Button("Annuler");
+                windowCoGrille.add(btnAnnuler, 1,6);
+
+
+                // Définir la position de la nouvelle fenetre
+                //relativement à la fenetre principale.
+                windowCo.setX(stage.getX() + 200);
+                windowCo.setY(stage.getY() + 100);
+                //Affichage de la nouvelle fenêtre
+                windowCo.show();
+                windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+
+
+
+            }
+        });
+
+        buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
+
+            TextField dataLogin = new TextField();
+            @Override
+            public void handle(ActionEvent event) {
+
+                GridPane windowCoGrille = new GridPane();
+                Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+
                 // Nouvelle Fenêtre (Stage)
                 Stage windowCo = new Stage();
                 windowCo.setTitle("Fenêtre de connexion");
@@ -130,26 +211,28 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
+                windowCoGrille.setPadding(new Insets(20,20,20,20));
 
                 //Remplir la grille
                 Text titre = new Text("Connectez-vous");
                 titre.setId("titreText"); //noeud pour CSS
-                windowCoGrille.add(titre, 1, 0, 2, 1);
+                    windowCoGrille.add(titre, 1,0,2,1);
+
 
                 Label labelLogin = new Label("Login");
-                windowCoGrille.add(labelLogin, 0, 1);
+                    windowCoGrille.add(labelLogin, 0, 1);
                 TextField textLogin = new TextField();
-                windowCoGrille.add(textLogin, 1, 1);
+                    windowCoGrille.add(textLogin, 1, 1);
 
                 Label labelPassword = new Label("Password");
-                windowCoGrille.add(labelPassword, 0, 2);
+                    windowCoGrille.add(labelPassword, 0, 2);
                 TextField textPassword = new TextField();
-                windowCoGrille.add(textPassword, 1, 2);
+                    windowCoGrille.add(textPassword, 1, 2);
 
                 //Nouveau bouton
+
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1, 3);
+                windowCoGrille.add(btnCo, 1,3);
 //                btnCo.setOnAction(new EventHandler<ActionEvent>() {
 //                    @Override
 //                    public void handle(ActionEvent event) {
@@ -161,6 +244,8 @@ public class Window extends Application {
 //                    }
 //                });
 
+
+
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(stage.getX() + 200);
@@ -168,13 +253,16 @@ public class Window extends Application {
                 //Affichage de la nouvelle fenêtre
                 windowCo.show();
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+
+
+
             }
         });
 
         VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.getChildren().addAll(table, hbBtn);
+        vbox.setPadding(new Insets(10 ,10,10,10));
+        vbox.getChildren().addAll(table,hbBtn);
 
         Scene scene = new Scene(vbox);
         stage.setScene(scene);
@@ -185,20 +273,11 @@ public class Window extends Application {
 }
 
 
+    }
 
-//    private ObservableList<Stagiaire> getStagiaireList(List StagiairesListForJulie){
-//
-//        List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
-//        ObservableList<Stagiaire> list = ;
-//        System.out.println(Trainees_List);
-//        return list;
-//
-//
-//    }
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
 
-//    public static void main(String[] args) {
-//        Application.launch(args);
-//    }
-//
-//}
+}
 
