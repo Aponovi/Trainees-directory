@@ -26,60 +26,69 @@ import java.util.List;
 
 public class Window extends Application {
 
-
     @Override
     public void start(Stage stage) throws IOException {
 
+        ObservableList<Stagiaire> data = getStagiaireList();
 
-       ObservableList<Stagiaire> data = getStagiaireList();
 
-        //Création Table
+        //Création de la table
         TableView<Stagiaire> table = new TableView<Stagiaire>();
         table.setEditable(true);
 
         Label label = new Label("Liste des stagiaires");
 
-        //Création des 5colonnes
 
+        //Création des cinq colonnes
         TableColumn<Stagiaire, String> promoCol =
                 new TableColumn<Stagiaire, String>("Promotion");
         promoCol.setMinWidth(100);
+        //Spécifier comment remplir la donnée pour chaque cellule de cette colonne
+        //Ceci se fait en specifiant un "cell value factory" pour cette colonne.
         promoCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, String>("promo"));
+                new PropertyValueFactory<Stagiaire, String>("Promotion"));
+
 
         TableColumn<Stagiaire, String> anneeCol =
                 new TableColumn<Stagiaire, String>("Année");
         anneeCol.setMinWidth(100);
         anneeCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, String>("Année")
-        );
+                new PropertyValueFactory<Stagiaire, String>("Année"));
+
 
         TableColumn<Stagiaire, String> nomCol =
                 new TableColumn<Stagiaire, String>("Nom");
         nomCol.setMinWidth(100);
         nomCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, String>("Nom")
-        );
+                new PropertyValueFactory<Stagiaire, String>("Nom"));
+
 
         TableColumn<Stagiaire, String> prenomCol =
                 new TableColumn<Stagiaire, String>("Prénom");
         prenomCol.setMinWidth(100);
         prenomCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, String>("Prénom")
-        );
+                new PropertyValueFactory<Stagiaire, String>("Prénom"));
+
 
         TableColumn<Stagiaire, String> dptCol =
                 new TableColumn<Stagiaire, String>("Département");
         dptCol.setMinWidth(100);
         dptCol.setCellValueFactory(
-                new PropertyValueFactory<Stagiaire, String>("Département")
-        );
+                new PropertyValueFactory<Stagiaire, String>("Département"));
 
 
-        // ajout des colonnes à la table
+        //spécifier une préférence de tri pour cette colonne
+        nomCol.setSortType(TableColumn.SortType.ASCENDING);
+        nomCol.setSortType(TableColumn.SortType.DESCENDING);
 
-        table.getColumns().addAll(promoCol,nomCol,prenomCol, anneeCol,dptCol);
+
+
+        //On ajoute les cinq colonnes à la table
+        table.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
+
+        //On rempli la table avec la liste observable
         table.setItems(data);
+
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -91,6 +100,83 @@ public class Window extends Application {
         hbBtn.getChildren().addAll(buttonAdd, buttonExport, buttonSearch, buttonConnexion);
 
         //action bouton se connecter
+
+        buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
+
+            TextField dataLogin = new TextField();
+            @Override
+            public void handle(ActionEvent event) {
+
+                GridPane windowCoGrille = new GridPane();
+                Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+
+                // Nouvelle Fenêtre (Stage)
+                Stage windowCo = new Stage();
+                windowCo.setTitle("Ajouter un stagiaire");
+                windowCo.setScene(windowCoScene);
+
+                // GridPane Layout
+                windowCoGrille.setAlignment(Pos.CENTER);
+                windowCoGrille.setHgap(10);
+                windowCoGrille.setVgap(10);
+                windowCoGrille.setPadding(new Insets(20,20,20,20));
+
+                //Remplir la grille
+
+                // Création des labels
+                // Création des champs de texte
+
+                Label lblPromo = new Label("Promotion :   ");
+                windowCoGrille.add(lblPromo, 0, 1);
+                TextField Promo = new TextField();
+                windowCoGrille.add(Promo, 1, 1);
+
+
+                Label lblAnnee = new Label("Année :   ");
+                windowCoGrille.add(lblAnnee, 0, 2);
+                TextField Annee = new TextField();
+                windowCoGrille.add(Annee, 1, 2);
+
+
+                Label lblPrenom  = new Label("Prénom :   ");
+                windowCoGrille.add(lblPrenom, 0, 3);
+                TextField Prenom = new TextField();
+                windowCoGrille.add(Prenom, 1, 3);
+
+
+                Label lblNom = new Label("Nom :   ");
+                windowCoGrille.add(lblNom, 0, 4);
+                TextField Nom = new TextField();
+                windowCoGrille.add(Nom, 1, 4);
+
+
+                Label lblDpt  = new Label("Département :   ");
+                windowCoGrille.add(lblDpt, 0, 5);
+                TextField Dpt = new TextField();
+                windowCoGrille.add(Dpt, 1, 5);
+
+
+                //Nouveau bouton
+
+                Button btnValider = new Button("Valider");
+                windowCoGrille.add(btnValider, 0,6);
+
+                Button btnAnnuler = new Button("Annuler");
+                windowCoGrille.add(btnAnnuler, 1,6);
+
+
+                // Définir la position de la nouvelle fenetre
+                //relativement à la fenetre principale.
+                windowCo.setX(stage.getX() + 200);
+                windowCo.setY(stage.getY() + 100);
+                //Affichage de la nouvelle fenêtre
+                windowCo.show();
+                windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+
+
+
+            }
+        });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -110,40 +196,28 @@ public class Window extends Application {
                 windowCoGrille.setAlignment(Pos.CENTER);
                 windowCoGrille.setHgap(10);
                 windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20,20,20,20));
+                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
 
                 //Remplir la grille
                 Text titre = new Text("Connectez-vous");
                 titre.setId("titreText"); //noeud pour CSS
-                    windowCoGrille.add(titre, 1,0,2,1);
+                windowCoGrille.add(titre, 1, 0, 2, 1);
 
 
                 Label labelLogin = new Label("Login");
-                    windowCoGrille.add(labelLogin, 0, 1);
+                windowCoGrille.add(labelLogin, 0, 1);
                 TextField textLogin = new TextField();
-                    windowCoGrille.add(textLogin, 1, 1);
+                windowCoGrille.add(textLogin, 1, 1);
 
                 Label labelPassword = new Label("Password");
-                    windowCoGrille.add(labelPassword, 0, 2);
+                windowCoGrille.add(labelPassword, 0, 2);
                 TextField textPassword = new TextField();
-                    windowCoGrille.add(textPassword, 1, 2);
+                windowCoGrille.add(textPassword, 1, 2);
 
                 //Nouveau bouton
 
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1,3);
-//                btnCo.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        WindowAdmin windowUserAdmin = new WindowAdmin();
-//                        Scene sceneAdmin = new Scene(windowUserAdmin.(), 800, 500);
-//                        Stage stageAdmin = new Stage();
-//                        stageAdmin.setScene(sceneAdmin);
-//                        stageAdmin.show();
-//                    }
-//                });
-
-
+                windowCoGrille.add(btnCo, 1, 3);
 
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
@@ -154,8 +228,8 @@ public class Window extends Application {
                 windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
 
 
-
             }
+
         });
 
         VBox vbox = new VBox();
@@ -180,9 +254,6 @@ public class Window extends Application {
 
     }
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
+    public static void main(String[] args) { Application.launch(args); }
 }
 
