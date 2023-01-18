@@ -20,6 +20,10 @@ import javafx.scene.text.Text;
 
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,6 +200,24 @@ public class Window extends Application {
                         windowAdd.close();
                     }
                 });
+
+                // Ajouter du nouveau stagiaire à la liste des stagiaires
+                btnValider.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+
+                        //Code ajout stagiaire
+                        Stagiaire stg = new Stagiaire(Promo.getText(), Annee.getText(), Nom.getText(), Prenom.getText(), Dpt.getText());
+                        stg.Add(BINARYFILE,binaryTree);
+                        Refresh_List(binaryTree,table);
+
+                        windowAdd.close();
+
+
+                    }
+
+                });
+
 
 
 
