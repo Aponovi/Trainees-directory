@@ -274,9 +274,20 @@ public class Window extends Application {
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1,3);
 
+                Button btnCancel = new Button("Annuler");
+                windowCoGrille.add(btnCancel, 2,3);
+
+                // fermer la fenetre en cliquant sur annuler
+                btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        windowCo.close();
+                    }
+                });
 
 
-                // Définir la position de la nouvelle fenetre
+
+                //Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(stage.getX() + 200);
                 windowCo.setY(stage.getY() + 100);
