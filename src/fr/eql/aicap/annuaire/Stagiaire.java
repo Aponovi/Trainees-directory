@@ -22,6 +22,13 @@ public class Stagiaire {
         this._dpt = dpt;
     }
 
+    //temporary constructer
+    public Stagiaire(String nom, String prenom, String annee) {
+        this._annee = annee;
+        this._nom = nom;
+        this._prenom = prenom;
+    }
+
     //méthodes d'accès aux variables d'instance
     public String getPromo() {
         return _promo;

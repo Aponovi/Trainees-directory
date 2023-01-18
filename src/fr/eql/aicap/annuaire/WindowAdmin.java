@@ -1,5 +1,6 @@
 package fr.eql.aicap.annuaire;
 
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,12 +11,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 
-import java.io.*;;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;
