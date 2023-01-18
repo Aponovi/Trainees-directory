@@ -23,7 +23,7 @@ public class Bin_File {
     private static int leftChild = 1; // 1 ==> pas de child
     private static int rightChild = 1; // 1 ==> pas de child
     RandomAccessFile RandomAccessFile;
-    public BinaryTree theTree = new BinaryTree();
+    public static BinaryTree theTree = new BinaryTree();
 
     public void From_Txt_To_Bin(String fichier_txt, String fichier_Binaire) {
         try {

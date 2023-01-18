@@ -23,6 +23,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.eql.aicap.annuaire.Main.BINARYFILE;
+
 
 public class Window extends Application {
 
@@ -31,7 +33,7 @@ public class Window extends Application {
     public void start(Stage stage) throws IOException {
 
 
-       ObservableList<Stagiaire> data = getStagiaireList();
+       ObservableList<Stagiaire> data = getStagiaireList(BINARYFILE, Bin_File.theTree);
 
         //Création Table
         TableView<Stagiaire> table = new TableView<Stagiaire>();
@@ -170,11 +172,11 @@ public class Window extends Application {
         stage.setTitle("Annuaire SQL");
     }
 
-    private ObservableList<Stagiaire> getStagiaireList(){
+    private ObservableList<Stagiaire> getStagiaireList(String fichier_Binaire, BinaryTree theTree){
 
         List<Stagiaire> Trainees_List = new ArrayList<Stagiaire>();
-        ObservableList<Stagiaire> list = FXCollections.observableArrayList(Trainees_List);
-        System.out.println(Trainees_List);
+        ObservableList<Stagiaire> list = FXCollections.observableArrayList(Stagiaire.Trainees_List(Main.BINARYFILE, theTree));
+
         return list;
 
 
