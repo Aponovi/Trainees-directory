@@ -28,10 +28,23 @@ Le Super-Admin peut additionnellement:
 * Supprimer des identifiants administrateur
 
 
-## Implémentés
+## Fonctionalités implémentées
 
 1. Ouverture de la page principale de l'application avec la liste visible par ordre alphabétique.
 
-![This is an image](/base.png)
+![base](/base.PNG)
+
+2. Recherche multi-critères
+
+![base](/search.PNG)
+
+3. Ajout de stagiaire
+
+![base](/add.PNG)
+
+4. Ouverture d'une pop-up de connexion
+
+![base](/co.PNG)
+
 
 
