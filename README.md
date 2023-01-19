@@ -30,6 +30,8 @@ Le Super-Admin peut additionnellement:
 
 ## Implémentés
 
-1. 
+1. Ouverture de la page principale de l'application avec la liste visible par ordre alphabétique.
+
+![This is an image](/base.png)
 
 
