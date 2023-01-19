@@ -251,7 +251,7 @@ public class Window extends Application {
 
         //go to scene Rechercher
         buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonExport, buttonSearch, buttonConnexion);
+        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonExport, buttonConnexion);
 
         //action bouton se connecter
 
