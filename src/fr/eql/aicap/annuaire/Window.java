@@ -298,8 +298,6 @@ public class Window extends Application {
                 //Nouveau bouton
                 Button btnCo = new Button("Connexion");
                 Button btnAnnuler = new Button("Annuler");
-//                windowCoGrille.add(btnCo, 1, 3);
-//                windowCoGrille.add(btnAnnuler, 2, 3);
                 windowCoGrille.addRow(3, btnCo, btnAnnuler);
                 btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
