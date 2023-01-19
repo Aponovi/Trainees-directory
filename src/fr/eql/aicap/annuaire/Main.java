@@ -12,15 +12,10 @@ public class Main {
     public static final String TXTFILE = "files/stagiaires.txt";
     public static BinaryTree binaryTree = null;
 
-
     public static void main(String[] args) {
-
         File folder = new File(FOLDER);
         folder.mkdir();
-
-
         Application.launch(Window.class, args);
-        //Bin_File.Visual_Check_of_binary_tree(BINARYFILE);
     }
 }
 

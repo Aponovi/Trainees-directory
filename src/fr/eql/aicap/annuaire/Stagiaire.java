@@ -88,7 +88,7 @@ public class Stagiaire {
             randomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
             randomAccessFile.writeChars(this._annee);
-            this._nom = Bin_File.completer(this._nom, Bin_File.NOM);
+            this._nom = Bin_File.completer(this._nom.toUpperCase(), Bin_File.NOM);
             randomAccessFile.writeChars(this._nom);
             this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
             randomAccessFile.writeChars(this._prenom);
@@ -144,7 +144,7 @@ public class Stagiaire {
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
         // System.out.println("la list dans la fonction " + Trainees_List);
         if (Nom_Filtre != "") {
-            return Trainees_List.stream().filter(c -> c._nom.contains(Nom_Filtre)).collect(Collectors.toList());
+            return Trainees_List.stream().filter(c -> c._nom.toUpperCase().contains(Nom_Filtre.toUpperCase())).collect(Collectors.toList());
         } else {
             return Trainees_List;
         }
