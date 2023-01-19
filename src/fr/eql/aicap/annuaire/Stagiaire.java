@@ -1,13 +1,10 @@
 package fr.eql.aicap.annuaire;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Stagiaire {
     private String _promo;
@@ -25,6 +22,11 @@ public class Stagiaire {
         this._prenom = prenom;
         this._dpt = dpt;
     }
+
+    public Stagiaire() {
+
+    }
+
 
     //méthodes d'accès aux variables d'instance
     public String getPromo() {
@@ -71,40 +73,64 @@ public class Stagiaire {
         return _promo + " " + _annee + " " + _nom + " " + _prenom + " " + _dpt;
     }
 
-    public void Add(String fichier_Binaire, BinaryTree binaryTree) {
+    public void add(String fichierBinaire, BinaryTree binaryTree) {
         //Méthode qui ajoute dans le fichier bin le stagiaire this
         try {
-            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "rw");
+            RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             int focusTrainee = Bin_File.compteurStagiaire * Bin_File.LONGUEURSTAGIAIRE;
-            RandomAccessFile.seek(focusTrainee);
+            randomAccessFile.seek(focusTrainee);
             // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
             int leftchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
             int rightchild = Integer.parseInt(String.format("%0" + Integer.numberOfLeadingZeros(1) + "d", 1));
-            RandomAccessFile.writeInt(leftchild);
-            RandomAccessFile.writeInt(rightchild);
+            randomAccessFile.writeInt(leftchild);
+            randomAccessFile.writeInt(rightchild);
             this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
-            RandomAccessFile.writeChars(this._promo);
+            randomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
-            RandomAccessFile.writeChars(this._annee);
+            randomAccessFile.writeChars(this._annee);
             this._nom = Bin_File.completer(this._nom, Bin_File.NOM);
-            RandomAccessFile.writeChars(this._nom);
+            randomAccessFile.writeChars(this._nom);
             this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
-            RandomAccessFile.writeChars(this._prenom);
+            randomAccessFile.writeChars(this._prenom);
             this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
-            RandomAccessFile.writeChars(this._dpt);
-            RandomAccessFile.close();
+            randomAccessFile.writeChars(this._dpt);
+            randomAccessFile.close();
             binaryTree.addNode(this._nom, focusTrainee);
+            Bin_File.compteurStagiaire += 1;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void Delete(String fichier_Binaire, int pointerPosition) {
+    public void delete(String fichierBinaire, int pointerPosition) {
         //Méthode qui supprime dans le fichier bin le stagiaire this
     }
 
-    public void Update(String fichier_Binaire, int pointerPosition) {
+    public void update(String fichierBinaire) {
         //Méthode qui modifie dans le fichier bin le stagiaire this
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
+            int focusTrainee = BinaryTree.findNode(Bin_File.completer(this._nom, Bin_File.NOM)).address;
+            // RandomAccessFile.seek(focusTrainee);
+            // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
+            randomAccessFile.seek(focusTrainee + Bin_File.RIGHTCHILD * 4 + Bin_File.LEFTCHILD * 4);
+            this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
+            randomAccessFile.writeChars(this._promo);
+            this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
+            randomAccessFile.writeChars(this._annee);
+            int pointer = (int) randomAccessFile.getFilePointer();
+            focusTrainee = pointer + Bin_File.NOM * 2;
+            randomAccessFile.seek(focusTrainee);
+            this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
+            randomAccessFile.writeChars(this._prenom);
+            this._dpt = Bin_File.completer(this._dpt, Bin_File.DEPARTEMENT);
+            randomAccessFile.writeChars(this._dpt);
+            randomAccessFile.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree binaryTree) {
@@ -114,26 +140,18 @@ public class Stagiaire {
 
     public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree binaryTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
-        int pointer = 0;
         List<Stagiaire> Trainees_List = new ArrayList<>();
-        Stagiaire traineeToAddInList = null;
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
-
-        /*for (int i = 0; i < Bin_File.compteurStagiaire; i++) {
-            traineeToAddInList = GetSelect(fichier_Binaire, pointer);
-            Trainees_List.add(traineeToAddInList);
-            // System.out.println("compteur stagaires" + i);
-            pointer += Bin_File.LONGUEURSTAGIAIRE;
-        }*/
-        System.out.println("la list dans la fonction " + Trainees_List);
-        return Trainees_List;
-        //ObservableList<Stagiaire> OrderList = FXCollections.observableArrayList(Trainees_List);
-        //System.out.println("la orderlist " + OrderList);
-        //return OrderList;
+        // System.out.println("la list dans la fonction " + Trainees_List);
+        if (Nom_Filtre != "") {
+            return Trainees_List.stream().filter(c -> c._nom.contains(Nom_Filtre)).collect(Collectors.toList());
+        } else {
+            return Trainees_List;
+        }
     }
 
 
-    public static Stagiaire GetSelect(String fichier_Binaire, int pointerPosition) {
+    public static Stagiaire getSelect(String fichier_Binaire, int pointerPosition) {
         try {
             RandomAccessFile RandomAccessFile = new RandomAccessFile(fichier_Binaire, "r");
             int focusTrainee = pointerPosition + Bin_File.LEFTCHILD * 4 + Bin_File.RIGHTCHILD * 4; // int sur 4 bytes
@@ -143,7 +161,6 @@ public class Stagiaire {
             String prenomStagiaire = "";
             String departementStagiaire = "";
             RandomAccessFile.seek(focusTrainee);
-            // System.out.println("Avant lecture le pointeur se situe sur la position : " + stagiaires.getFilePointer());
             for (int i = 0; i < 50; i++) {
                 formationStagiaires += RandomAccessFile.readChar();
             }
@@ -160,12 +177,6 @@ public class Stagiaire {
             for (int i = 0; i < 4; i++) {
                 departementStagiaire += RandomAccessFile.readChar();
             }
-//                System.out.println("stagiaire : "
-//                        + formationStagiaires + " "
-//                        + anneeFormationStagiaire + ""
-//                        + nomStagiaire + ""
-//                        + prenomStagiaire + ""
-//                        + departementStagiaire);
             formationStagiaires = (formationStagiaires.replaceAll("\\s+", ""));
             anneeFormationStagiaire = (anneeFormationStagiaire.replaceAll("\\s+", ""));
             nomStagiaire = (nomStagiaire.replaceAll("\\s+", ""));
@@ -176,5 +187,36 @@ public class Stagiaire {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String verif() {
+        String mess_err = "";
+        if (this._promo.length() == 0) {
+            mess_err += "La promotion doit être saisie.\n";
+        } else if (this._promo.length() > Bin_File.PROMO) {
+            mess_err += "La promotion est trop longue.\n";
+        }
+        if (this._annee.length() == 0) {
+            mess_err += "L'année doit être saisie.\n";
+        } else if (this._annee.length() > Bin_File.ANNEE) {
+            mess_err += "L'année est trop longue.\n";
+        }
+        if (this._dpt.length() == 0) {
+            mess_err += "Le département doit être saisie.\n";
+        } else if (this._dpt.length() > Bin_File.DEPARTEMENT) {
+            mess_err += "Le département est trop long.\n";
+        }
+        if (this._nom.length() == 0) {
+            mess_err += "Le nom doit être saisie.\n";
+        } else if (this._nom.length() > Bin_File.NOM) {
+            mess_err += "Le nom est trop long.\n";
+        }
+        if (this._prenom.length() == 0) {
+            mess_err += "Le prénom doit être saisie.\n";
+        } else if (this._prenom.length() > Bin_File.PRENOM) {
+            mess_err += "Le prénom est trop long.\n";
+        }
+
+        return mess_err;
     }
 }

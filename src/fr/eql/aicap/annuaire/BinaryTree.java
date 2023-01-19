@@ -2,7 +2,7 @@ package fr.eql.aicap.annuaire;
 import java.util.List;
 
 public class BinaryTree {
-    Node root;
+    static Node root;
     public void addNode(String key, int positionInBinFile) {
         // Create a new Node and initialize it
         Node newNode = new Node(key, positionInBinFile);
@@ -42,7 +42,7 @@ public class BinaryTree {
             }
         }
     }
-    public void DeleteNode(String key, int positionInBinFile) {
+    public void deleteNode(String key, int positionInBinFile) {
         //TODO Urgent
 
     }
@@ -63,9 +63,8 @@ public class BinaryTree {
         if (focusNode != null) {
             // Traverse the left node
             inOrderTraverseTree_List(focusNode.leftChild,List,fichier_Binaire);
-            List.add(Stagiaire.GetSelect(fichier_Binaire, focusNode.address));
-            // Visit the currently focused on node
-            //System.out.println(focusNode);
+            // add in list the currently focused on node
+            List.add(Stagiaire.getSelect(fichier_Binaire, focusNode.address));
             // Traverse the right node
             inOrderTraverseTree_List(focusNode.rightChild,List,fichier_Binaire);
         }
@@ -92,7 +91,7 @@ public class BinaryTree {
 
     }
 
-    public Node findNode(String key) {
+    public static Node findNode(String key) {
         // Start at the top of the tree
         Node focusNode = root;
         // While we haven't found the Node
