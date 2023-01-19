@@ -32,11 +32,11 @@ public class Window extends Application {
     GridPane gridPaneTop;
 
     private void refreshList() {
-        refreshList("");
+        refreshList(new Stagiaire());
     }
 
-    private void refreshList(String Nom_Filter) {
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, Nom_Filter, binaryTree);
+    private void refreshList(Stagiaire stagiaireFilter) {
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, stagiaireFilter, binaryTree);
         traineesList = FXCollections.observableArrayList(data);
         table.setItems(traineesList);
         table.refresh();
@@ -76,17 +76,32 @@ public class Window extends Application {
         Label lblFiltre = new Label("Filtre :   ");
         gridPaneTop.add(lblFiltre, 0, 1);
         TextField nomFilter = new TextField();
+        nomFilter.setPromptText("Nom");
         gridPaneTop.add(nomFilter, 1, 1);
+        TextField prenomFilter = new TextField();
+        prenomFilter.setPromptText("Prénom");
+        gridPaneTop.add(prenomFilter, 2, 1);
+        TextField promoFilter = new TextField();
+        promoFilter.setPromptText("Promotion");
+        gridPaneTop.add(promoFilter, 3, 1);
+        TextField yearFilter = new TextField();
+        yearFilter.setPromptText("Année");
+        gridPaneTop.add(yearFilter, 4, 1);
+        TextField dptFilter = new TextField();
+        dptFilter.setPromptText("Département");
+        gridPaneTop.add(dptFilter, 5, 1);
+
         Button buttonFilter = new Button("Rechercher");
         buttonFilter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                refreshList(nomFilter.getText());
+                Stagiaire stagiaireFilter = new Stagiaire(promoFilter.getText(),yearFilter.getText(),nomFilter.getText(),prenomFilter.getText(),dptFilter.getText());
+                refreshList(stagiaireFilter);
             }
 
             ;
         });
-        gridPaneTop.add(buttonFilter, 2, 1);
+        gridPaneTop.add(buttonFilter, 9, 1);
     }
 
     private void chargementList() {

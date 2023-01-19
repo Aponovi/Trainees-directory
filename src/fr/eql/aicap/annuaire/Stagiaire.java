@@ -135,16 +135,24 @@ public class Stagiaire {
 
     public static List<Stagiaire> Trainees_List(String fichier_Binaire, BinaryTree binaryTree) {
 
-        return Trainees_List(fichier_Binaire, "", binaryTree);
+        return Trainees_List(fichier_Binaire, new Stagiaire(), binaryTree);
     }
 
-    public static List<Stagiaire> Trainees_List(String fichier_Binaire, String Nom_Filtre, BinaryTree binaryTree) {
+    public static List<Stagiaire> Trainees_List(String fichier_Binaire, Stagiaire stagiaireFilter, BinaryTree binaryTree) {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
         List<Stagiaire> Trainees_List = new ArrayList<>();
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
         // System.out.println("la list dans la fonction " + Trainees_List);
-        if (Nom_Filtre != "") {
-            return Trainees_List.stream().filter(c -> c._nom.toUpperCase().contains(Nom_Filtre.toUpperCase())).collect(Collectors.toList());
+        if (stagiaireFilter._nom != null || stagiaireFilter._prenom != null|| stagiaireFilter._dpt != null|| stagiaireFilter._annee != null|| stagiaireFilter._promo != null) {
+            return Trainees_List.stream().filter(
+                    c -> (
+                            (stagiaireFilter._nom == null || c._nom.toUpperCase().contains(stagiaireFilter._nom.toUpperCase()))
+                            &&(stagiaireFilter._prenom == null || c._prenom.toUpperCase().contains(stagiaireFilter._prenom.toUpperCase()))
+                            &&(stagiaireFilter._promo == null || c._promo.toUpperCase().contains(stagiaireFilter._promo.toUpperCase()))
+                            &&(stagiaireFilter._annee == null || c._annee.toUpperCase().contains(stagiaireFilter._annee.toUpperCase()))
+                            &&(stagiaireFilter._dpt == null || c._dpt.toUpperCase().contains(stagiaireFilter._dpt.toUpperCase()))
+                    )
+            ).collect(Collectors.toList());
         } else {
             return Trainees_List;
         }
