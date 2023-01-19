@@ -1,10 +1,11 @@
 package fr.eql.aicap.annuaire;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static fr.eql.aicap.annuaire.Main.BINARYFILE;
 
 public class Stagiaire {
     private String _promo;
@@ -102,8 +103,75 @@ public class Stagiaire {
         }
     }
 
-    public void delete(String fichierBinaire, int pointerPosition) {
+    public BinaryTree delete(String fichierBinaire, BinaryTree binaryTree) {
         //Méthode qui supprime dans le fichier bin le stagiaire this
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rwd");
+            int focusTrainee = binaryTree.findNode(Bin_File.completer(this._nom, Bin_File.NOM)).address;
+            if (this != null) {
+                //randomAccessFile.seek(focusTrainee);
+                File outFile;
+                File inFile = new File(fichierBinaire);
+                try {
+                    outFile = File.createTempFile("swap", "buffer");
+                } catch (IOException ex) {
+                    throw new IOError(ex);
+                }
+                try (
+                        InputStream inStream = new FileInputStream(inFile);
+                        OutputStream outStream = new FileOutputStream(outFile)
+                ) {
+                    //copy bytes in chunks (will be kept)
+                    //Avant le stagiaire
+                    int CHUNK_SIZE = focusTrainee;
+                    byte[] chunkBuffer = new byte[CHUNK_SIZE];
+                    int chunkSize = inStream.read(chunkBuffer, 0, CHUNK_SIZE);
+                    outStream.write(chunkBuffer, 0, chunkSize);
+                    //Après le stagiaire
+                    CHUNK_SIZE= (int) (randomAccessFile.length() - (focusTrainee + Bin_File.LONGUEURSTAGIAIRE));
+                    chunkBuffer = new byte[CHUNK_SIZE];
+                    inStream.skip( Bin_File.LONGUEURSTAGIAIRE);
+                    //int c=inStream.read();
+                    //c=inStream.read();
+                    chunkSize = inStream.read(chunkBuffer, 0, CHUNK_SIZE);
+                    outStream.write(chunkBuffer, 0, chunkSize);
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException("input file not found!", ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException("failed to trim data!", ex);
+                }
+                randomAccessFile.close();
+                inFile.delete();
+                outFile.renameTo(inFile);
+                binaryTree = null;
+                BinaryTree.root = null;
+                binaryTree = new BinaryTree();
+                RandomAccessFile RandomAccessFile = new RandomAccessFile(BINARYFILE, "r");
+                int pos = 0;
+                String Key = "";
+                Bin_File.compteurStagiaire = 0;
+                while (pos < RandomAccessFile.length()) {
+                    Bin_File.compteurStagiaire += 1;
+                    int pos_Name = pos + Bin_File.ADRESSBIGINNINGNAME;
+                    RandomAccessFile.seek(pos_Name);
+                    for (int i = 0; i < Bin_File.NOM; i++) {
+                        Key += RandomAccessFile.readChar();
+                    }
+                    binaryTree.addNode(Key, pos);
+                    pos = pos + Bin_File.LONGUEURSTAGIAIRE;
+                    Key = "";
+                }
+                RandomAccessFile.close();
+                Bin_File.addChildrenAddressesIntoParentData(fichierBinaire,binaryTree);
+
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return binaryTree;
+
     }
 
     public void update(String fichierBinaire) {
@@ -143,14 +211,14 @@ public class Stagiaire {
         List<Stagiaire> Trainees_List = new ArrayList<>();
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
         // System.out.println("la list dans la fonction " + Trainees_List);
-        if (stagiaireFilter._nom != null || stagiaireFilter._prenom != null|| stagiaireFilter._dpt != null|| stagiaireFilter._annee != null|| stagiaireFilter._promo != null) {
+        if (stagiaireFilter._nom != null || stagiaireFilter._prenom != null || stagiaireFilter._dpt != null || stagiaireFilter._annee != null || stagiaireFilter._promo != null) {
             return Trainees_List.stream().filter(
                     c -> (
                             (stagiaireFilter._nom == null || c._nom.toUpperCase().contains(stagiaireFilter._nom.toUpperCase()))
-                            &&(stagiaireFilter._prenom == null || c._prenom.toUpperCase().contains(stagiaireFilter._prenom.toUpperCase()))
-                            &&(stagiaireFilter._promo == null || c._promo.toUpperCase().contains(stagiaireFilter._promo.toUpperCase()))
-                            &&(stagiaireFilter._annee == null || c._annee.toUpperCase().contains(stagiaireFilter._annee.toUpperCase()))
-                            &&(stagiaireFilter._dpt == null || c._dpt.toUpperCase().contains(stagiaireFilter._dpt.toUpperCase()))
+                                    && (stagiaireFilter._prenom == null || c._prenom.toUpperCase().contains(stagiaireFilter._prenom.toUpperCase()))
+                                    && (stagiaireFilter._promo == null || c._promo.toUpperCase().contains(stagiaireFilter._promo.toUpperCase()))
+                                    && (stagiaireFilter._annee == null || c._annee.toUpperCase().contains(stagiaireFilter._annee.toUpperCase()))
+                                    && (stagiaireFilter._dpt == null || c._dpt.toUpperCase().contains(stagiaireFilter._dpt.toUpperCase()))
                     )
             ).collect(Collectors.toList());
         } else {
@@ -199,27 +267,27 @@ public class Stagiaire {
 
     public String verif() {
         String mess_err = "";
-        if (this._promo.length() == 0) {
+        if (this._promo == null || this._promo.length() == 0) {
             mess_err += "La promotion doit être saisie.\n";
         } else if (this._promo.length() > Bin_File.PROMO) {
             mess_err += "La promotion est trop longue.\n";
         }
-        if (this._annee.length() == 0) {
+        if (this._annee == null || this._annee.length() == 0) {
             mess_err += "L'année doit être saisie.\n";
         } else if (this._annee.length() > Bin_File.ANNEE) {
             mess_err += "L'année est trop longue.\n";
         }
-        if (this._dpt.length() == 0) {
+        if (this._dpt == null || this._dpt.length() == 0) {
             mess_err += "Le département doit être saisie.\n";
         } else if (this._dpt.length() > Bin_File.DEPARTEMENT) {
             mess_err += "Le département est trop long.\n";
         }
-        if (this._nom.length() == 0) {
+        if (this._nom == null || this._nom.length() == 0) {
             mess_err += "Le nom doit être saisie.\n";
         } else if (this._nom.length() > Bin_File.NOM) {
             mess_err += "Le nom est trop long.\n";
         }
-        if (this._prenom.length() == 0) {
+        if (this._prenom == null || this._prenom.length() == 0) {
             mess_err += "Le prénom doit être saisie.\n";
         } else if (this._prenom.length() > Bin_File.PRENOM) {
             mess_err += "Le prénom est trop long.\n";

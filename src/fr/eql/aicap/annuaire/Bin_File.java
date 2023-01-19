@@ -82,9 +82,9 @@ public class Bin_File {
     /************************************
      * write nodes children in binary file *
      *************************************/
-    public void addChildrenAddressesIntoParentData(String fichierBinaire, BinaryTree binaryTree) {
+    public static void addChildrenAddressesIntoParentData(String fichierBinaire, BinaryTree binaryTree) {
         try {
-            RandomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
+            RandomAccessFile RandomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
             int focusTrainee = ADRESSBIGINNINGNAME;
             int nbnoeud = 0;
             String focusTraineeName = "";

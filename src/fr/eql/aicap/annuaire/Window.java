@@ -16,8 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
+
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;
 import static fr.eql.aicap.annuaire.Main.TXTFILE;
@@ -30,6 +32,7 @@ public class Window extends Application {
     ObservableList<Stagiaire> traineesList;
     TableView<Stagiaire> table;
     GridPane gridPaneTop;
+    private Labeled deleteLabel;
 
     private void refreshList() {
         refreshList(new Stagiaire());
@@ -48,13 +51,12 @@ public class Window extends Application {
             Bin_File Bin_File = new Bin_File();
             binaryTree = Bin_File.fromTxtToBin(TXTFILE, BINARYFILE);
             Bin_File.addChildrenAddressesIntoParentData(BINARYFILE, binaryTree);
-        }
-        else{
+        } else {
             binaryTree = new BinaryTree();
             RandomAccessFile RandomAccessFile = new RandomAccessFile(BINARYFILE, "r");
             int pos = 0;
-            String Key ="";
-            while (pos<RandomAccessFile.length()) {
+            String Key = "";
+            while (pos < RandomAccessFile.length()) {
                 Bin_File.compteurStagiaire += 1;
                 int pos_Name = pos + Bin_File.ADRESSBIGINNINGNAME;
                 RandomAccessFile.seek(pos_Name);
@@ -63,7 +65,7 @@ public class Window extends Application {
                 }
                 binaryTree.addNode(Key, pos);
                 pos = pos + Bin_File.LONGUEURSTAGIAIRE;
-                Key ="";
+                Key = "";
             }
             RandomAccessFile.close();
         }
@@ -95,7 +97,7 @@ public class Window extends Application {
         buttonFilter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stagiaire stagiaireFilter = new Stagiaire(promoFilter.getText(),yearFilter.getText(),nomFilter.getText(),prenomFilter.getText(),dptFilter.getText());
+                Stagiaire stagiaireFilter = new Stagiaire(promoFilter.getText(), yearFilter.getText(), nomFilter.getText(), prenomFilter.getText(), dptFilter.getText());
                 refreshList(stagiaireFilter);
             }
 
@@ -235,13 +237,31 @@ public class Window extends Application {
         });
     }
 
+    private void alertDelStg(Stage primaryStage, Stagiaire stagiaireSelected) throws IOException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("SUPPRIMER UN STAGIAIRE");
+        alert.setHeaderText("ATTENTION : VOUS ÊTES SUR LE POINT DE SUPPRIMER UN STAGIAIRE");
+        alert.setContentText(" Voulez-vous réellement supprimer : " + stagiaireSelected.getNom() + " ?");
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == ButtonType.OK) {
+
+            Stagiaire stg = table.getSelectionModel().getSelectedItem();
+            if (stg != null) {
+                binaryTree=stg.delete(BINARYFILE, binaryTree);
+                refreshList();
+            }
+        }
+    }
+
     private void chargementBouton(Stage primaryStage) {
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
-//        Button buttonUpdate = new Button("Modifier le stagiaire");
-//        Button buttonExport = new Button("Exporter en PDF");
+        Button buttonUpdate = new Button("Modifier le stagiaire");
+        Button buttonExport = new Button("Exporter en PDF");
+        Button buttonDelete = new Button("Supprimer le stagiare");
 
         //go to scene Rechercher
         Button buttonSearch = new Button("Rechercher");
@@ -251,8 +271,16 @@ public class Window extends Application {
 
         //go to scene Rechercher
         buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-        hbBtn.getChildren().addAll(buttonAdd, buttonConnexion);
+        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonDelete, buttonExport, buttonConnexion);
 
+        //action bouton se connecter
+
+        /*buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnStagiaireAddClick(event,binaryTree,table);
+            }
+        });*/
 
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -262,17 +290,34 @@ public class Window extends Application {
 
             ;
         });
-//        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
-//                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-//                    chargementFenStagiaire(primaryStage, stagiaireSelected);
-//                }
-//            }
-//
-//            ;
-//        });
+        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
+                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
+                    chargementFenStagiaire(primaryStage, stagiaireSelected);
+                }
+            }
+
+            ;
+        });
+
+        buttonDelete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
+                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
+                    try {
+                        alertDelStg(primaryStage, stagiaireSelected);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            ;
+        });
+
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
             TextField dataLogin = new TextField();
