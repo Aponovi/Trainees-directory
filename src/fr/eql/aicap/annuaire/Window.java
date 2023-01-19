@@ -297,9 +297,16 @@ public class Window extends Application {
                 windowCoGrille.add(textPassword, 1, 2);
                 //Nouveau bouton
                 Button btnCo = new Button("Connexion");
-                windowCoGrille.add(btnCo, 1, 3);
-//                btnCo.setOnAction(event1 -> mainPage.run());
-                windowCoGrille.add(btnCo, 1, 3);
+                Button btnAnnuler = new Button("Annuler");
+//                windowCoGrille.add(btnCo, 1, 3);
+//                windowCoGrille.add(btnAnnuler, 2, 3);
+                windowCoGrille.addRow(3, btnCo, btnAnnuler);
+                btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        windowCo.close();
+                    }
+                });
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(primaryStage.getX() + 200);
