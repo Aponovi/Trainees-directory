@@ -240,8 +240,8 @@ public class Window extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
-        Button buttonUpdate = new Button("Modifier le stagiaire");
-        Button buttonExport = new Button("Exporter en PDF");
+//        Button buttonUpdate = new Button("Modifier le stagiaire");
+//        Button buttonExport = new Button("Exporter en PDF");
 
         //go to scene Rechercher
         Button buttonSearch = new Button("Rechercher");
@@ -251,16 +251,8 @@ public class Window extends Application {
 
         //go to scene Rechercher
         buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonExport, buttonConnexion);
+        hbBtn.getChildren().addAll(buttonAdd, buttonConnexion);
 
-        //action bouton se connecter
-
-        /*buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                btnStagiaireAddClick(event,binaryTree,table);
-            }
-        });*/
 
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -270,17 +262,17 @@ public class Window extends Application {
 
             ;
         });
-        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
-                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-                    chargementFenStagiaire(primaryStage, stagiaireSelected);
-                }
-            }
-
-            ;
-        });
+//        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
+//                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
+//                    chargementFenStagiaire(primaryStage, stagiaireSelected);
+//                }
+//            }
+//
+//            ;
+//        });
 
         buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
             TextField dataLogin = new TextField();
