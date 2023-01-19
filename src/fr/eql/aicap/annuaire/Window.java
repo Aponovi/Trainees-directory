@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;
 import static fr.eql.aicap.annuaire.Main.TXTFILE;
@@ -31,6 +32,7 @@ public class Window extends Application {
     ObservableList<Stagiaire> traineesList;
     TableView<Stagiaire> table;
     GridPane gridPaneTop;
+    private Labeled deleteLabel;
 
     private void refreshList() {
         refreshList(new Stagiaire());
@@ -235,13 +237,21 @@ public class Window extends Application {
         });
     }
 
-    private void alertDelStg(Stage primaryStage, Stagiaire stagiaireSelected) {
+    private void alertDelStg(Stage primaryStage, Stagiaire stagiaireSelected) throws IOException {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("SUPPRIMER UN STAGIAIRE");
         alert.setHeaderText("ATTENTION : VOUS ÊTES SUR LE POINT DE SUPPRIMER UN STAGIAIRE");
         alert.setContentText(" Voulez-vous réellement supprimer : " + stagiaireSelected.getNom() + " ?");
-        alert.showAndWait();
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == ButtonType.OK) {
+
+            Stagiaire stg = table.getSelectionModel().getSelectedItem();
+            if (stg != null) {
+                binaryTree=stg.delete(BINARYFILE, binaryTree);
+                refreshList();
+            }
+        }
     }
 
     private void chargementBouton(Stage primaryStage) {
@@ -297,7 +307,11 @@ public class Window extends Application {
             public void handle(ActionEvent event) {
                 if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
                     Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-                    alertDelStg(primaryStage, stagiaireSelected);
+                    try {
+                        alertDelStg(primaryStage, stagiaireSelected);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 
