@@ -32,29 +32,29 @@ public class WindowAdmin extends Application {
 //        this.adminSwitch = adminSwitch;
 //    }
 
-    private void Refresh_List(BinaryTree binaryTree, TableView<Stagiaire> table)
-    {
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+    private void Refresh_List(BinaryTree binaryTree, TableView<Stagiaire> table) {
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> _Trainees_List = FXCollections.observableArrayList(data);
         table.setItems(_Trainees_List);
         table.refresh();
     }
-    private void Btn_Stagiaire_Add_Click(ActionEvent event, BinaryTree binaryTree, TableView<Stagiaire> table)
-    {
+
+    private void Btn_Stagiaire_Add_Click(ActionEvent event, BinaryTree binaryTree, TableView<Stagiaire> table) {
         //Affichage PopUp Stagiaire
 
         //Code ajout stagiaire
         Stagiaire julie = new Stagiaire("ai cap1", "2023", "AAA", "julie", "92");
-        julie.add(BINARYFILE,binaryTree);
-        Refresh_List(binaryTree,table);
+        julie.add(BINARYFILE, binaryTree);
+        Refresh_List(binaryTree, table);
     }
+
     @Override
     public void start(Stage stage) throws IOException {
         Bin_File Bin_File = new Bin_File();
-        BinaryTree binaryTree =  Bin_File.fromTxtToBin(TXTFILE, BINARYFILE);
-        Bin_File.addChildrenAddressesIntoParentData(BINARYFILE,binaryTree);
+        BinaryTree binaryTree = Bin_File.fromTxtToBin(TXTFILE, BINARYFILE);
+        Bin_File.addChildrenAddressesIntoParentData(BINARYFILE, binaryTree);
 
-        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE,binaryTree);
+        List<Stagiaire> data = Stagiaire.Trainees_List(BINARYFILE, binaryTree);
         ObservableList<Stagiaire> Trainees_List = FXCollections.observableArrayList(data);
 
         //Création Table
@@ -104,12 +104,12 @@ public class WindowAdmin extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
-        Button buttonModify = new Button ("Modifier un stagiaire");
-        Button buttonDelete= new Button("Supprimer un stagiaire");
+        Button buttonModify = new Button("Modifier un stagiaire");
+        Button buttonDelete = new Button("Supprimer un stagiaire");
         Button buttonExport = new Button("Exporter en PDF");
         Button buttonSearch = new Button("Rechercher");
-        Button buttonUpdate= new Button("Modifier mes identifiants");
-        Button buttonOff= new Button("Se déconnecter");
+        Button buttonUpdate = new Button("Modifier mes identifiants");
+        Button buttonOff = new Button("Se déconnecter");
 
 
         hbBtn.getChildren().addAll(buttonAdd, buttonDelete, buttonExport, buttonSearch, buttonUpdate, buttonOff, buttonModify);
@@ -119,7 +119,7 @@ public class WindowAdmin extends Application {
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Btn_Stagiaire_Add_Click(event,binaryTree,table);
+                Btn_Stagiaire_Add_Click(event, binaryTree, table);
             }
         });
 

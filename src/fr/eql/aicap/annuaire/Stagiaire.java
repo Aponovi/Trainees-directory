@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Stagiaire {
     private String _promo;
@@ -20,6 +21,10 @@ public class Stagiaire {
         this._nom = nom;
         this._prenom = prenom;
         this._dpt = dpt;
+    }
+
+    public Stagiaire() {
+
     }
 
 
@@ -91,6 +96,7 @@ public class Stagiaire {
             randomAccessFile.writeChars(this._dpt);
             randomAccessFile.close();
             binaryTree.addNode(this._nom, focusTrainee);
+            Bin_File.compteurStagiaire += 1;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -100,20 +106,20 @@ public class Stagiaire {
         //Méthode qui supprime dans le fichier bin le stagiaire this
     }
 
-    public void update(String fichierBinaire, String keyname) {
+    public void update(String fichierBinaire) {
         //Méthode qui modifie dans le fichier bin le stagiaire this
         try {
             RandomAccessFile randomAccessFile = new RandomAccessFile(fichierBinaire, "rw");
-            int focusTrainee = BinaryTree.findNode(keyname).address;
+            int focusTrainee = BinaryTree.findNode(Bin_File.completer(this._nom, Bin_File.NOM)).address;
             // RandomAccessFile.seek(focusTrainee);
             // System.out.println("Avant l'écriture le pointeur se situe sur la position : " + RandomAccessFile.getFilePointer());
-            randomAccessFile.seek(focusTrainee);
+            randomAccessFile.seek(focusTrainee + Bin_File.RIGHTCHILD * 4 + Bin_File.LEFTCHILD * 4);
             this._promo = Bin_File.completer(this._promo, Bin_File.PROMO);
             randomAccessFile.writeChars(this._promo);
             this._annee = Bin_File.completer(this._annee, Bin_File.ANNEE);
             randomAccessFile.writeChars(this._annee);
             int pointer = (int) randomAccessFile.getFilePointer();
-            focusTrainee = pointer + Bin_File.NOM;
+            focusTrainee = pointer + Bin_File.NOM * 2;
             randomAccessFile.seek(focusTrainee);
             this._prenom = Bin_File.completer(this._prenom, Bin_File.PRENOM);
             randomAccessFile.writeChars(this._prenom);
@@ -136,8 +142,12 @@ public class Stagiaire {
         //Méthode qui liste tous les stagiaires du fichier binaire et qui les renvoie
         List<Stagiaire> Trainees_List = new ArrayList<>();
         BinaryTree.inOrderTraverseTree_List(binaryTree.root, Trainees_List, fichier_Binaire);
-        System.out.println("la list dans la fonction " + Trainees_List);
-        return Trainees_List;
+        // System.out.println("la list dans la fonction " + Trainees_List);
+        if (Nom_Filtre != "") {
+            return Trainees_List.stream().filter(c -> c._nom.contains(Nom_Filtre)).collect(Collectors.toList());
+        } else {
+            return Trainees_List;
+        }
     }
 
 
@@ -177,5 +187,36 @@ public class Stagiaire {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String verif() {
+        String mess_err = "";
+        if (this._promo.length() == 0) {
+            mess_err += "La promotion doit être saisie.\n";
+        } else if (this._promo.length() > Bin_File.PROMO) {
+            mess_err += "La promotion est trop longue.\n";
+        }
+        if (this._annee.length() == 0) {
+            mess_err += "L'année doit être saisie.\n";
+        } else if (this._annee.length() > Bin_File.ANNEE) {
+            mess_err += "L'année est trop longue.\n";
+        }
+        if (this._dpt.length() == 0) {
+            mess_err += "Le département doit être saisie.\n";
+        } else if (this._dpt.length() > Bin_File.DEPARTEMENT) {
+            mess_err += "Le département est trop long.\n";
+        }
+        if (this._nom.length() == 0) {
+            mess_err += "Le nom doit être saisie.\n";
+        } else if (this._nom.length() > Bin_File.NOM) {
+            mess_err += "Le nom est trop long.\n";
+        }
+        if (this._prenom.length() == 0) {
+            mess_err += "Le prénom doit être saisie.\n";
+        } else if (this._prenom.length() > Bin_File.PRENOM) {
+            mess_err += "Le prénom est trop long.\n";
+        }
+
+        return mess_err;
     }
 }
