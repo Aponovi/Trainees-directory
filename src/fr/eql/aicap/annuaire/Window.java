@@ -331,10 +331,11 @@ public class Window extends Application {
         });
         VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.setPadding(new Insets(15, 15, 15, 15));
         vbox.getChildren().addAll(gridPaneTop, table, hbBtn);
         scene = new Scene(vbox);
         primaryStage.setScene(scene);
+        primaryStage.setWidth(1000);
         primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         primaryStage.setTitle("Annuaire EQL");
