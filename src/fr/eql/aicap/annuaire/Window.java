@@ -299,7 +299,6 @@ public class Window extends Application {
                 Button btnCo = new Button("Connexion");
                 windowCoGrille.add(btnCo, 1, 3);
 //                btnCo.setOnAction(event1 -> mainPage.run());
-                windowCoGrille.add(btnCo, 1, 3);
                 // Définir la position de la nouvelle fenetre
                 //relativement à la fenetre principale.
                 windowCo.setX(primaryStage.getX() + 200);
