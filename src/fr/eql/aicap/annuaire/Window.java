@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static fr.eql.aicap.annuaire.Main.BINARYFILE;
@@ -183,7 +184,7 @@ public class Window extends Application {
         windowCoGrille.add(lblNom, 0, 4);
         TextField Nom = new TextField(stagiaireSelected.getNom());
         if (stagiaireSelected.getNom() != null) {
-            Nom.setEditable(false);
+            Nom.setEditable(true);
         }
         windowCoGrille.add(Nom, 1, 4);
         Label lblDpt = new Label("Département :   ");
@@ -221,59 +222,66 @@ public class Window extends Application {
                         stg.add(BINARYFILE, binaryTree);
                     } else {
                         //stg.setNom(Bin_File.completer(Nom.getText(),Bin_File.NOM));
-                        stg.update(BINARYFILE);
+                        if (Objects.equals(stagiaireSelected.getNom(), stg.getNom())) {
+                            stg.update(BINARYFILE);
+                        }
+                        else {
+                            binaryTree = stagiaireSelected.delete(BINARYFILE, binaryTree);
+                            refreshList();
+                            stg.add(BINARYFILE, binaryTree);
+                        }
                     }
+                        refreshList();
+                        windowCo.close();
+                    } else{
+                        //Alert msg_err
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Erreur");
+                        alert.setHeaderText("Impossible de réaliser l'ajout ou la modification du stagiaire:");
+                        alert.setContentText(msg_err);
+                        alert.showAndWait();
+                    }
+                }
+            });
+        }
+
+        private void alertDelStg (Stage primaryStage, Stagiaire stagiaireSelected) throws IOException {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("SUPPRIMER UN STAGIAIRE");
+            alert.setHeaderText("ATTENTION : VOUS ÊTES SUR LE POINT DE SUPPRIMER UN STAGIAIRE");
+            alert.setContentText(" Voulez-vous réellement supprimer : " + stagiaireSelected.getNom() + " ?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get() == ButtonType.OK) {
+
+                Stagiaire stg = table.getSelectionModel().getSelectedItem();
+                if (stg != null) {
+                    binaryTree = stg.delete(BINARYFILE, binaryTree);
                     refreshList();
-                    windowCo.close();
-                } else {
-                    //Alert msg_err
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Erreur");
-                    alert.setHeaderText("Impossible de réaliser l'ajout ou la modification du stagiaire:");
-                    alert.setContentText(msg_err);
-                    alert.showAndWait();
                 }
             }
-        });
-    }
-
-    private void alertDelStg(Stage primaryStage, Stagiaire stagiaireSelected) throws IOException {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("SUPPRIMER UN STAGIAIRE");
-        alert.setHeaderText("ATTENTION : VOUS ÊTES SUR LE POINT DE SUPPRIMER UN STAGIAIRE");
-        alert.setContentText(" Voulez-vous réellement supprimer : " + stagiaireSelected.getNom() + " ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == ButtonType.OK) {
-
-            Stagiaire stg = table.getSelectionModel().getSelectedItem();
-            if (stg != null) {
-                binaryTree=stg.delete(BINARYFILE, binaryTree);
-                refreshList();
-            }
         }
-    }
 
-    private void chargementBouton(Stage primaryStage) {
+        private void chargementBouton (Stage primaryStage){
 
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        Button buttonAdd = new Button("Ajouter un stagiaire");
-        Button buttonUpdate = new Button("Modifier le stagiaire");
-        Button buttonExport = new Button("Exporter en PDF");
-        Button buttonDelete = new Button("Supprimer le stagiare");
+            HBox hbBtn = new HBox(10);
+            hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+            Button buttonAdd = new Button("Ajouter un stagiaire");
+            Button buttonUpdate = new Button("Modifier le stagiaire");
+            Button buttonExport = new Button("Exporter en PDF");
+            Button buttonDelete = new Button("Supprimer le stagiare");
 
-        //go to scene Rechercher
-        Button buttonSearch = new Button("Rechercher");
-        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
+            //go to scene Rechercher
+            Button buttonSearch = new Button("Rechercher");
+            buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
 
-        Button buttonConnexion = new Button("Se connecter");
+            Button buttonConnexion = new Button("Se connecter");
 
-        //go to scene Rechercher
-        buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonDelete, buttonConnexion);
+            //go to scene Rechercher
+            buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
+            hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonDelete, buttonConnexion);
 
-        //action bouton se connecter
+            //action bouton se connecter
 
         /*buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -282,163 +290,163 @@ public class Window extends Application {
             }
         });*/
 
-        buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                chargementFenStagiaire(primaryStage, new Stagiaire());
-            }
-
-            ;
-        });
-        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
-                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-                    chargementFenStagiaire(primaryStage, stagiaireSelected);
+            buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    chargementFenStagiaire(primaryStage, new Stagiaire());
                 }
-            }
 
-            ;
-        });
-
-        buttonDelete.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
-                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-                    try {
-                        alertDelStg(primaryStage, stagiaireSelected);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                ;
+            });
+            buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
+                        Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
+                        chargementFenStagiaire(primaryStage, stagiaireSelected);
                     }
                 }
-            }
 
-            ;
-        });
+                ;
+            });
 
-
-        buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
-            TextField dataLogin = new TextField();
-
-            @Override
-            public void handle(ActionEvent event) {
-                GridPane windowCoGrille = new GridPane();
-                Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
-                // Nouvelle Fenêtre (Stage)
-                Stage windowCo = new Stage();
-                windowCo.setTitle("Fenêtre de connexion");
-                windowCo.setScene(windowCoScene);
-                // GridPane Layout
-                windowCoGrille.setAlignment(Pos.CENTER);
-                windowCoGrille.setHgap(10);
-                windowCoGrille.setVgap(10);
-                windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
-                //Remplir la grille
-                Text titre = new Text("Connectez-vous");
-                titre.setId("titreText"); //noeud pour CSS
-                windowCoGrille.add(titre, 1, 0, 2, 1);
-                Label labelLogin = new Label("Login");
-                windowCoGrille.add(labelLogin, 0, 1);
-                TextField textLogin = new TextField();
-                windowCoGrille.add(textLogin, 1, 1);
-                Label labelPassword = new Label("Password");
-                windowCoGrille.add(labelPassword, 0, 2);
-                TextField textPassword = new TextField();
-                windowCoGrille.add(textPassword, 1, 2);
-                //Nouveau bouton
-                Button btnCo = new Button("Connexion");
-                Button btnAnnuler = new Button("Annuler");
-                windowCoGrille.addRow(3, btnCo, btnAnnuler);
-                btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent arg0) {
-                        windowCo.close();
+            buttonDelete.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
+                        Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
+                        try {
+                            alertDelStg(primaryStage, stagiaireSelected);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                });
-                // Définir la position de la nouvelle fenetre
-                //relativement à la fenetre principale.
-                windowCo.setX(primaryStage.getX() + 200);
-                windowCo.setY(primaryStage.getY() + 100);
-                //Affichage de la nouvelle fenêtre
-                windowCo.show();
-                windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-            }
-        });
-        VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(15, 15, 15, 15));
-        vbox.getChildren().addAll(gridPaneTop, table, hbBtn);
-        scene = new Scene(vbox);
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(1000);
-        primaryStage.show();
-        scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        primaryStage.setTitle("Annuaire EQL");
+                }
+
+                ;
+            });
+
+
+            buttonConnexion.setOnAction(new EventHandler<ActionEvent>() {
+                TextField dataLogin = new TextField();
+
+                @Override
+                public void handle(ActionEvent event) {
+                    GridPane windowCoGrille = new GridPane();
+                    Scene windowCoScene = new Scene(windowCoGrille, 500, 300);
+                    // Nouvelle Fenêtre (Stage)
+                    Stage windowCo = new Stage();
+                    windowCo.setTitle("Fenêtre de connexion");
+                    windowCo.setScene(windowCoScene);
+                    // GridPane Layout
+                    windowCoGrille.setAlignment(Pos.CENTER);
+                    windowCoGrille.setHgap(10);
+                    windowCoGrille.setVgap(10);
+                    windowCoGrille.setPadding(new Insets(20, 20, 20, 20));
+                    //Remplir la grille
+                    Text titre = new Text("Connectez-vous");
+                    titre.setId("titreText"); //noeud pour CSS
+                    windowCoGrille.add(titre, 1, 0, 2, 1);
+                    Label labelLogin = new Label("Login");
+                    windowCoGrille.add(labelLogin, 0, 1);
+                    TextField textLogin = new TextField();
+                    windowCoGrille.add(textLogin, 1, 1);
+                    Label labelPassword = new Label("Password");
+                    windowCoGrille.add(labelPassword, 0, 2);
+                    TextField textPassword = new TextField();
+                    windowCoGrille.add(textPassword, 1, 2);
+                    //Nouveau bouton
+                    Button btnCo = new Button("Connexion");
+                    Button btnAnnuler = new Button("Annuler");
+                    windowCoGrille.addRow(3, btnCo, btnAnnuler);
+                    btnAnnuler.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent arg0) {
+                            windowCo.close();
+                        }
+                    });
+                    // Définir la position de la nouvelle fenetre
+                    //relativement à la fenetre principale.
+                    windowCo.setX(primaryStage.getX() + 200);
+                    windowCo.setY(primaryStage.getY() + 100);
+                    //Affichage de la nouvelle fenêtre
+                    windowCo.show();
+                    windowCoScene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+                }
+            });
+            VBox vbox = new VBox();
+            vbox.setSpacing(5);
+            vbox.setPadding(new Insets(15, 15, 15, 15));
+            vbox.getChildren().addAll(gridPaneTop, table, hbBtn);
+            scene = new Scene(vbox);
+            primaryStage.setScene(scene);
+            primaryStage.setWidth(1000);
+            primaryStage.show();
+            scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+            primaryStage.setTitle("Annuaire EQL");
+        }
+
+        @Override
+        public void start (Stage primaryStage) throws IOException {
+            chargementFichier();
+            chargementTop();
+            chargementList();
+            // RECHERCHER ---------------------------------------------------------------------------------
+            //search button
+            Button buttonRecherche = new Button("Rechercher");
+            buttonRecherche.setOnAction(e -> buttonRechercheClicked());
+
+            //return button
+            Button buttonReturn = new Button("Return");
+            buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
+
+            //search box _nom
+            TextField nomTextField = new TextField();
+            nomTextField.setPromptText("Nom");
+            nomTextField.setMinWidth(100);
+            //temporary search table
+            //tempTable = new TableView<>();
+            //tempTable.setItems(getStagiaire());
+
+            // ajout des colonnes à la table
+            //tempTable.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
+            //tempTable.setItems(Trainees_List);
+
+            HBox layoutSearch = new HBox();
+            //layoutSearch.getChildren().addAll(tempTable);
+
+            HBox layoutSearch2 = new HBox(15);
+            layoutSearch2.getChildren().addAll(nomTextField, buttonRecherche, buttonReturn);
+
+            VBox layoutRec = new VBox();
+            layoutRec.setSpacing(5);
+            layoutRec.setPadding(new Insets(10, 10, 10, 10));
+            //layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
+
+            sceneSearch = new Scene(layoutRec);
+            //stage.setScene(sceneSearch);
+            primaryStage.show();
+            sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
+            primaryStage.setTitle("Recherche");
+            // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
+
+            chargementBouton(primaryStage);
+
+        }
+
+        private void buttonRechercheClicked () {
+            //temporary search list
+            ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
+            //allStagiaires = tempTable.getItems();
+            //stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
+            //stagiairesSelected.forEach(allStagiaires::remove);
+        }
+
+        public ObservableList<Stagiaire> getStagiaire () {
+            //temporary search list
+            ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
+            return stagiaires;
+        }
     }
-
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        chargementFichier();
-        chargementTop();
-        chargementList();
-        // RECHERCHER ---------------------------------------------------------------------------------
-        //search button
-        Button buttonRecherche = new Button("Rechercher");
-        buttonRecherche.setOnAction(e -> buttonRechercheClicked());
-
-        //return button
-        Button buttonReturn = new Button("Return");
-        buttonReturn.setOnAction(e -> primaryStage.setScene(scene));
-
-        //search box _nom
-        TextField nomTextField = new TextField();
-        nomTextField.setPromptText("Nom");
-        nomTextField.setMinWidth(100);
-        //temporary search table
-        //tempTable = new TableView<>();
-        //tempTable.setItems(getStagiaire());
-
-        // ajout des colonnes à la table
-        //tempTable.getColumns().addAll(promoCol, nomCol, prenomCol, anneeCol, dptCol);
-        //tempTable.setItems(Trainees_List);
-
-        HBox layoutSearch = new HBox();
-        //layoutSearch.getChildren().addAll(tempTable);
-
-        HBox layoutSearch2 = new HBox(15);
-        layoutSearch2.getChildren().addAll(nomTextField, buttonRecherche, buttonReturn);
-
-        VBox layoutRec = new VBox();
-        layoutRec.setSpacing(5);
-        layoutRec.setPadding(new Insets(10, 10, 10, 10));
-        //layoutRec.getChildren().addAll(tempTable, layoutSearch, layoutSearch2);
-
-        sceneSearch = new Scene(layoutRec);
-        //stage.setScene(sceneSearch);
-        primaryStage.show();
-        sceneSearch.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
-        primaryStage.setTitle("Recherche");
-        // fin RECHERCHER -----------------------------------------------------------------------------------------------------------------
-
-        chargementBouton(primaryStage);
-
-    }
-
-    private void buttonRechercheClicked() {
-        //temporary search list
-        ObservableList<Stagiaire> stagiairesSelected, allStagiaires;
-        //allStagiaires = tempTable.getItems();
-        //stagiairesSelected = tempTable.getSelectionModel().getSelectedItems();
-        //stagiairesSelected.forEach(allStagiaires::remove);
-    }
-
-    public ObservableList<Stagiaire> getStagiaire() {
-        //temporary search list
-        ObservableList<Stagiaire> stagiaires = FXCollections.observableArrayList();
-        return stagiaires;
-    }
-}
 
 
