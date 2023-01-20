@@ -42,15 +42,15 @@ Le Super-Admin peut additionnellement:
 
 ![base](/add.PNG)
 
-3. Modification de stagiaire
+4. Modification de stagiaire
 
-![base](/add.PNG)
+![base](/modify.PNG)
 
-3. Suppression de stagiaire
+5. Suppression de stagiaire
 
-![base](/add.PNG)
+![base](/delete.PNG)
 
-4. Ouverture d'une pop-up de connexion
+6. Ouverture d'une pop-up de connexion
 
 ![base](/co.PNG)
 
