@@ -259,8 +259,6 @@ public class Window extends Application {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         Button buttonAdd = new Button("Ajouter un stagiaire");
-        Button buttonUpdate = new Button("Modifier le stagiaire");
-        Button buttonExport = new Button("Exporter en PDF");
         Button buttonDelete = new Button("Supprimer le stagiare");
 
         //go to scene Rechercher
@@ -271,7 +269,7 @@ public class Window extends Application {
 
         //go to scene Rechercher
         buttonSearch.setOnAction(e -> primaryStage.setScene(sceneSearch));
-        hbBtn.getChildren().addAll(buttonAdd, buttonUpdate, buttonDelete, buttonExport, buttonConnexion);
+        hbBtn.getChildren().addAll(buttonAdd, buttonDelete, buttonConnexion);
 
         //action bouton se connecter
 
@@ -290,17 +288,7 @@ public class Window extends Application {
 
             ;
         });
-        buttonUpdate.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (table.getSelectionModel() != null && table.getSelectionModel().getSelectedItem() != null) {
-                    Stagiaire stagiaireSelected = table.getSelectionModel().getSelectedItem();
-                    chargementFenStagiaire(primaryStage, stagiaireSelected);
-                }
-            }
-
-            ;
-        });
+        
 
         buttonDelete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
